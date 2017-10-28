@@ -67,7 +67,7 @@ body {
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q">
             <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                <button class="btn btn-default green" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         </div>
         </form>
@@ -84,6 +84,10 @@ body {
 
 <!-- End Navigation -->
 <style>
+.container {
+    overflow-y: scroll;
+
+}
 .green {
   color: #1fb752;
 }
@@ -221,7 +225,7 @@ body {
      </li>
    </div>
 
-    <li><a href="#!artists">Playlist #1 </a></li>
+    <li><a href="#">MJXT</a></li>
     <li><a href="#!artists">Playlist #2 </a></li>
     <li><a href="#!artists">Playlist #3 </a></li>
     <li><a href="#!artists">Playlist #4 </a></li>
@@ -237,11 +241,186 @@ body {
   </ul>
 </div>
 
-<div class="container" style="margin-left:13%;margin-right:13%">
- <div class="row"> 
+
+ <!-- Friends Bar ########################################################################################## -->
+ <!--Snippet from https://bootsnipp.com/snippets/W73B0-->
+
+<style>
+.row{
+    margin-left:0px;
+    margin-right:60px;
+}
+
+#wrapper-right {
+    padding-right: 70px;
+    transition: all .4s ease 0s;
+    height: 100%;
+}
+
+#sidebar-wrapper-right {
+    margin-right: -150px;
+    right: 70px;
+    width: 300px;
+    background: #222;
+    position: fixed;
+    height: 100%;
+    z-index: 10000;
+    transition: all .4s ease 0s;
+}
+
+.sidebar-nav-right {
+    display: block;
+    float: right;
+    width: 300px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#page-content-wrapper-right {
+    padding-left: 0;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+}
+#wrapper-right.active {
+    padding-right: 150px;
+}
+#wrapper-right.active #sidebar-wrapper-right {
+    right: 350px;
+}
+
+#page-content-wrapper-right {
+  width: 100%;
+}
+
+#sidebar_menu-right li a, .sidebar-nav-right li a {
+    color: #999;
+    display: block;
+    float: right;
+    text-decoration: none;
+    width: 300px;
+    background: #252525;
+    border-top: 1px solid #373737;
+    border-bottom: 1px solid #1A1A1A;
+    -webkit-transition: background .5s;
+    -moz-transition: background .5s;
+    -o-transition: background .5s;
+    -ms-transition: background .5s;
+    transition: background .5s;
+}
+.sidebar_name {
+    padding-top: 25px;
+    color: #fff;
+    opacity: .7;
+}
+
+.sidebar-nav-right li {
+  line-height: 40px;
+  text-indent: 20px;
+}
+
+.sidebar-nav-right li a {
+  color: #999999;
+  display: block;
+  text-decoration: none;
+}
+
+.sidebar-nav-right li a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+  text-decoration: none;
+}
+
+.sidebar-nav-right li a:active,
+.sidebar-nav-right li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav-right > .sidebar-brand {
+  height: 65px;
+  line-height: 60px;
+  font-size: 18px;
+}
+
+.sidebar-nav-right > .sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav-right > .sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+#main_icon
+{
+    float: left;
+    padding-left: 5px;
+    padding-top: 10px;
+    padding-right: 20px;
+}
+.sub_icon
+{
+    float: left;
+    padding-left: 5px;
+    padding-top: 10px;
+    padding-right: 20px;
+}
+.content-header {
+  height: 65px;
+  line-height: 65px;
+}
+
+.content-header h1 {
+  margin: 0;
+  margin-left: 20px;
+  line-height: 65px;
+  display: inline-block;
+}
+
+@media (max-width:767px) {
+    #wrapper-right {
+    padding-right: 70px;
+    transition: all .4s ease 0s;
+}
+#sidebar-wrapper-right {
+    right: 70px;
+}
+#wrapper-right.active {
+    padding-right: 150px;
+}
+#wrapper-right.active #sidebar-wrapper-right {
+    right: 150px;
+    width: 150px;
+    transition: all .4s ease 0s;
+}
+}
+</style>
+
+
+<div id="wrapper-right" class="">
+      
+      <!-- Sidebar -->
+            <!-- Sidebar -->
+      <div id="sidebar-wrapper-right">
+      <ul id="sidebar_menu" class="sidebar-nav-right">
+           <li class="sidebar-brand-right green">FRIEND ACTIVITY</li>
+      </ul>
+        <ul class="sidebar-nav-right" id="sidebar-right">     
+          <li><a href = "test.html"><span> <img src="profExample.png" width="10%" style="padding-right:5px">Mrunal Patel</a></span></li>
+          <li><a href = "test.html"><span> <img src="panic.png" width="10%" style="padding-right:5px">Varun Goel</a></span></li>
+          <li><a href = "test.html"><span> <img src="pawsa.png" width="10%" style="padding-right:5px">Rishab Chhabra</a></span></li>
+        </ul>
+      </div>
+</div>
+
+
 
  <!-- Content ########################################################################################## -->
-   <img src = "https://www.jhsph.edu/sebin/f/d/placeholder-720x180.png" width = 1120px height = 150px>
+
+
+<div class="container" style="margin-left:15%;margin-right:30%">
+ <div class="row"> 
+   <img src = "https://www.jhsph.edu/sebin/f/d/placeholder-720x180.png" width = 1000px height = 150px>
 </div>
 
 <div class="row"> 
@@ -266,7 +445,7 @@ body {
  box-shadow: none; 
  border-radius: 10px;
  color: #fff;
- width: 1000px !important;
+ width: 900px !important;
 }
 
 .search-input ::-webkit-input-placeholder, .search-input :-moz-placeholder, .search-input ::-moz-placeholder, .search-input :-ms-input-placeholder { {
@@ -285,7 +464,7 @@ body {
                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         </form>
-    </div>
+</div>
 
 <br>
 
@@ -348,7 +527,7 @@ myFunction();
 
   </table>
 
-</body>
+
 
 
 </div>
@@ -381,8 +560,6 @@ myFunction();
 
 </style>
 
-<div class="row"> 
-</div>
 
 </div>
 
