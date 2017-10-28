@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Seahawks">
+
+    <title>Amplio</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/3.2.1/assets/font-awesome/css/font-awesome.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <script src="controllers.js"></script>
+    <script src="lib/angular-strap.js"></script>
+
+</head>
+<!-- End Head ####################################################################################################### -->
+<body ng-app="Amplio">
+
+<style>
+body {
+   color:white;
+   background-color: #1c1c1c;
+   background-attachment:fixed;
+   padding-top:50px;
+
+}
+.navbar-default {
+    width: 100%;
+    background-color: black;
+    border-color: black;
+    margin-bottom: 0;
+    margin-top:0;
+    position:fixed;
+    top:0
+
+} 
+</style>
+<!-- Navigation -->
+<nav class="navbar navbar-default  navbar-static-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"><img src = "AmplioLogoSmall.png" style= "padding-left: 20px; width: 100px"></a>
+  </div>
+ <div class="col-sm-3 col-md-3">
+        <form class="navbar-form" role="search" style = "padding-left: 55px">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+    </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="col-sm-7">
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#!playlist">UPGRADE</a></li>
+        <li><img src = "user.png" style="padding: 5px; width:50px"></li>
+    </ul>
+    </div>
+</nav>
+
+<!-- End Navigation -->
+<style>
+.green {
+  color: #1fb752;
+}
+.linkInfo> ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.linkInfo li {
+    display: inline;
+    padding-right:70px
+}
+
+.linkInfo a {
+    color: grey;
+    text-decoration: none;
+}
+
+.linkInfo a:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.linkInfo a:active{
+    color: white;
+    text-decoration: none;
+}
+
+
+.linkInfo: a:hover::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  border: 1px solid lime;
+}
+
+.header {
+     background-color: #222;
+     font-size: 16px;
+     color: #1fb752;
+     padding-left: 15px;
+     padding-top: 40px;
+     padding-bottom: 15px;
+}
+
+
+.navbar-fixed-left {
+  overflow-y: scroll;
+  width: 200px;
+  position: fixed;
+  height: 100%;
+  border-radius: 0px;
+  border: none;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+  float: none;  /* Cancel default li float: left */
+  width: 200px;
+}
+
+.navbar-fixed-left .navbar-nav > a:active{
+  background-color: black 
+}
+
+.navbar-fixed-left .navbar-nav > li:hover {
+  background-color: black
+
+}
+
+.navbar-fixed-left + .container {
+  padding-left: 70px;
+}
+
+/* On using dropdown menu (To right shift popuped) */
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
+  margin-top: -50px;
+  margin-left: 140px;
+}
+
+.scrollbar
+{
+    margin-left: 30px;
+    float: left;
+    height: 300px;
+    width: 65px;
+    background: #F5F5F5;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: black;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: black;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,.3);
+    background-color: #595959;
+}
+
+</style>
+
+<div class="navbar navbar-inverse navbar-fixed-left" ng-controller="LeftBarController" >
+
+  <ul class="nav navbar-nav" bs-active-link>
+   <li>
+        <a href="#!browse" ><i class="fa fa-angle-double-right" aria-hidden="true" style = "padding-right: 10px"></i>Browse</a></li>
+   <li>
+        <a href="#!stations"><i class="fa fa-circle-thin" aria-hidden="true" style = "padding-right: 10px"></i>Stations</a></li>
+   <li>
+        <a href="#!songs"><i class="fa fa-music" aria-hidden="true" style = "padding-right: 10px"></i>Songs</a></li>
+   <li>
+        <a href="#!albums"><i class="fa fa-dot-circle-o" aria-hidden="true" style = "padding-right: 10px"></i>Albums</a></li>
+   <li>
+        <a href="#!artists"><i class="fa fa-user" aria-hidden="true" style = "padding-right: 10px"></i>Artists</a></li>
+   
+   <div class = "header">
+    <li>
+        Playlists <a href="#"><i class="fa fa-plus green" aria-hidden="true" style = "padding-left: 70px"></i></a>
+     </li>
+   </div>
+
+    <li><a href="#!artists">Playlist #1 </a></li>
+    <li><a href="#!artists">Playlist #2 </a></li>
+    <li><a href="#!artists">Playlist #3 </a></li>
+    <li><a href="#!artists">Playlist #4 </a></li>
+    <li><a href="#!artists">Playlist #5 </a></li>
+    <li><a href="#!artists">Playlist #6 </a></li>
+    <li><a href="#!artists">Playlist #7 </a></li>
+    <li><a href="#!artists">Playlist #8 </a></li>
+    <li><a href="#!artists">Playlist #9 </a></li>
+    <li><a href="#!artists">Playlist #10 </a></li>
+    <li><a href="#!artists">Playlist #11 </a></li>
+
+
+  </ul>
+</div>
+
+<div class="container" style="margin-left:13%;margin-right:13%">
+ <div class="row"> 
+
+ <!-- Content ########################################################################################## -->
+   <img src = "https://www.jhsph.edu/sebin/f/d/placeholder-720x180.png" width = 1120px height = 150px>
+</div>
+
+<div class="row"> 
+
+<table cellspacing="0" cellpadding="0">
+    <tr>
+        <td colspan="1" style = "padding:30px; padding-left: 0px"><img src = "playlist.png" width = 200px></td>
+        <td rowspan="1">PLAYLIST<br>
+        <h1><b>MJXT</b></h1><br>
+        Created by: Marisa DePasquale - 446 Songs, 33hr, 59 min<br><br>
+        <button type="button" class="btn btn-success">Play</button>
+
+        </td>
+    </tr>
+</table>
+
+ </div>
+<style>
+.search-input{
+ background-color: #4f4f4f; 
+ border: 1px solid #4f4f4f; 
+ box-shadow: none; 
+ border-radius: 10px;
+ color: #fff;
+ width: 1000px !important;
+}
+
+.search-input ::-webkit-input-placeholder, .search-input :-moz-placeholder, .search-input ::-moz-placeholder, .search-input :-ms-input-placeholder { {
+   color: #fff;
+   font-weight: bold;
+}
+
+
+
+</style>
+<div class="row"> 
+    <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control search-input" name="srch-term" placeholder="Filter">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </form>
+    </div>
+
+<br>
+
+<style>
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #4f4f4f;
+}
+.table-hover
+
+</style>
+<div class="row">            
+  <table class="table table-hover" id = "songs">
+    <script type="text/javascript">
+function myFunction() {
+    var table = document.getElementById("songs");
+
+
+
+    for (i = 0; i < 400; i++) {
+    var row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+
+    cell1.innerHTML = "";
+    cell2.innerHTML = "<a href='#'><i class='fa fa-plus green'></i></a>";
+    cell3.innerHTML = "Feel It Still";
+    cell4.innerHTML = "Portugal, The Man";
+    cell5.innerHTML = "Woodstock";
+    cell6.innerHTML = "2016-11-29";
+    cell7.innerHTML = "4:54";
+
+  }
+
+    var header = table.createTHead();
+    var row = header.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    
+    cell1.innerHTML = "";
+    cell2.innerHTML = "";
+    cell3.innerHTML = "<b>Title</b>";
+    cell4.innerHTML = "<b>Artist</b>";
+    cell5.innerHTML = "<b>Album</b>";
+    cell6.innerHTML = "<b>Date</b>";
+    cell7.innerHTML = "<b>Time</b>";
+
+}
+myFunction();
+</script>
+
+  </table>
+
+</body>
+
+
+</div>
+
+<style>
+#grid {
+    border: none;
+    float:left; 
+}
+
+#grid div {
+    float: left;
+    padding-right: 78px;
+}
+
+#grid div img{
+    width: 200px;
+    padding-bottom: 20px;
+}
+
+.fade
+{
+        opacity:1;
+}
+.fade:hover
+{
+        opacity:0.5;
+}
+
+
+</style>
+
+<div class="row"> 
+</div>
+
+</div>
+
+
+
+<div ng-view></div>
+
+<!-- Scripts ########################################################################################## -->
+<script>
+var app = angular.module("myApp", ["ngRoute"]);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "main.htm"
+    })
+    .when("/playlist", {
+        templateUrl : "playlist.html"
+    })
+    .when("/green", {
+        templateUrl : "green.htm"
+    })
+    .when("/blue", {
+        templateUrl : "blue.htm"
+    });
+});
+</script>
+</body>
+</html>
