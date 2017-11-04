@@ -11,6 +11,14 @@ import java.util.UUID;
 )
 public class Artist {
 
+    public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
+        this.name = name;
+        this.bibliography = bibliography;
+        this.albums = albums;
+        this.concerts = concerts;
+        this.label = label;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID artistID;
