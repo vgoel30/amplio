@@ -2,6 +2,7 @@ package com.amplio.amplio.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,6 +12,10 @@ import java.util.TreeSet;
         uniqueConstraints = @UniqueConstraint(columnNames = "Username")
 )
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID userId;
 
     @NotNull
     private String firstName;
@@ -28,6 +33,14 @@ public class User {
 
     private Set<User> followers;
     private Set<User> following;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
 
     public String getFirstName() {
         return firstName;
