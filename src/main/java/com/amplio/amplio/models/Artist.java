@@ -21,10 +21,10 @@ public class Artist {
     private String bibliography;
 
     @NotNull
-    private albums HashSet<Album>; //TODO: Use Album class
+    private  HashSet<Album> albums; //TODO: Use Album class
 
-    private concerts HashSet<Cocert> //TODO: Use Concert class
+    private  HashSet<Concert> concerts; //TODO: Use Concert class
 
     @NotNull
-    private label Label //TODO: Use Label class
+    private  Label label;//TODO: Use Label class
 }
