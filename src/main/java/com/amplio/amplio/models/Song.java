@@ -3,6 +3,7 @@ package com.amplio.amplio.models;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
@@ -17,12 +18,18 @@ public class Song {
     private String songName;
     @NotNull
     private Integer numberPlays;
+
     @NotNull
+    @OneToMany
     private Set<Genre> genre;
+
     @NotNull
+    @OneToMany
     private List<Artist> artists;
+
     @NotNull
     private Album album;
+
     @NotNull
     private Integer duration;
     private String lyrics;

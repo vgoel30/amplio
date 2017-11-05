@@ -1,5 +1,6 @@
 package com.amplio.amplio.models;
 
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
@@ -8,6 +9,7 @@ public class SongQueue {
 
     @NotNull
     private UUID qID;
+    @OneToMany
     private List<Song> songs;
     private Integer currentSongIndex;
     @NotNull
