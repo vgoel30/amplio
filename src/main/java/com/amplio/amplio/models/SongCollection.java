@@ -3,7 +3,7 @@ package com.amplio.amplio.models;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class SongCollection {
+public abstract class SongCollection {
 
     @NotNull
     private String title;

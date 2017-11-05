@@ -3,18 +3,21 @@ package com.amplio.amplio.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = "AlbumID")
 )
-public class Album {
+public class Album extends SongCollection{
 
-    public Album(Artist artist, Label label, SimpleDateFormat date) {
+    public Album(Artist artist, Label label, SimpleDateFormat date, List<Song> songs, String title) {
         this.artist = artist;
         this.label = label;
         this.date = date;
+        setSongs(songs);
+        setTitle(title);
     }
 
     public Album(Artist artist, Label label) {
