@@ -29,10 +29,60 @@ public class Artist {
     private String bibliography;
 
     @NotNull
-    private  HashSet<Album> albums; //TODO: Use Album class
+    @OneToMany
+    private  HashSet<Album> albums;
 
-    private  HashSet<Concert> concerts; //TODO: Use Concert class
+    private HashSet<Concert> concerts;
 
     @NotNull
-    private  Label label;//TODO: Use Label class
+    @ManyToOne
+    private Label label;
+
+    public UUID getArtistID() {
+        return artistID;
+    }
+
+    public void setArtistID(UUID artistID) {
+        this.artistID = artistID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBibliography() {
+        return bibliography;
+    }
+
+    public void setBibliography(String bibliography) {
+        this.bibliography = bibliography;
+    }
+
+    public HashSet<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(HashSet<Album> albums) {
+        this.albums = albums;
+    }
+
+    public HashSet<Concert> getConcerts() {
+        return concerts;
+    }
+
+    public void setConcerts(HashSet<Concert> concerts) {
+        this.concerts = concerts;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public void setLabel(Label label) {
+        this.label = label;
+    }
 }

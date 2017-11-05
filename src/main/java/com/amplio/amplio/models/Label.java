@@ -21,10 +21,12 @@ public class Label{
     private UUID labelID;
 
     @NotNull
+    @OneToMany
     private HashSet<Artist> artists;
 
     @NotNull
-    private HashSet<Album> albums; //TODO: Change to album class name when done
+    @OneToMany
+    private HashSet<Album> albums;
 
     public UUID getLabelID() {
         return labelID;

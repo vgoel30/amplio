@@ -23,6 +23,7 @@ public class Concert {
     private UUID concertID;
 
     @NotNull
+    @OneToMany
     private HashSet<Artist> artists;
 
     @NotNull
