@@ -1,8 +1,11 @@
 package com.amplio.amplio.models;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 public class Statistics {
+    @OneToMany
     private List<Artist> topArtists;
+    @OneToMany
     private List<Song> topSongs;
 
     public Statistics(){
