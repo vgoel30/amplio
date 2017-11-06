@@ -23,6 +23,7 @@ public class Song {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Genre.class)
     private Set<Genre> genre;
 
     @NotNull
