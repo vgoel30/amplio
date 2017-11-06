@@ -2,6 +2,7 @@ package com.amplio.amplio.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 import java.util.HashSet;
 import java.text.SimpleDateFormat;
@@ -24,7 +25,7 @@ public class Concert {
 
     @NotNull
     @OneToMany
-    private HashSet<Artist> artists;
+    private Set<Artist> artists;
 
     @NotNull
     private SimpleDateFormat date;
@@ -40,7 +41,7 @@ public class Concert {
         this.concertID = concertID;
     }
 
-    public HashSet<Artist> getArtists() {
+    public Set<Artist> getArtists() {
         return artists;
     }
 

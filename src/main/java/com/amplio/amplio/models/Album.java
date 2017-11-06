@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = "AlbumID")
 )
-public class Album extends SongCollection{
+public class Album extends SongCollection {
 
     public Album(Artist artist, Label label, SimpleDateFormat date, List<Song> songs, String title) {
         this.artist = artist;
@@ -25,10 +25,6 @@ public class Album extends SongCollection{
         this.label = label;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID albumID;
-
     @NotNull
     private Artist artist;
 
@@ -37,14 +33,6 @@ public class Album extends SongCollection{
 
     @NotNull
     private SimpleDateFormat date;
-
-    public UUID getAlbumID() {
-        return albumID;
-    }
-
-    public void setAlbumID(UUID albumID) {
-        this.albumID = albumID;
-    }
 
     public Artist getArtist() {
         return artist;

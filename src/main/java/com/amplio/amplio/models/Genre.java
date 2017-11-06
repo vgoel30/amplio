@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import javax.persistence.Entity;
+
 public enum Genre {
     JAZZ,
     POP,

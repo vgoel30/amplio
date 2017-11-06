@@ -8,10 +8,6 @@ import java.util.UUID;
 
 public class Playlist extends SongCollection
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID playlistID;
-
     private String image;
 
     @NotNull

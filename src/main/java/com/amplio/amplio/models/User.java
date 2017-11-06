@@ -2,10 +2,7 @@ package com.amplio.amplio.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.UUID;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(
@@ -65,9 +62,8 @@ public class User {
     @OneToMany
     private Set<Album> favoriteAlbums;
 
-    @OneToMany
     @Enumerated(EnumType.STRING)
-    private ArrayList<AdCategory> adPrefs;
+    private List<AdCategory> adPrefs;
 
     @OneToOne
     private SongQueue songQueue;
@@ -211,7 +207,7 @@ public class User {
         favoriteAlbums.remove(album);
     }
 
-    public ArrayList<AdCategory> getAdPrefs() {
+    public List<AdCategory> getAdPrefs() {
         return adPrefs;
     }
     public void setAdPrefs(ArrayList<AdCategory> adPrefs) {

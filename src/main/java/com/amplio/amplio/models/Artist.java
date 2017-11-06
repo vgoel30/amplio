@@ -3,6 +3,7 @@ package com.amplio.amplio.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -30,9 +31,9 @@ public class Artist {
 
     @NotNull
     @OneToMany
-    private  HashSet<Album> albums;
+    private Set<Album> albums;
 
-    private HashSet<Concert> concerts;
+    private Set<Concert> concerts;
 
     @NotNull
     @ManyToOne
@@ -62,7 +63,7 @@ public class Artist {
         this.bibliography = bibliography;
     }
 
-    public HashSet<Album> getAlbums() {
+    public Set<Album> getAlbums() {
         return albums;
     }
 
@@ -70,7 +71,7 @@ public class Artist {
         this.albums = albums;
     }
 
-    public HashSet<Concert> getConcerts() {
+    public Set<Concert> getConcerts() {
         return concerts;
     }
 

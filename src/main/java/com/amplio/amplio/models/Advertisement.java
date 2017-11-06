@@ -2,6 +2,7 @@ package com.amplio.amplio.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +15,7 @@ public class Advertisement {
 
     @OneToMany
     @Enumerated(EnumType.STRING)
-    private ArrayList<AdCategory> categories;
+    private List<AdCategory> categories;
 
     @Lob
     private byte[] image;
@@ -38,7 +39,7 @@ public class Advertisement {
         this.adId = adId;
     }
 
-    public ArrayList<AdCategory> getCategories() {
+    public List<AdCategory> getCategories() {
         return categories;
     }
     public void setCategories(ArrayList<AdCategory> categories) {

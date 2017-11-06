@@ -1,10 +1,15 @@
 package com.amplio.amplio.models;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import com.sun.javafx.beans.IDProperty;
+
+import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Statistics {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID statsID;
     @OneToMany
     private List<Artist> topArtists;
     @OneToMany

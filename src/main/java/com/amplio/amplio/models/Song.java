@@ -22,7 +22,7 @@ public class Song {
     private Integer numberPlays;
 
     @NotNull
-    @OneToMany
+    @Enumerated(EnumType.STRING)
     private Set<Genre> genre;
 
     @NotNull
