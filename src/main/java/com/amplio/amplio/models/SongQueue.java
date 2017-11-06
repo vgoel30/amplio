@@ -1,22 +1,22 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "qID")
-)
-
 public class SongQueue {
 
     @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID qID;
     @NotNull
+    @OneToOne
     private User user;
     @OneToMany
     private List<Song> songs;
@@ -24,21 +24,21 @@ public class SongQueue {
     @NotNull
     private Boolean isRadio;
     @NotNull
-    private Boolean repeat;
+    private Boolean repeatSongs;
     @NotNull
-    private Boolean shuffle;
+    private Boolean shuffleSongs;
 
     public SongQueue(User user){
         this.user = user;
         this.isRadio = false;
-        this.repeat = false;
-        this.shuffle = false;
+        this.repeatSongs = false;
+        this.shuffleSongs = false;
     }
     public void toggleRepeat(Boolean toggle){
-        repeat = toggle;
+        repeatSongs = toggle;
     }
     public void toggleShuffle(Boolean toggle){
-        shuffle = toggle;
+        shuffleSongs = toggle;
     }
     public Song getNextSong(){
         return songs.get(currentSongIndex + 1);

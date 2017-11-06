@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -8,9 +10,6 @@ import java.util.HashSet;
 import java.text.SimpleDateFormat;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "ConcertID")
-)
 public class Concert {
 
     public Concert(HashSet<Artist> artists, SimpleDateFormat date, String location) {
@@ -20,11 +19,12 @@ public class Concert {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID concertID;
 
     @NotNull
-    @OneToMany
+    @ManyToMany(mappedBy = "concerts")
     private Set<Artist> artists;
 
     @NotNull

@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -7,14 +9,11 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "songID")
-)
-
 public class Song {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID songId;
     @NotNull
     private String songName;
@@ -23,24 +22,25 @@ public class Song {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Genre.class)
-    private Set<Genre> genre;
+    @ElementCollection(targetClass = GenreEnum.class)
+    private Set<GenreEnum> GenreEnum;
 
     @NotNull
     @OneToMany
     private List<Artist> artists;
 
     @NotNull
+    @OneToOne
     private Album album;
 
     @NotNull
     private Integer duration;
     private String lyrics;
 
-    public Song(String songName, Integer numberPlays, Set<Genre> genre, List<Artist> artists, Album album, Integer duration) {
+    public Song(String songName, Integer numberPlays, Set<GenreEnum> GenreEnum, List<Artist> artists, Album album, Integer duration) {
         this.songName = songName;
         this.numberPlays = numberPlays;
-        this.genre = genre;
+        this.GenreEnum = GenreEnum;
         this.artists = artists;
         this.album = album;
         this.duration = duration;
@@ -65,12 +65,12 @@ public class Song {
         this.numberPlays = numberPlays;
     }
 
-    public Set<Genre> getGenre() {
-        return genre;
+    public Set<GenreEnum> getGenreEnum() {
+        return GenreEnum;
     }
 
-    public void setGenre(Set<Genre> genre) {
-        this.genre = genre;
+    public void setGenreEnum(Set<GenreEnum> GenreEnum) {
+        this.GenreEnum = GenreEnum;
     }
 
     public List<Artist> getArtists() {

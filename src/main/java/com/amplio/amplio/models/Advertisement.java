@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,13 @@ public class Advertisement {
 
     // Attributes
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID adId;
 
-    @OneToMany
     @Enumerated(EnumType.STRING)
-    private List<AdCategory> categories;
+    @ElementCollection(targetClass = AdCategoryEnum.class)
+    private List<AdCategoryEnum> categories;
 
     @Lob
     private byte[] image;
@@ -25,7 +28,7 @@ public class Advertisement {
     private Integer numClicks;
 
     // Constructors
-    public Advertisement(ArrayList<AdCategory> categories, byte[] image, Double price, Integer numClicks) {
+    public Advertisement(ArrayList<AdCategoryEnum> categories, byte[] image, Double price, Integer numClicks) {
         this.categories = categories;
         this.image = image;
         this.price = price;
@@ -39,10 +42,10 @@ public class Advertisement {
         this.adId = adId;
     }
 
-    public List<AdCategory> getCategories() {
+    public List<AdCategoryEnum> getCategories() {
         return categories;
     }
-    public void setCategories(ArrayList<AdCategory> categories) {
+    public void setCategories(ArrayList<AdCategoryEnum> categories) {
         this.categories = categories;
     }
 

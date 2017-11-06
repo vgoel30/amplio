@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -7,9 +9,6 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "LabelID")
-)
 public class Label{
 
     public Label(HashSet<Artist> artists, HashSet<Album> albums) {
@@ -18,7 +17,8 @@ public class Label{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID labelID;
 
     @NotNull

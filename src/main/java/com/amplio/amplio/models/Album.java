@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "AlbumID")
-)
 public class Album extends SongCollection {
 
     public Album(Artist artist, Label label, SimpleDateFormat date, List<Song> songs, String title) {
@@ -26,9 +23,11 @@ public class Album extends SongCollection {
     }
 
     @NotNull
+    @OneToOne
     private Artist artist;
 
     @NotNull
+    @OneToOne
     private Label label;
 
     @NotNull

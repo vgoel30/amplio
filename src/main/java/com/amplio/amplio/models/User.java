@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -12,7 +14,8 @@ public class User {
 
     // Attributes
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID userId;
 
     @NotNull
@@ -62,8 +65,9 @@ public class User {
     @OneToMany
     private Set<Album> favoriteAlbums;
 
+    @ElementCollection(targetClass = AdCategoryEnum.class)
     @Enumerated(EnumType.STRING)
-    private List<AdCategory> adPrefs;
+    private List<AdCategoryEnum> adPrefs;
 
     @OneToOne
     private SongQueue songQueue;
@@ -207,10 +211,10 @@ public class User {
         favoriteAlbums.remove(album);
     }
 
-    public List<AdCategory> getAdPrefs() {
+    public List<AdCategoryEnum> getAdPrefs() {
         return adPrefs;
     }
-    public void setAdPrefs(ArrayList<AdCategory> adPrefs) {
+    public void setAdPrefs(ArrayList<AdCategoryEnum> adPrefs) {
         this.adPrefs = adPrefs;
     }
 

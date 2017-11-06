@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -7,9 +9,6 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "ArtistID")
-)
 public class Artist {
 
     public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
@@ -21,7 +20,8 @@ public class Artist {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID artistID;
 
     @NotNull
@@ -33,6 +33,12 @@ public class Artist {
     @OneToMany
     private Set<Album> albums;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "artist_concert",
+            joinColumns = @JoinColumn(name = "artist_id"),
+            inverseJoinColumns = @JoinColumn(name = "concert_id")
+    )
     private Set<Concert> concerts;
 
     @NotNull

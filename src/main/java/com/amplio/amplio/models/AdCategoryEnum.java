@@ -2,7 +2,7 @@ package com.amplio.amplio.models;
 
 import javax.persistence.Entity;
 
-public enum AdCategory {
+public enum AdCategoryEnum {
     ENTERTAINMENT,
     LIFESTYLE,
     SHOPPING,

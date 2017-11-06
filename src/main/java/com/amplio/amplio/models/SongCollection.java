@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -10,12 +12,15 @@ import java.util.UUID;
 public abstract class SongCollection {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID collectionID;
 
     @NotNull
     private String title;
+
     @NotNull
+    @OneToMany
     private List<Song> songs;
 
     public String getTitle() {
@@ -38,7 +43,4 @@ public abstract class SongCollection {
         return collectionID;
     }
 
-    public void setID(UUID collectionID) {
-        this.collectionID = collectionID;
-    }
 }
