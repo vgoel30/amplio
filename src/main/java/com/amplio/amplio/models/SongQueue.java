@@ -1,9 +1,6 @@
 package com.amplio.amplio.models;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +13,11 @@ import java.util.UUID;
 public class SongQueue {
 
     @NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID qID;
+    @NotNull
+    private User user;
     @OneToMany
     private List<Song> songs;
     private Integer currentSongIndex;
@@ -27,7 +28,8 @@ public class SongQueue {
     @NotNull
     private Boolean shuffle;
 
-    public SongQueue(){
+    public SongQueue(User user){
+        this.user = user;
         this.isRadio = false;
         this.repeat = false;
         this.shuffle = false;

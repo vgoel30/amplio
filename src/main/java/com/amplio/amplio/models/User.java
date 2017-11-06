@@ -69,6 +69,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ArrayList<AdCategory> adPrefs;
 
+    @OneToOne
+    private SongQueue songQueue;
 
     // Constructors
     public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
@@ -214,6 +216,13 @@ public class User {
     }
     public void setAdPrefs(ArrayList<AdCategory> adPrefs) {
         this.adPrefs = adPrefs;
+    }
+
+    public SongQueue getSongQueue() {
+        return songQueue;
+    }
+    public void setSongQueue(SongQueue songQueue) {
+        this.songQueue = songQueue;
     }
 
     //TODO: Methods like isFollower etc.
