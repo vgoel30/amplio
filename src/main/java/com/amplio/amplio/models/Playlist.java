@@ -1,16 +1,16 @@
 package com.amplio.amplio.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Entity
 public class Playlist extends SongCollection
 {
     private String image;
 
     @NotNull
+    @OneToOne
     private User owner;
 
     @NotNull
