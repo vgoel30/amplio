@@ -12,9 +12,16 @@ public class SessionServiceImpl implements SessionService{
     @Autowired
     private SessionRepository sessionRepository;
 
-
     @Override
-    public User loginUser(LoginForm loginForm) {
+    public User loginUser(LoginForm loginForm){
+        String userName = loginForm.getUserName();
+        String password = loginForm.getPassword();
+        User user = sessionRepository.getUserByUsername(userName);
+        if(user.getPassword().equals(password)){
+            return user;
+        }
         return null;
     }
+
+
 }
