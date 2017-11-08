@@ -6,8 +6,5 @@ import com.amplio.amplio.models.User;
 
 public interface SessionService {
     public User registerUser(RegisterForm registerForm);
-
-    User registerUser(RegisterForm registerForm);
-
     public User loginUser(LoginForm loginForm);
 }
