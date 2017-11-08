@@ -45,6 +45,7 @@ public class Song {
         this.album = album;
         this.duration = duration;
     }
+
     public String getSongName() {
         return songName;
     }

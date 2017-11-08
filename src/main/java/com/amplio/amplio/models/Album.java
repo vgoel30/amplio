@@ -1,13 +1,22 @@
 package com.amplio.amplio.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Album extends SongCollection {
+
+    @NotNull
+    @OneToOne
+    private Artist artist;
+    @NotNull
+    @OneToOne
+    private Label label;
+    @NotNull
+    private SimpleDateFormat date;
 
     public Album(Artist artist, Label label, SimpleDateFormat date, List<Song> songs, String title) {
         this.artist = artist;
@@ -21,17 +30,6 @@ public class Album extends SongCollection {
         this.artist = artist;
         this.label = label;
     }
-
-    @NotNull
-    @OneToOne
-    private Artist artist;
-
-    @NotNull
-    @OneToOne
-    private Label label;
-
-    @NotNull
-    private SimpleDateFormat date;
 
     public Artist getArtist() {
         return artist;

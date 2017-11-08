@@ -9,25 +9,23 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-public class Label{
-
-    public Label(HashSet<Artist> artists, HashSet<Album> albums) {
-        this.artists = artists;
-        this.albums = albums;
-    }
+public class Label {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID labelID;
-
     @NotNull
     @OneToMany
     private Set<Artist> artists;
-
     @NotNull
     @OneToMany
     private Set<Album> albums;
+
+    public Label(HashSet<Artist> artists, HashSet<Album> albums) {
+        this.artists = artists;
+        this.albums = albums;
+    }
 
     public UUID getLabelID() {
         return labelID;

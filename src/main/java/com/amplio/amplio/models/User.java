@@ -12,7 +12,6 @@ import java.util.*;
 )
 public class User {
 
-    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -30,7 +29,6 @@ public class User {
     @NotNull
     private String username;
 
-    // NOTE: Use the PasswordEncoder interface
     @NotNull
     private String password;
 
@@ -44,9 +42,9 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-        name = "user_followers",
-        joinColumns = @JoinColumn(name = "following_id"),
-        inverseJoinColumns = @JoinColumn(name = "follower_id")
+            name = "user_followers",
+            joinColumns = @JoinColumn(name = "following_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
     private Set<User> followers;
 
@@ -72,7 +70,6 @@ public class User {
     @OneToOne
     private SongQueue songQueue;
 
-    // Constructors
     public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -83,10 +80,10 @@ public class User {
     }
 
 
-    // Accessor and Mutator methods
     public UUID getUserId() {
         return userId;
     }
+
     public void setUserId(UUID userId) {
         this.userId = userId;
     }
@@ -94,6 +91,7 @@ public class User {
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -101,6 +99,7 @@ public class User {
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -108,6 +107,7 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -115,6 +115,7 @@ public class User {
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -122,6 +123,7 @@ public class User {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -129,6 +131,7 @@ public class User {
     public Boolean getPremium() {
         return isPremium;
     }
+
     public void setPremium(Boolean premium) {
         isPremium = premium;
     }
@@ -136,6 +139,7 @@ public class User {
     public byte[] getProfilePicture() {
         return profilePicture;
     }
+
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
@@ -143,6 +147,7 @@ public class User {
     public Set<User> getFollowers() {
         return followers;
     }
+
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
     }
@@ -150,30 +155,32 @@ public class User {
     public Set<User> getFollowing() {
         return following;
     }
-    public void setFollowing(Set<User> following) { this.following = following; }
+
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
 
     public void follow(User follower) {
-        // Add a follower
         this.followers.add(follower);
-        // Add user that you're following to your following set
         follower.following.add(this);
     }
+
     public void unfollow(User follower) {
-        // Remove the follower
         this.followers.remove(follower);
-        // Remove the user that you're following from your following set
         follower.following.remove(this);
     }
 
     public Set<Song> getSavedSongs() {
         return savedSongs;
     }
+
     public void saveSong(Song song) {
         if (savedSongs == null) {
             savedSongs = new TreeSet<>();
         }
         savedSongs.add(song);
     }
+
     public void unsaveSong(Song song) {
         savedSongs.remove(song);
     }
@@ -181,6 +188,7 @@ public class User {
     public Set<Song> getLikedSongs() {
         return likedSongs;
     }
+
     public void likeSong(Song song) {
         if (likedSongs == null) {
             likedSongs = new TreeSet<>();
@@ -191,6 +199,7 @@ public class User {
     public Set<Song> getDislikedSongs() {
         return dislikedSongs;
     }
+
     public void dislikeSong(Song song) {
         if (dislikedSongs == null) {
             dislikedSongs = new TreeSet<>();
@@ -201,12 +210,14 @@ public class User {
     public Set<Album> getFavoriteAlbums() {
         return favoriteAlbums;
     }
+
     public void favoriteAlbum(Album album) {
         if (favoriteAlbums == null) {
             favoriteAlbums = new TreeSet<>();
         }
         favoriteAlbums.add(album);
     }
+
     public void unfavoriteAlbum(Album album) {
         favoriteAlbums.remove(album);
     }
@@ -214,6 +225,7 @@ public class User {
     public List<AdCategoryEnum> getAdPrefs() {
         return adPrefs;
     }
+
     public void setAdPrefs(ArrayList<AdCategoryEnum> adPrefs) {
         this.adPrefs = adPrefs;
     }
@@ -221,6 +233,7 @@ public class User {
     public SongQueue getSongQueue() {
         return songQueue;
     }
+
     public void setSongQueue(SongQueue songQueue) {
         this.songQueue = songQueue;
     }

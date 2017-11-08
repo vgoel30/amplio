@@ -38,6 +38,7 @@ public class Advertisement {
     public UUID getAdId() {
         return adId;
     }
+
     public void setAdId(UUID adId) {
         this.adId = adId;
     }
@@ -45,6 +46,7 @@ public class Advertisement {
     public List<AdCategoryEnum> getCategories() {
         return categories;
     }
+
     public void setCategories(ArrayList<AdCategoryEnum> categories) {
         this.categories = categories;
     }
@@ -52,6 +54,7 @@ public class Advertisement {
     public byte[] getImage() {
         return image;
     }
+
     public void setImage(byte[] image) {
         this.image = image;
     }
@@ -59,6 +62,7 @@ public class Advertisement {
     public Double getPrice() {
         return price;
     }
+
     public void setPrice(Double price) {
         this.price = price;
     }
@@ -66,9 +70,11 @@ public class Advertisement {
     public Integer getNumClicks() {
         return numClicks;
     }
+
     public void setNumClicks(Integer numClicks) {
         this.numClicks = numClicks;
     }
+
     public void incrementClicks() {
         numClicks++;
     }
