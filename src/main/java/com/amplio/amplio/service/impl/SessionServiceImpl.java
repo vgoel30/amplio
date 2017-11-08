@@ -16,7 +16,18 @@ public class SessionServiceImpl implements SessionService{
 
     @Override
     public User registerUser(RegisterForm registerForm) {
-        return null;
+        String username = registerForm.getUserName();
+        if(userRepository.getUserByUsername(username) != null){
+            return null;
+        }
+        String firstName = registerForm.getFirstName();
+        String lastName = registerForm.getLastName();
+        String email = registerForm.getEmail();
+        String password = registerForm.getPassword();
+        Boolean isPremium = false;
+        User user = new User(firstName, lastName, email, username, password, isPremium);
+        userRepository.save(user);
+        return user;
     }
 
     @Override
