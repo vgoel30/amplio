@@ -11,28 +11,16 @@ import java.util.UUID;
 @Entity
 public class Artist {
 
-    public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
-        this.name = name;
-        this.bibliography = bibliography;
-        this.albums = albums;
-        this.concerts = concerts;
-        this.label = label;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID artistID;
-
     @NotNull
     private String name;
-
     private String bibliography;
-
     @NotNull
     @OneToMany
     private Set<Album> albums;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "artist_concert",
@@ -40,10 +28,17 @@ public class Artist {
             inverseJoinColumns = @JoinColumn(name = "concert_id")
     )
     private Set<Concert> concerts;
-
     @NotNull
     @ManyToOne
     private Label label;
+
+    public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
+        this.name = name;
+        this.bibliography = bibliography;
+        this.albums = albums;
+        this.concerts = concerts;
+        this.label = label;
+    }
 
     public UUID getArtistID() {
         return artistID;

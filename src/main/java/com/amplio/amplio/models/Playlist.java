@@ -1,12 +1,11 @@
 package com.amplio.amplio.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 @Entity
-public class Playlist extends SongCollection
-{
+public class Playlist extends SongCollection {
     private String image;
 
     @NotNull
@@ -17,13 +16,11 @@ public class Playlist extends SongCollection
     private boolean isPublic;
 
 
-    public void addSong(Song song)
-    {
+    public void addSong(Song song) {
         getSongs().add(song);
     }
 
-    public void removeSong(Song song)
-    {
+    public void removeSong(Song song) {
         getSongs().remove(song);
     }
 }

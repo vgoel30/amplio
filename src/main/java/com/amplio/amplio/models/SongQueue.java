@@ -28,22 +28,26 @@ public class SongQueue {
     @NotNull
     private Boolean shuffleSongs;
 
-    public SongQueue(User user){
+    public SongQueue(User user) {
         this.user = user;
         this.isRadio = false;
         this.repeatSongs = false;
         this.shuffleSongs = false;
     }
-    public void toggleRepeat(Boolean toggle){
+
+    public void toggleRepeat(Boolean toggle) {
         repeatSongs = toggle;
     }
-    public void toggleShuffle(Boolean toggle){
+
+    public void toggleShuffle(Boolean toggle) {
         shuffleSongs = toggle;
     }
-    public Song getNextSong(){
+
+    public Song getNextSong() {
         return songs.get(currentSongIndex + 1);
     }
-    public Song getPrevSong(){
+
+    public Song getPrevSong() {
         return songs.get(currentSongIndex - 1);
     }
 }

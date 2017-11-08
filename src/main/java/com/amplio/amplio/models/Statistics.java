@@ -1,5 +1,5 @@
 package com.amplio.amplio.models;
-import com.sun.javafx.beans.IDProperty;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,25 +17,25 @@ public class Statistics {
     @OneToMany
     private List<Song> topSongs;
 
-    public Statistics(){
+    public Statistics() {
         this.topArtists = null;
         this.topSongs = null;
     }
 
-    public void addTopArtist(Artist artist){
+    public void addTopArtist(Artist artist) {
         this.topArtists.add(artist);
     }
 
-    public void addTopSong(Song song){
+    public void addTopSong(Song song) {
         this.topSongs.add(song);
 
     }
 
-    public void delTopArtist(Artist artist){
+    public void delTopArtist(Artist artist) {
         this.topArtists.remove(artist);
     }
 
-    public void delTopSong(Song song){
+    public void delTopSong(Song song) {
         this.topSongs.remove(song);
 
     }

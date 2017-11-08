@@ -11,7 +11,6 @@ import java.util.UUID;
 @Entity
 public class Advertiser {
 
-    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -23,25 +22,23 @@ public class Advertiser {
     @NotNull
     private String email;
 
-    // NOTE: Use the PasswordEncoder interface
+    /* TODO: Use the PasswordEncoder interface */
     @NotNull
     private String password;
 
     @OneToMany
     private Set<Advertisement> ads;
 
-    // Constructors
     public Advertiser(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    // Accessor and Mutator Methods
-
     public UUID getAdvertiserId() {
         return advertiserId;
     }
+
     public void setAdvertiserId(UUID advertiserId) {
         this.advertiserId = advertiserId;
     }
@@ -49,6 +46,7 @@ public class Advertiser {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -56,6 +54,7 @@ public class Advertiser {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -63,6 +62,7 @@ public class Advertiser {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -70,12 +70,14 @@ public class Advertiser {
     public Set<Advertisement> getAds() {
         return ads;
     }
+
     public void addAd(Advertisement ad) {
         if (ads == null) {
             ads = new TreeSet<>();
         }
         ads.add(ad);
     }
+
     public void deleteAd(Advertisement ad) {
         ads.remove(ad);
     }
