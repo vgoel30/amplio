@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="amplioApp">
+<head>
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+    <!-- SPELLS -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="js/router.js"></script>
+
+    <title>Amplio</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css" rel="stylesheet" type="text/css">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+</head>
+
+<!-- define angular controller -->
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default  navbar-static-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src = "images/AmplioLogoSmall.png" style= "padding-left: 20px; width: 100px"></a>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <form class="navbar-form" role="search" style = "padding-left: 55px">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="q">
+                <div class="input-group-btn">
+                    <button class="btn btn-default green" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- User settings section -->
+    <div class="col-sm-7">
+        <ul class="nav navbar-nav navbar-right">
+            <li class = "green"><a href="#!playlist">UPGRADE</a></li>
+            <li><img src = "images/user.png" style="padding: 5px; width:50px"></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- End Navigation -->
+
+<div class="container" style="margin-left:15%;margin-right:30%; margin-top:5%">
+    <div class="row">
+
+    <!-- this is where content will be injected -->
+    <div ng-view></div>
+    <p>{{ message }}</p>
+
+    </div>
+</div>
+</body>
+
+</html>
