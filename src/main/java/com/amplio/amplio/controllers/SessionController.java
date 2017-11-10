@@ -15,30 +15,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api/session")
 public class SessionController {
-    @Autowired
-    private SessionServiceImpl sessionService;
+  @Autowired
+  private SessionServiceImpl sessionService;
 
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public ResponseEntity<User> register(@RequestBody RegisterForm registerForm) {
-        HttpStatus status;
-        User user = sessionService.registerUser(registerForm);
-        if(user == null){
-            status = HttpStatus.FORBIDDEN;
-        } else {
-            status = HttpStatus.CREATED;
-        }
-        return new ResponseEntity<User>(user, status);
+  @RequestMapping(path = "/register", method = RequestMethod.POST)
+  public ResponseEntity<User> register(
+      @RequestBody
+          RegisterForm registerForm) {
+    HttpStatus status;
+    User user = sessionService.registerUser(registerForm);
+    if(user == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status = HttpStatus.CREATED;
     }
+    return new ResponseEntity<User>(user, status);
+  }
 
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody LoginForm loginForm) {
-        HttpStatus status;
-        User user = sessionService.loginUser(loginForm);
-        if(user == null){
-            status = HttpStatus.FORBIDDEN;
-        } else{
-            status = HttpStatus.CREATED;
-        }
-        return new ResponseEntity<User>(user, status);
+  @RequestMapping(path = "/login", method = RequestMethod.POST)
+  public ResponseEntity<User> login(
+      @RequestBody
+          LoginForm loginForm) {
+    HttpStatus status;
+    User user = sessionService.loginUser(loginForm);
+    if(user == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status = HttpStatus.CREATED;
     }
+    return new ResponseEntity<User>(user, status);
+  }
 }
