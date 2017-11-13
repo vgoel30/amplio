@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,6 +25,10 @@ public class Artist {
   private Set<Album> albums;
 
   private Set<Concert> concerts;
+
+  private List<Song> deleteRequests;
+
+  private List<Song> uploadRequests;
 
   @NotNull
   private Label label;
@@ -91,4 +96,21 @@ public class Artist {
   public void setLabel(Label label) {
     this.label = label;
   }
+
+  public List<Song> getDeleteRequests() {
+    return deleteRequests;
+  }
+
+  public void setDeleteRequests(List<Song> deleteRequests) {
+    this.deleteRequests = deleteRequests;
+  }
+
+  public List<Song> getUploadRequests() {
+    return uploadRequests;
+  }
+
+  public void setUploadRequests(List<Song> uploadRequests) {
+    this.uploadRequests = uploadRequests;
+  }
+
 }
