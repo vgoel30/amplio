@@ -27,10 +27,8 @@ public class SessionController {
         } else {
             status = HttpStatus.CREATED;
         }
-        return new ResponseEntity<User>(user, status);
+        return new ResponseEntity<>(user, status);
     }
-    return new ResponseEntity<User>(user, status);
-  }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody LoginForm loginForm) {
@@ -43,6 +41,4 @@ public class SessionController {
         }
         return new ResponseEntity<User>(user, status);
     }
-    return new ResponseEntity<User>(user, status);
-  }
 }
