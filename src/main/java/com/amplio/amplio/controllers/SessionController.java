@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/session")
+@RequestMapping(value = "/api/user")
 public class SessionController {
   @Autowired
   private SessionServiceImpl sessionService;
