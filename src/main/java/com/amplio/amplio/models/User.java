@@ -7,68 +7,39 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
-@Table(
-    uniqueConstraints = @UniqueConstraint(columnNames = "Username")
-)
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID userId;
-
   @NotNull
   private String firstName;
-
   @NotNull
   private String lastName;
-
   @NotNull
   private String email;
-
   @NotNull
+  @Column(unique = true)
   private String username;
-
   @NotNull
   private String password;
-
   @NotNull
   private Boolean isPremium;
-
-  // TODO: Credit Card
-
   @Lob
   private byte[] profilePicture;
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "user_followers",
-      joinColumns = @JoinColumn(name = "following_id"),
-      inverseJoinColumns = @JoinColumn(name = "follower_id")
-  )
   private Set<User> followers;
-
-  @ManyToMany(mappedBy = "followers")
   private Set<User> following;
-
-  @OneToMany
+  private Set<User> friends;
   private Set<Song> savedSongs;
-
-  @OneToMany
   private Set<Song> likedSongs;
-
-  @OneToMany
   private Set<Song> dislikedSongs;
-
-  @OneToMany
+  private List<Song> songHistory;
+  private SongQueue songQueue;
   private Set<Album> favoriteAlbums;
-
   @ElementCollection(targetClass = AdCategoryEnum.class)
   @Enumerated(EnumType.STRING)
   private List<AdCategoryEnum> adPrefs;
-
-  @OneToOne
-  private SongQueue songQueue;
 
   public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
     this.firstName = firstName;
@@ -78,7 +49,6 @@ public class User {
     this.password = password;
     this.isPremium = isPremium;
   }
-
 
   public UUID getUserId() {
     return userId;
@@ -144,39 +114,67 @@ public class User {
     this.profilePicture = profilePicture;
   }
 
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "user_followers",
+      joinColumns = @JoinColumn(name = "following_id"),
+      inverseJoinColumns = @JoinColumn(name = "follower_id")
+  )
   public Set<User> getFollowers() {
     return followers;
   }
 
-  public void setFollowers(Set<User> followers) {
-    this.followers = followers;
-  }
-
+  @ManyToMany(mappedBy = "followers")
   public Set<User> getFollowing() {
     return following;
   }
 
-  public void setFollowing(Set<User> following) {
-    this.following = following;
+  public void follow(User toFollow) {
+    if(following == null) {
+      following = new HashSet<>();
+    }
+    following.add(toFollow);
+    if(toFollow.followers== null) {
+      toFollow.followers = new HashSet<>();
+    }
+    toFollow.followers.add(this);
   }
 
-  public void follow(User follower) {
-    this.followers.add(follower);
-    follower.following.add(this);
+  public void unfollow(User toUnfollow) {
+    if(following != null) {
+      following.remove(toUnfollow);
+    }
+    if(toUnfollow.followers != null) {
+      toUnfollow.followers.remove(this);
+    }
   }
 
-  public void unfollow(User follower) {
-    this.followers.remove(follower);
-    follower.following.remove(this);
+  @ManyToMany(cascade = CascadeType.ALL)
+  public Set<User> getFriends() {
+    return friends;
   }
 
+  public void friend(User friend) {
+    if(friends == null) {
+      friends = new HashSet<>();
+    }
+    friends.add(friend);
+  }
+
+  public void unfriend(User friend) {
+    if(friends != null) {
+      friends.remove(friend);
+    }
+  }
+
+  @OneToMany
   public Set<Song> getSavedSongs() {
     return savedSongs;
   }
 
   public void saveSong(Song song) {
     if(savedSongs == null) {
-      savedSongs = new TreeSet<>();
+      savedSongs = new HashSet<>();
     }
     savedSongs.add(song);
   }
@@ -185,35 +183,40 @@ public class User {
     savedSongs.remove(song);
   }
 
+  @OneToMany
   public Set<Song> getLikedSongs() {
     return likedSongs;
   }
 
   public void likeSong(Song song) {
     if(likedSongs == null) {
-      likedSongs = new TreeSet<>();
+      likedSongs = new HashSet<>();
     }
     likedSongs.add(song);
   }
 
+  @OneToMany
   public Set<Song> getDislikedSongs() {
     return dislikedSongs;
   }
 
   public void dislikeSong(Song song) {
     if(dislikedSongs == null) {
-      dislikedSongs = new TreeSet<>();
+      dislikedSongs = new HashSet<>();
     }
     dislikedSongs.add(song);
   }
 
+  //TODO: Methods like isFollower etc.
+
+  @OneToMany
   public Set<Album> getFavoriteAlbums() {
     return favoriteAlbums;
   }
 
   public void favoriteAlbum(Album album) {
     if(favoriteAlbums == null) {
-      favoriteAlbums = new TreeSet<>();
+      favoriteAlbums = new HashSet<>();
     }
     favoriteAlbums.add(album);
   }
@@ -230,12 +233,25 @@ public class User {
     this.adPrefs = adPrefs;
   }
 
+  @OneToOne
   public SongQueue getSongQueue() {
     return songQueue;
   }
 
   public void setSongQueue(SongQueue songQueue) {
     this.songQueue = songQueue;
+  }
+
+  @OneToMany
+  public List<Song> getSongHistory() {
+    return songHistory;
+  }
+
+  public void addHistory(Song song) {
+    if(songHistory == null) {
+      songHistory = new ArrayList<>();
+    }
+    songHistory.add(song);
   }
 
   //TODO: Methods like isFollower etc.
