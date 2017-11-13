@@ -10,10 +10,8 @@ import java.util.List;
 public class Album extends SongCollection {
 
   @NotNull
-  @OneToOne
   private Artist artist;
   @NotNull
-  @OneToOne
   private Label label;
   @NotNull
   private SimpleDateFormat date;
@@ -31,6 +29,7 @@ public class Album extends SongCollection {
     this.label = label;
   }
 
+  @OneToOne
   public Artist getArtist() {
     return artist;
   }
@@ -39,6 +38,7 @@ public class Album extends SongCollection {
     this.artist = artist;
   }
 
+  @OneToOne
   public Label getLabel() {
     return label;
   }

@@ -15,8 +15,10 @@ public class Song {
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID songId;
+
   @NotNull
   private String songName;
+
   @NotNull
   private Integer numberPlays;
 
@@ -26,11 +28,9 @@ public class Song {
   private Set<GenreEnum> GenreEnum;
 
   @NotNull
-  @OneToMany
   private List<Artist> artists;
 
   @NotNull
-  @OneToOne
   private Album album;
 
   @NotNull
@@ -75,6 +75,7 @@ public class Song {
     this.GenreEnum = GenreEnum;
   }
 
+  @OneToOne
   public List<Artist> getArtists() {
     return artists;
   }
@@ -83,6 +84,7 @@ public class Song {
     this.artists = artists;
   }
 
+  @OneToOne
   public Album getAlbum() {
     return album;
   }

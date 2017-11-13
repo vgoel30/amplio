@@ -26,7 +26,6 @@ public class Advertiser {
   @NotNull
   private String password;
 
-  @OneToMany
   private Set<Advertisement> ads;
 
   public Advertiser(String name, String email, String password) {
@@ -67,6 +66,7 @@ public class Advertiser {
     this.password = password;
   }
 
+  @OneToMany
   public Set<Advertisement> getAds() {
     return ads;
   }

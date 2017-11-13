@@ -16,11 +16,13 @@ public class Concert {
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID concertID;
+
   @NotNull
-  @ManyToMany(mappedBy = "concerts")
   private Set<Artist> artists;
+
   @NotNull
   private SimpleDateFormat date;
+
   @NotNull
   private String location; //TODO: Change to an appropriate location datatype
 
@@ -38,6 +40,7 @@ public class Concert {
     this.concertID = concertID;
   }
 
+  @ManyToMany(mappedBy = "concerts")
   public Set<Artist> getArtists() {
     return artists;
   }

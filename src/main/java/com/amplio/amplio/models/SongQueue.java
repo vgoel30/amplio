@@ -15,16 +15,20 @@ public class SongQueue {
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID qID;
+
   @NotNull
-  @OneToOne
   private User user;
-  @OneToMany
+
   private List<Song> songs;
+
   private Integer currentSongIndex;
+
   @NotNull
   private Boolean isRadio;
+
   @NotNull
   private Boolean repeatSongs;
+
   @NotNull
   private Boolean shuffleSongs;
 
@@ -49,5 +53,63 @@ public class SongQueue {
 
   public Song getPrevSong() {
     return songs.get(currentSongIndex - 1);
+  }
+
+  public UUID getqID() {
+    return qID;
+  }
+
+  public void setqID(UUID qID) {
+    this.qID = qID;
+  }
+
+  @OneToOne
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  @OneToMany
+  public List<Song> getSongs() {
+    return songs;
+  }
+
+  public void setSongs(List<Song> songs) {
+    this.songs = songs;
+  }
+
+  public Integer getCurrentSongIndex() {
+    return currentSongIndex;
+  }
+
+  public void setCurrentSongIndex(Integer currentSongIndex) {
+    this.currentSongIndex = currentSongIndex;
+  }
+
+  public Boolean getRadio() {
+    return isRadio;
+  }
+
+  public void setRadio(Boolean radio) {
+    isRadio = radio;
+  }
+
+  public Boolean getRepeatSongs() {
+    return repeatSongs;
+  }
+
+  public void setRepeatSongs(Boolean repeatSongs) {
+    this.repeatSongs = repeatSongs;
+  }
+
+  public Boolean getShuffleSongs() {
+    return shuffleSongs;
+  }
+
+  public void setShuffleSongs(Boolean shuffleSongs) {
+    this.shuffleSongs = shuffleSongs;
   }
 }

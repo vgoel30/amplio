@@ -12,9 +12,9 @@ public class Statistics {
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID statsID;
-  @OneToMany
+
   private List<Artist> topArtists;
-  @OneToMany
+
   private List<Song> topSongs;
 
   public Statistics() {
@@ -40,5 +40,30 @@ public class Statistics {
 
   }
 
+  public UUID getStatsID() {
+    return statsID;
+  }
+
+  public void setStatsID(UUID statsID) {
+    this.statsID = statsID;
+  }
+
+  @OneToMany
+  public List<Artist> getTopArtists() {
+    return topArtists;
+  }
+
+  public void setTopArtists(List<Artist> topArtists) {
+    this.topArtists = topArtists;
+  }
+
+  @OneToMany
+  public List<Song> getTopSongs() {
+    return topSongs;
+  }
+
+  public void setTopSongs(List<Song> topSongs) {
+    this.topSongs = topSongs;
+  }
 }
 

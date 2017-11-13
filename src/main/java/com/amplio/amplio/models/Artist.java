@@ -15,21 +15,17 @@ public class Artist {
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID artistID;
+
   @NotNull
   private String name;
   private String bibliography;
+
   @NotNull
-  @OneToMany
   private Set<Album> albums;
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "artist_concert",
-      joinColumns = @JoinColumn(name = "artist_id"),
-      inverseJoinColumns = @JoinColumn(name = "concert_id")
-  )
+
   private Set<Concert> concerts;
+
   @NotNull
-  @ManyToOne
   private Label label;
 
   public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
@@ -64,6 +60,7 @@ public class Artist {
     this.bibliography = bibliography;
   }
 
+  @OneToMany
   public Set<Album> getAlbums() {
     return albums;
   }
@@ -72,6 +69,12 @@ public class Artist {
     this.albums = albums;
   }
 
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "artist_concert",
+      joinColumns = @JoinColumn(name = "artist_id"),
+      inverseJoinColumns = @JoinColumn(name = "concert_id")
+  )
   public Set<Concert> getConcerts() {
     return concerts;
   }
@@ -80,6 +83,7 @@ public class Artist {
     this.concerts = concerts;
   }
 
+  @ManyToOne
   public Label getLabel() {
     return label;
   }
