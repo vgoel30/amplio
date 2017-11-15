@@ -50,6 +50,15 @@ public class User {
   @Enumerated(EnumType.STRING)
   private List<AdCategoryEnum> adPrefs;
 
+  public User() {
+    firstName = "";
+    lastName = "";
+    email = "";
+    username = "";
+    password = "";
+    isPremium = false;
+  }
+
   public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
     this.firstName = firstName;
     this.lastName = lastName;
