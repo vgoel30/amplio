@@ -22,15 +22,20 @@ public class Artist {
   private String bibliography;
 
   @NotNull
+  @OneToMany
   private Set<Album> albums;
 
+  @ManyToMany(cascade = CascadeType.ALL)
   private Set<Concert> concerts;
 
+  @OneToMany
   private List<Song> deleteRequests;
 
+  @OneToMany
   private List<Song> uploadRequests;
 
   @NotNull
+  @ManyToOne
   private Label label;
 
   public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
@@ -65,7 +70,6 @@ public class Artist {
     this.bibliography = bibliography;
   }
 
-  @OneToMany
   public Set<Album> getAlbums() {
     return albums;
   }
@@ -74,7 +78,6 @@ public class Artist {
     this.albums = albums;
   }
 
-  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
       name = "artist_concert",
       joinColumns = @JoinColumn(name = "artist_id"),
@@ -88,7 +91,6 @@ public class Artist {
     this.concerts = concerts;
   }
 
-  @ManyToOne
   public Label getLabel() {
     return label;
   }

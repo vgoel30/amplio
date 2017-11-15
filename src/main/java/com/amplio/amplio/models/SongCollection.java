@@ -20,6 +20,7 @@ public abstract class SongCollection {
   private String title;
 
   @NotNull
+  @OneToMany
   private List<Song> songs;
 
   public String getTitle() {
@@ -30,7 +31,6 @@ public abstract class SongCollection {
     this.title = title;
   }
 
-  @OneToMany
   public List<Song> getSongs() {
     return songs;
   }

@@ -28,9 +28,11 @@ public class Song {
   private Set<GenreEnum> GenreEnum;
 
   @NotNull
+  @OneToMany
   private List<Artist> artists;
 
   @NotNull
+  @OneToOne
   private Album album;
 
   @NotNull
@@ -75,7 +77,6 @@ public class Song {
     this.GenreEnum = GenreEnum;
   }
 
-  @OneToOne
   public List<Artist> getArtists() {
     return artists;
   }
@@ -84,7 +85,6 @@ public class Song {
     this.artists = artists;
   }
 
-  @OneToOne
   public Album getAlbum() {
     return album;
   }

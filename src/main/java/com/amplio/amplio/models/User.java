@@ -28,14 +28,23 @@ public class User {
   private Boolean isPremium;
   @Lob
   private byte[] profilePicture;
+  @ManyToMany(cascade = CascadeType.ALL)
   private Set<User> followers;
+  @ManyToMany(mappedBy = "followers")
   private Set<User> following;
+  @ManyToMany(cascade = CascadeType.ALL)
   private Set<User> friends;
+  @OneToMany
   private Set<Song> savedSongs;
+  @OneToMany
   private Set<Song> likedSongs;
+  @OneToMany
   private Set<Song> dislikedSongs;
+  @OneToMany
   private List<Song> songHistory;
+  @OneToOne
   private SongQueue songQueue;
+  @OneToMany
   private Set<Album> favoriteAlbums;
   @ElementCollection(targetClass = AdCategoryEnum.class)
   @Enumerated(EnumType.STRING)
@@ -114,7 +123,6 @@ public class User {
     this.profilePicture = profilePicture;
   }
 
-  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
       name = "user_followers",
       joinColumns = @JoinColumn(name = "following_id"),
@@ -124,7 +132,6 @@ public class User {
     return followers;
   }
 
-  @ManyToMany(mappedBy = "followers")
   public Set<User> getFollowing() {
     return following;
   }
@@ -149,7 +156,6 @@ public class User {
     }
   }
 
-  @ManyToMany(cascade = CascadeType.ALL)
   public Set<User> getFriends() {
     return friends;
   }
@@ -167,7 +173,6 @@ public class User {
     }
   }
 
-  @OneToMany
   public Set<Song> getSavedSongs() {
     return savedSongs;
   }
@@ -183,7 +188,6 @@ public class User {
     savedSongs.remove(song);
   }
 
-  @OneToMany
   public Set<Song> getLikedSongs() {
     return likedSongs;
   }
@@ -195,7 +199,6 @@ public class User {
     likedSongs.add(song);
   }
 
-  @OneToMany
   public Set<Song> getDislikedSongs() {
     return dislikedSongs;
   }
@@ -209,7 +212,6 @@ public class User {
 
   //TODO: Methods like isFollower etc.
 
-  @OneToMany
   public Set<Album> getFavoriteAlbums() {
     return favoriteAlbums;
   }
@@ -233,7 +235,6 @@ public class User {
     this.adPrefs = adPrefs;
   }
 
-  @OneToOne
   public SongQueue getSongQueue() {
     return songQueue;
   }
@@ -242,7 +243,6 @@ public class User {
     this.songQueue = songQueue;
   }
 
-  @OneToMany
   public List<Song> getSongHistory() {
     return songHistory;
   }

@@ -17,8 +17,10 @@ public class SongQueue {
   private UUID qID;
 
   @NotNull
+  @OneToOne
   private User user;
 
+  @OneToMany
   private List<Song> songs;
 
   private Integer currentSongIndex;
@@ -63,7 +65,6 @@ public class SongQueue {
     this.qID = qID;
   }
 
-  @OneToOne
   public User getUser() {
     return user;
   }
@@ -72,7 +73,6 @@ public class SongQueue {
     this.user = user;
   }
 
-  @OneToMany
   public List<Song> getSongs() {
     return songs;
   }

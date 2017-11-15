@@ -17,9 +17,11 @@ public class Label {
   private UUID labelID;
 
   @NotNull
+  @OneToMany
   private Set<Artist> artists;
 
   @NotNull
+  @OneToMany
   private Set<Album> albums;
 
   public Label(HashSet<Artist> artists, HashSet<Album> albums) {
@@ -35,7 +37,6 @@ public class Label {
     this.labelID = labelID;
   }
 
-  @OneToMany
   public Set<Artist> getArtists() {
     return artists;
   }
@@ -44,7 +45,6 @@ public class Label {
     this.artists = artists;
   }
 
-  @OneToMany
   public Set<Album> getAlbums() {
     return albums;
   }

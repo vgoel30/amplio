@@ -13,8 +13,10 @@ public class Statistics {
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID statsID;
 
+  @OneToMany
   private List<Artist> topArtists;
 
+  @OneToMany
   private List<Song> topSongs;
 
   public Statistics() {
@@ -48,7 +50,6 @@ public class Statistics {
     this.statsID = statsID;
   }
 
-  @OneToMany
   public List<Artist> getTopArtists() {
     return topArtists;
   }
@@ -57,7 +58,6 @@ public class Statistics {
     this.topArtists = topArtists;
   }
 
-  @OneToMany
   public List<Song> getTopSongs() {
     return topSongs;
   }

@@ -18,6 +18,7 @@ public class Concert {
   private UUID concertID;
 
   @NotNull
+  @ManyToMany(mappedBy = "concerts")
   private Set<Artist> artists;
 
   @NotNull
@@ -40,7 +41,6 @@ public class Concert {
     this.concertID = concertID;
   }
 
-  @ManyToMany(mappedBy = "concerts")
   public Set<Artist> getArtists() {
     return artists;
   }

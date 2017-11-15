@@ -9,6 +9,7 @@ public class Playlist extends SongCollection {
   private String image;
 
   @NotNull
+  @OneToOne
   private User owner;
 
   @NotNull
@@ -30,7 +31,6 @@ public class Playlist extends SongCollection {
     this.image = image;
   }
 
-  @OneToOne
   public User getOwner() {
     return owner;
   }

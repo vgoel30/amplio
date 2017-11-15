@@ -32,7 +32,7 @@ public class SessionServiceImpl implements SessionService{
 
     @Override
     public User loginUser(LoginForm loginForm){
-        String userName = loginForm.getUserName();
+      String userName = loginForm.getUsername();
         String password = loginForm.getPassword();
         User user = userRepository.getUserByUsername(userName);
         if (user == null){
