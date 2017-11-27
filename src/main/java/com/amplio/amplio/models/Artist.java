@@ -38,7 +38,7 @@ public class Artist {
   @ManyToOne
   private Label label;
 
-  public Artist(String name, String bibliography, HashSet<Album> albums, HashSet<Concert> concerts, Label label) {
+  public Artist(String name, String bibliography, Set<Album> albums, Set<Concert> concerts, Label label) {
     this.name = name;
     this.bibliography = bibliography;
     this.albums = albums;

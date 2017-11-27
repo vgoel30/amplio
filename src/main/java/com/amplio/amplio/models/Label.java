@@ -17,6 +17,7 @@ public class Label {
   private UUID labelID;
 
   @NotNull
+  @Column(unique = true)
   private String name;
 
   @NotNull
