@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService{
     }
     return userPlaylist;
   }
+
+  @Override
+  public List<User> searchUser(String query) {
+    List<User> users = userRepository.findTop10ByUserNameContainingIgnoreCase(query);
+    return users;
+  }
 }

@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserService {
   User getUser(Integer userId);
   List<Playlist> getPlaylists(HttpSession session);
+  List<User> searchUser(String query);
 }
