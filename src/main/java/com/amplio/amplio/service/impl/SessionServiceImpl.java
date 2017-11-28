@@ -19,8 +19,9 @@ public class SessionServiceImpl implements SessionService{
 
     @Override
     public User registerUser(RegisterForm registerForm) {
-        String username = registerForm.getUserName();
-        if(userRepository.getUserByUsername(username) != null){
+
+        String userName = registerForm.getUserName();
+        if(userRepository.getUserByUsername(userName) != null){
             return null;
         }
         String firstName = registerForm.getFirstName();
@@ -29,7 +30,8 @@ public class SessionServiceImpl implements SessionService{
         String password = registerForm.getPassword();
         password = passwordEncoder.encode(password);
         Boolean isPremium = false;
-        User user = new User(firstName, lastName, email, username, password, isPremium);
+        User user = new User(firstName, lastName, email, userName, password, isPremium);
+        System.out.println(user);
         userRepository.save(user);
         return user;
     }

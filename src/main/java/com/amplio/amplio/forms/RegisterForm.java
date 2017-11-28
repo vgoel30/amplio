@@ -3,7 +3,7 @@ package com.amplio.amplio.forms;
 public class RegisterForm {
   private String firstName;
   private String lastName;
-  private String username;
+  private String userName;
   private String email;
   private String password;
 
@@ -16,7 +16,7 @@ public class RegisterForm {
   }
 
   public String getUserName() {
-    return username;
+    return userName;
   }
 
   public String getEmail() {
