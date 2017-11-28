@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(value = "/api/user")
@@ -37,9 +38,9 @@ public class SessionController {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody LoginForm loginForm) {
+    public ResponseEntity<User> login(@RequestBody LoginForm loginForm, HttpServletRequest request, HttpSession session) {
         HttpStatus status;
-        User user = sessionService.loginUser(loginForm);
+        User user = sessionService.loginUser(loginForm, request, session);
         if(user == null) {
             status = HttpStatus.FORBIDDEN;
         } else {
