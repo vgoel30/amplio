@@ -14,6 +14,6 @@ public interface UserService {
   User getUser(Integer userId);
   List<Playlist> getPlaylists(HttpSession session);
   List<User> searchUser(String query);
-  Set<User> addFollower(HttpSession session, Integer userId);
+  Set<Follower> addFollower(HttpSession session, Integer userId);
   Set<Follower> getFollowers(Integer userId);
 }

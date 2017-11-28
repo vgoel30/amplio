@@ -28,10 +28,10 @@ public class User {
   private Boolean isPremium;
   @Lob
   private byte[] profilePicture;
-  @ManyToMany(cascade = CascadeType.ALL)
-  private Set<User> followers;
-  @ManyToMany(mappedBy = "followers")
-  private Set<User> following;
+  @OneToMany
+  private Set<Follower> followers;
+  @OneToMany
+  private Set<Follower> following;
   @OneToMany
   private Set<Song> savedSongs;
   @OneToMany
@@ -140,37 +140,50 @@ public class User {
     this.playlists = playlists;
   }
 
-  @JoinTable(
-      name = "user_followers",
-      joinColumns = @JoinColumn(name = "following_id"),
-      inverseJoinColumns = @JoinColumn(name = "follower_id")
-  )
-  public Set<User> getFollowers() {
+  public Set<Follower> getFollowers() {
     return followers;
   }
 
-  public Set<User> getFollowing() {
+  public Set<Follower> getFollowing() {
     return following;
   }
 
-  public Set<User> follow(User toFollow) {
+  public Set<Follower> follow(User toFollow) {
     if(following == null) {
       following = new HashSet<>();
     }
-    following.add(toFollow);
+    following.add(new Follower(toFollow));
     if(toFollow.followers == null) {
       toFollow.followers = new HashSet<>();
     }
-    toFollow.followers.add(this);
+    toFollow.followers.add(new Follower(this));
     return following;
   }
 
   public void unfollow(User toUnfollow) {
     if(following != null) {
-      following.remove(toUnfollow);
+      Follower target = null;
+      for (Follower follower : following) {
+        if (follower.getUserId() == toUnfollow.getUserId()) {
+          target = follower;
+          break;
+        }
+      }
+      if (target != null) {
+        following.remove(target);
+      }
     }
     if(toUnfollow.followers != null) {
-      toUnfollow.followers.remove(this);
+      Follower target = null;
+      for (Follower follower : followers) {
+        if (follower.getUserId() == this.getUserId()) {
+          target = follower;
+          break;
+        }
+      }
+      if (target != null) {
+        toUnfollow.followers.remove(this);
+      }
     }
   }
 
