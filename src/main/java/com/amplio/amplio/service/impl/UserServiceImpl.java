@@ -53,4 +53,18 @@ public class UserServiceImpl implements UserService{
     }
     return followers;
   }
+
+  @Override
+  public Set<User> addFollower(HttpSession session, Integer userId) {
+    Set<User> followers = null;
+    User currentUser = (User) session.getAttribute("user");
+    if(currentUser != null) {
+      User user = userRepository.findUserByUserId(userId);
+      if(user != null) {
+        followers = currentUser.follow(user);
+        userRepository.save(currentUser);
+      }
+    }
+    return followers;
+  }
 }

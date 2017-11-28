@@ -153,7 +153,7 @@ public class User {
     return following;
   }
 
-  public void follow(User toFollow) {
+  public Set<User> follow(User toFollow) {
     if(following == null) {
       following = new HashSet<>();
     }
@@ -162,6 +162,7 @@ public class User {
       toFollow.followers = new HashSet<>();
     }
     toFollow.followers.add(this);
+    return following;
   }
 
   public void unfollow(User toUnfollow) {

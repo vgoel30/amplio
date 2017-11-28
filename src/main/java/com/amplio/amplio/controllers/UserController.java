@@ -7,10 +7,7 @@ import com.amplio.amplio.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -86,6 +83,21 @@ public class UserController {
     }
 
     return new ResponseEntity<Set<User>>(followers, status);
+  }
+
+  @RequestMapping(path = "/follow", method = RequestMethod.POST)
+  public ResponseEntity<Set<User>> addFollowers(@RequestBody User user, HttpSession session) {
+    HttpStatus status;
+    Set<User> following = userService.addFollower(session, user.getUserId());
+
+    if(following == null){
+      status = HttpStatus.UNAUTHORIZED;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Set<User>>(following, status);
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)
