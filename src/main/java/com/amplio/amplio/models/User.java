@@ -1,17 +1,17 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-//  @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private Integer userId;
   @NotNull
   private String firstName;
@@ -46,6 +46,8 @@ public class User {
   private SongQueue songQueue;
   @OneToMany
   private Set<Album> favoriteAlbums;
+  @OneToMany
+  private List<Playlist> playlists;
   @ElementCollection(targetClass = AdCategoryEnum.class)
   @Enumerated(EnumType.STRING)
   private List<AdCategoryEnum> adPrefs;
@@ -132,6 +134,14 @@ public class User {
     this.profilePicture = profilePicture;
   }
 
+  public List<Playlist> getPlaylists() {
+    return playlists;
+  }
+
+  public void setPlaylists(List<Playlist> playlists) {
+    this.playlists = playlists;
+  }
+
   @JoinTable(
       name = "user_followers",
       joinColumns = @JoinColumn(name = "following_id"),
@@ -150,7 +160,7 @@ public class User {
       following = new HashSet<>();
     }
     following.add(toFollow);
-    if(toFollow.followers== null) {
+    if(toFollow.followers == null) {
       toFollow.followers = new HashSet<>();
     }
     toFollow.followers.add(this);

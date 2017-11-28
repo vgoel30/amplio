@@ -1,10 +1,7 @@
 package com.amplio.amplio.controllers;
 
 import com.amplio.amplio.models.Playlist;
-import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.impl.PlaylistServiceImpl;
-import com.amplio.amplio.service.impl.SessionServiceImpl;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,25 +17,23 @@ public class PlaylistController {
   private PlaylistServiceImpl playlistService;
 
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<Playlist> getPlaylist(@PathVariable String id){
+  public ResponseEntity<Playlist> getPlaylist(@PathVariable String id) {
     Playlist playlist = null;
     HttpStatus status;
     Integer playlistId;
 
-    try{
+    try {
       playlistId = Integer.parseInt(id);
-    }
-    catch(NumberFormatException numberFormatException){
+    } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Playlist>(playlist, status);
     }
 
     playlist = playlistService.getPlaylist(playlistId);
 
-    if(playlist == null){
+    if(playlist == null) {
       status = HttpStatus.NOT_FOUND;
-    }
-    else{
+    } else {
       status = HttpStatus.OK;
     }
 

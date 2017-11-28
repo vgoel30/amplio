@@ -53,9 +53,7 @@ public class SessionServiceImpl implements SessionService {
     if(user == null) {
       return null;
     }
-    Boolean v = passwordEncoder.matches(password, user.getPassword());
-    System.out.println(v);
-    if(v) {
+    if(passwordEncoder.matches(password, user.getPassword())) {
       newSession.setAttribute("user", user);
       return user;
     }
