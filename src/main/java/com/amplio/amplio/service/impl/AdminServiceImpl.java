@@ -2,10 +2,12 @@ package com.amplio.amplio.service.impl;
 
 import com.amplio.amplio.forms.AlbumForm;
 import com.amplio.amplio.forms.ArtistForm;
-import com.amplio.amplio.models.*;
+import com.amplio.amplio.models.Album;
+import com.amplio.amplio.models.Artist;
+import com.amplio.amplio.models.Concert;
+import com.amplio.amplio.models.Song;
 import com.amplio.amplio.repository.AlbumRepository;
 import com.amplio.amplio.repository.ArtistRepository;
-import com.amplio.amplio.repository.LabelRepository;
 import com.amplio.amplio.repository.SongRepository;
 import com.amplio.amplio.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,6 @@ public class AdminServiceImpl implements AdminService {
   @Autowired
   private ArtistRepository artistRepository;
   @Autowired
-  private LabelRepository labelRepository;
-  @Autowired
   private AlbumRepository albumRepository;
   @Autowired
   private SongRepository songRepository;
@@ -31,19 +31,14 @@ public class AdminServiceImpl implements AdminService {
   public Artist addArtist(ArtistForm artistForm) {
     String name = artistForm.getName();
     String bibliography = artistForm.getBibliography();
-    Label label = labelRepository.getLabelByName(artistForm.getName());
 
-    if(name == null || label == null) {
+    if(name == null) {
       return null;
     }
 
     Set<Album> albums = new HashSet<Album>();
     Set<Concert> concerts = new HashSet<Concert>();
-    Artist artist = new Artist(name, bibliography, albums, concerts, label);
-
-    label.getArtists().add(artist);
-    labelRepository.save(label);
-
+    Artist artist = new Artist(name, bibliography, albums, concerts);
     artistRepository.save(artist);
     return artist;
   }
@@ -51,16 +46,15 @@ public class AdminServiceImpl implements AdminService {
   @Override
   public Album addAlbum(AlbumForm albumForm) {
     Artist artist = artistRepository.getArtistByArtistID(albumForm.getArtistID());
-    Label label = labelRepository.getLabelByName(albumForm.getLabelName());
     SimpleDateFormat date = new SimpleDateFormat(albumForm.getDate());
     String title = albumForm.getTitle();
     List<Song> songs = albumForm.getSongs();
 
-    if(artist == null || label == null || date == null || title == null || songs == null) {
+    if(artist == null || date == null || title == null || songs == null) {
       return null;
     }
 
-    Album album = new Album(artist, label, date, songs, title);
+    Album album = new Album(artist, date, songs, title);
 
     for(Song song : songs) {
       //TODO: Figure out artists references
@@ -70,9 +64,6 @@ public class AdminServiceImpl implements AdminService {
 
     artist.getAlbums().add(album);
     artistRepository.save(artist);
-
-    label.getAlbums().add(album);
-    labelRepository.save(label);
 
     albumRepository.save(album);
     return album;

@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public class AlbumForm {
   private UUID artistID;
-  private String labelName;
   private String date;
   private String title;
   private List<Song> songs;
@@ -18,14 +17,6 @@ public class AlbumForm {
 
   public void setArtistID(UUID artistID) {
     this.artistID = artistID;
-  }
-
-  public String getLabelName() {
-    return labelName;
-  }
-
-  public void setLabelName(String labelName) {
-    this.labelName = labelName;
   }
 
   public String getDate() {

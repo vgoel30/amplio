@@ -12,23 +12,17 @@ public class Album extends SongCollection {
   @NotNull
   @OneToOne
   private Artist artist;
-  @NotNull
-  @OneToOne
-  private Label label;
-  @NotNull
   private SimpleDateFormat date;
 
-  public Album(Artist artist, Label label, SimpleDateFormat date, List<Song> songs, String title) {
+  public Album(Artist artist, SimpleDateFormat date, List<Song> songs, String title) {
     this.artist = artist;
-    this.label = label;
     this.date = date;
     setSongs(songs);
     setTitle(title);
   }
 
-  public Album(Artist artist, Label label) {
+  public Album(Artist artist) {
     this.artist = artist;
-    this.label = label;
   }
 
   public Artist getArtist() {
@@ -37,14 +31,6 @@ public class Album extends SongCollection {
 
   public void setArtist(Artist artist) {
     this.artist = artist;
-  }
-
-  public Label getLabel() {
-    return label;
-  }
-
-  public void setLabel(Label label) {
-    this.label = label;
   }
 
   public SimpleDateFormat getDate() {

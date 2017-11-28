@@ -14,24 +14,23 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
 
-  public User getUser(Integer userId){
+  public User getUser(Integer userId) {
     User user = userRepository.findUserByUserId(userId);
     return user;
   }
 
-  public List<Playlist> getPlaylists(HttpSession session){
+  public List<Playlist> getPlaylists(HttpSession session) {
     List<Playlist> userPlaylist = null;
     User currentUser = (User) session.getAttribute("user");
     if(currentUser != null) {
       List<Playlist> playlists = currentUser.getPlaylists();
-      if(playlists == null){
+      if(playlists == null) {
         userPlaylist = new ArrayList<Playlist>();
-      }
-      else{
+      } else {
         userPlaylist = playlists;
       }
     }
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService{
   public Set<Follower> getFollowers(Integer userId) {
     Set<Follower> followers = null;
     User user = userRepository.findUserByUserId(userId);
-    if(user != null){
+    if(user != null) {
       followers = user.getFollowers();
     }
     return followers;

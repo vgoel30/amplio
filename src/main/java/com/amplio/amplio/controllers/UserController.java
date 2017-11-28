@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +20,7 @@ public class UserController {
   private UserServiceImpl userService;
 
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<User> getUser(@PathVariable String id){
+  public ResponseEntity<User> getUser(@PathVariable String id) {
     User user = null;
     HttpStatus status;
     Integer userId;
@@ -45,16 +44,15 @@ public class UserController {
   }
 
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public ResponseEntity<List<User>> searchUser(@PathVariable String query){
+  public ResponseEntity<List<User>> searchUser(@PathVariable String query) {
     List<User> users = null;
     HttpStatus status;
 
     users = userService.searchUser(query);
 
-    if(users == null){
+    if(users == null) {
       status = HttpStatus.BAD_REQUEST;
-    }
-    else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -62,7 +60,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/followers/{id}", method = RequestMethod.GET)
-  public ResponseEntity<Set<Follower>> getFollowers(@PathVariable String id){
+  public ResponseEntity<Set<Follower>> getFollowers(@PathVariable String id) {
     Set<Follower> followers = null;
     HttpStatus status;
     Integer userId;
@@ -90,10 +88,9 @@ public class UserController {
     HttpStatus status;
     Set<User> following = userService.addFollower(session, user.getUserId());
 
-    if(following == null){
+    if(following == null) {
       status = HttpStatus.UNAUTHORIZED;
-    }
-    else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -101,14 +98,13 @@ public class UserController {
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)
-  public ResponseEntity<List<Playlist>> getPlaylist(HttpSession session){
+  public ResponseEntity<List<Playlist>> getPlaylist(HttpSession session) {
     HttpStatus status;
     List<Playlist> userPlaylists = userService.getPlaylists(session);
 
-    if(userPlaylists == null){
+    if(userPlaylists == null) {
       status = HttpStatus.UNAUTHORIZED;
-    }
-    else{
+    } else {
       status = HttpStatus.OK;
     }
 

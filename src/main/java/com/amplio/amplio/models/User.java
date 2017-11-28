@@ -163,25 +163,25 @@ public class User {
   public void unfollow(User toUnfollow) {
     if(following != null) {
       Follower target = null;
-      for (Follower follower : following) {
-        if (follower.getUserId() == toUnfollow.getUserId()) {
+      for(Follower follower : following) {
+        if(follower.getUserId() == toUnfollow.getUserId()) {
           target = follower;
           break;
         }
       }
-      if (target != null) {
+      if(target != null) {
         following.remove(target);
       }
     }
     if(toUnfollow.followers != null) {
       Follower target = null;
-      for (Follower follower : followers) {
-        if (follower.getUserId() == this.getUserId()) {
+      for(Follower follower : followers) {
+        if(follower.getUserId() == this.getUserId()) {
           target = follower;
           break;
         }
       }
-      if (target != null) {
+      if(target != null) {
         toUnfollow.followers.remove(this);
       }
     }

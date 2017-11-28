@@ -1,7 +1,10 @@
 package com.amplio.amplio.models;
 
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.*;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 

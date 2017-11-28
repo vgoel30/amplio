@@ -1,7 +1,5 @@
 package com.amplio.amplio.models;
 
-import com.sun.istack.internal.Nullable;
-
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -25,7 +23,7 @@ public class Follower {
     this.profilePicture = profilePicture;
   }
 
-  public Follower(User user){
+  public Follower(User user) {
     this.userId = user.getUserId();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();

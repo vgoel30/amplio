@@ -31,16 +31,11 @@ public class Artist {
   @OneToMany
   private List<Song> uploadRequests;
 
-  @NotNull
-  @ManyToOne
-  private Label label;
-
-  public Artist(String name, String bibliography, Set<Album> albums, Set<Concert> concerts, Label label) {
+  public Artist(String name, String bibliography, Set<Album> albums, Set<Concert> concerts) {
     this.name = name;
     this.bibliography = bibliography;
     this.albums = albums;
     this.concerts = concerts;
-    this.label = label;
   }
 
   public Integer getArtistID() {
@@ -86,14 +81,6 @@ public class Artist {
 
   public void setConcerts(HashSet<Concert> concerts) {
     this.concerts = concerts;
-  }
-
-  public Label getLabel() {
-    return label;
-  }
-
-  public void setLabel(Label label) {
-    this.label = label;
   }
 
   public List<Song> getDeleteRequests() {
