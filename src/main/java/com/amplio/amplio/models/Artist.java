@@ -1,21 +1,18 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 public class Artist {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID artistID;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  private Integer artistID;
 
   @NotNull
   private String name;
@@ -46,11 +43,11 @@ public class Artist {
     this.label = label;
   }
 
-  public UUID getArtistID() {
+  public Integer getArtistID() {
     return artistID;
   }
 
-  public void setArtistID(UUID artistID) {
+  public void setArtistID(Integer artistID) {
     this.artistID = artistID;
   }
 

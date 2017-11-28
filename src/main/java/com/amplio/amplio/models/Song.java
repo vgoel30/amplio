@@ -1,20 +1,17 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 public class Song {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID songId;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  private Integer songId;
 
   @NotNull
   private String songName;
@@ -57,7 +54,7 @@ public class Song {
     this.songName = songName;
   }
 
-  public UUID getSongId() {
+  public Integer getSongId() {
     return songId;
   }
 
