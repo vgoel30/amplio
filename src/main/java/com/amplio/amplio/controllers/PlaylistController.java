@@ -21,7 +21,7 @@ public class PlaylistController {
 
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
   public ResponseEntity<Playlist> getPlaylist(@PathVariable String id){
-    Playlist playlist = null
+    Playlist playlist = null;
     HttpStatus status;
     Integer playlistId;
 
