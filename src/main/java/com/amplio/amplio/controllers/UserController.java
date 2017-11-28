@@ -45,6 +45,23 @@ public class UserController {
     return new ResponseEntity<User>(user, status);
   }
 
+  @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
+  public ResponseEntity<List<User>> searchUser(@PathVariable String query){
+    List<User> users = null;
+    HttpStatus status;
+
+    users = userService.searchUser(query);
+
+    if(users == null){
+      status = HttpStatus.BAD_REQUEST;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<List<User>>(users, status);
+  }
+
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)
   public ResponseEntity<List<Playlist>> getPlaylist(HttpSession session){
     HttpStatus status;
