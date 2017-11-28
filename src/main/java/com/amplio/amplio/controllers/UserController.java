@@ -21,6 +21,30 @@ public class UserController {
   @Autowired
   private UserServiceImpl userService;
 
+  @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+  public ResponseEntity<User> getUser(@PathVariable String id){
+    User user = null;
+    HttpStatus status;
+    Integer userId;
+
+    try {
+      userId = Integer.parseInt(id);
+    } catch(NumberFormatException numberFormatException) {
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<User>(user, status);
+    }
+
+    user = userService.getUser(userId);
+
+    if(user == null) {
+      status = HttpStatus.NOT_FOUND;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<User>(user, status);
+  }
+
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)
   public ResponseEntity<List<Playlist>> getPlaylist(HttpSession session){
     HttpStatus status;
