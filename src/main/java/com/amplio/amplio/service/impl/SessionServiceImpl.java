@@ -10,16 +10,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SessionServiceImpl implements SessionService{
-    @Autowired
-    private UserRepository userRepository;
+public class SessionServiceImpl implements SessionService {
+  @Autowired
+  private UserRepository userRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
 
     @Override
     public User registerUser(RegisterForm registerForm) {
-
         String userName = registerForm.getUserName();
         if(userRepository.getUserByUsername(userName) != null){
             return null;
@@ -36,19 +35,19 @@ public class SessionServiceImpl implements SessionService{
         return user;
     }
 
-    @Override
-    public User loginUser(LoginForm loginForm){
-      String userName = loginForm.getUsername();
-        String password = loginForm.getPassword();
-        User user = userRepository.getUserByUsername(userName);
-        if (user == null){
-            return null;
-        }
-        if(user.getPassword().equals(password)){
-            return user;
-        }
-        return null;
+  @Override
+  public User loginUser(LoginForm loginForm) {
+    String userName = loginForm.getUsername();
+    String password = loginForm.getPassword();
+    User user = userRepository.getUserByUsername(userName);
+    if(user == null) {
+      return null;
     }
+    if(user.getPassword().equals(password)) {
+      return user;
+    }
+    return null;
+  }
 
 
 }

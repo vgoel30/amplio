@@ -17,6 +17,16 @@ public class Label {
   private UUID labelID;
 
   @NotNull
+  @Column(unique = true)
+  private String name;
+
+  @NotNull
+  private String password;
+
+  @NotNull
+  private String email;
+
+  @NotNull
   @OneToMany
   private Set<Artist> artists;
 
@@ -24,9 +34,36 @@ public class Label {
   @OneToMany
   private Set<Album> albums;
 
-  public Label(HashSet<Artist> artists, HashSet<Album> albums) {
+  public Label(String name, String password, String email, HashSet<Artist> artists, HashSet<Album> albums) {
+    this.name = name;
+    this.password = password;
+    this.email = email;
     this.artists = artists;
     this.albums = albums;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public UUID getLabelID() {
