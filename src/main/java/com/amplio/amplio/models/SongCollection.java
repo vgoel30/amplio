@@ -12,9 +12,8 @@ import java.util.UUID;
 public abstract class SongCollection {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID collectionID;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer collectionId;
 
   @NotNull
   private String title;
@@ -39,8 +38,8 @@ public abstract class SongCollection {
     this.songs = songs;
   }
 
-  public UUID getID() {
-    return collectionID;
+  public Integer getId() {
+    return collectionId;
   }
 
 }

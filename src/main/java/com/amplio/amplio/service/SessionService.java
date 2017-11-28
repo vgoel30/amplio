@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public interface SessionService {
-    public User registerUser(RegisterForm registerForm);
-    public User loginUser(LoginForm loginForm, HttpServletRequest request, HttpSession session);
-    public String logoutUser(HttpServletRequest request, HttpServletResponse response);
+  User registerUser(RegisterForm registerForm);
+
+  User loginUser(LoginForm loginForm, HttpServletRequest request, HttpSession session);
+
+  String logoutUser(HttpServletRequest request, HttpServletResponse response);
 }
