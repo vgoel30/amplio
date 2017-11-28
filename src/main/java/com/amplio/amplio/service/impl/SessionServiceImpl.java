@@ -28,18 +28,18 @@ public class SessionServiceImpl implements SessionService {
     public User registerUser(RegisterForm registerForm) {
         String userName = registerForm.getUserName();
         User existingUser = userRepository.findByUserName(userName);
-        if(existingUser != null){
-            return null;
+        User user = null;
+
+        if(existingUser == null) {
+          String firstName = registerForm.getFirstName();
+          String lastName = registerForm.getLastName();
+          String email = registerForm.getEmail();
+          String password = registerForm.getPassword();
+          password = passwordEncoder.encode(password);
+          Boolean isPremium = false;
+          user = new User(firstName, lastName, email, userName, password, isPremium);
+          userRepository.save(user);
         }
-        String firstName = registerForm.getFirstName();
-        String lastName = registerForm.getLastName();
-        String email = registerForm.getEmail();
-        String password = registerForm.getPassword();
-        password = passwordEncoder.encode(password);
-        Boolean isPremium = false;
-        User user = new User(firstName, lastName, email, userName, password, isPremium);
-        System.out.println(user);
-        userRepository.save(user);
         return user;
     }
 
@@ -50,14 +50,16 @@ public class SessionServiceImpl implements SessionService {
     String userName = loginForm.getUserName();
     String password = loginForm.getPassword();
     User user = userRepository.findByUserName(userName);
-    if(user == null) {
-      return null;
+
+    if(user != null){
+      if(passwordEncoder.matches(password, user.getPassword())) {
+        newSession.setAttribute("user", user);
+      }
+      else{
+        user = null;
+      }
     }
-    if(passwordEncoder.matches(password, user.getPassword())) {
-      newSession.setAttribute("user", user);
-      return user;
-    }
-    return null;
+    return user;
   }
 
   @Override
