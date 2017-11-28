@@ -100,11 +100,11 @@ public class User {
     this.email = email;
   }
 
-  public String getUsername() {
+  public String getUserName() {
     return userName;
   }
 
-  public void setUsername(String username) {
+  public void setUserName(String username) {
     this.userName = username;
   }
 

@@ -24,24 +24,24 @@ public class SessionServiceImpl implements SessionService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-    @Override
-    public User registerUser(RegisterForm registerForm) {
-        String userName = registerForm.getUserName();
-        User existingUser = userRepository.findByUserName(userName);
-        User user = null;
+  @Override
+  public User registerUser(RegisterForm registerForm) {
+    String userName = registerForm.getUserName();
+    User existingUser = userRepository.findByUserName(userName);
+    User user = null;
 
-        if(existingUser == null) {
-          String firstName = registerForm.getFirstName();
-          String lastName = registerForm.getLastName();
-          String email = registerForm.getEmail();
-          String password = registerForm.getPassword();
-          password = passwordEncoder.encode(password);
-          Boolean isPremium = false;
-          user = new User(firstName, lastName, email, userName, password, isPremium);
-          userRepository.save(user);
-        }
-        return user;
+    if(existingUser == null) {
+      String firstName = registerForm.getFirstName();
+      String lastName = registerForm.getLastName();
+      String email = registerForm.getEmail();
+      String password = registerForm.getPassword();
+      password = passwordEncoder.encode(password);
+      Boolean isPremium = false;
+      user = new User(firstName, lastName, email, userName, password, isPremium);
+      userRepository.save(user);
     }
+    return user;
+  }
 
   @Override
   public User loginUser(LoginForm loginForm, HttpServletRequest request, HttpSession session) {
@@ -51,11 +51,10 @@ public class SessionServiceImpl implements SessionService {
     String password = loginForm.getPassword();
     User user = userRepository.findByUserName(userName);
 
-    if(user != null){
+    if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
         newSession.setAttribute("user", user);
-      }
-      else{
+      } else {
         user = null;
       }
     }
@@ -70,6 +69,4 @@ public class SessionServiceImpl implements SessionService {
     }
     return "redirect:/login?logout";
   }
-
-
 }
