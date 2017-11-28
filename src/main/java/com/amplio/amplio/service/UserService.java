@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,6 @@ public interface UserService {
   User getUser(Integer userId);
   List<Playlist> getPlaylists(HttpSession session);
   List<User> searchUser(String query);
-  Set<User> getFollowers(Integer userId);
   Set<User> addFollower(HttpSession session, Integer userId);
+  Set<Follower> getFollowers(Integer userId);
 }

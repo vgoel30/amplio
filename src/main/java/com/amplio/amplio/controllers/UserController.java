@@ -62,8 +62,8 @@ public class UserController {
   }
 
   @RequestMapping(path = "/followers/{id}", method = RequestMethod.GET)
-  public ResponseEntity<Set<User>> getFollowers(@PathVariable String id){
-    Set<User> followers = null;
+  public ResponseEntity<Set<Follower>> getFollowers(@PathVariable String id){
+    Set<Follower> followers = null;
     HttpStatus status;
     Integer userId;
 
@@ -71,7 +71,7 @@ public class UserController {
       userId = Integer.parseInt(id);
     } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
-      return new ResponseEntity<Set<User>>(followers, status);
+      return new ResponseEntity<Set<Follower>>(followers, status);
     }
 
     followers = userService.getFollowers(userId);
@@ -82,7 +82,7 @@ public class UserController {
       status = HttpStatus.OK;
     }
 
-    return new ResponseEntity<Set<User>>(followers, status);
+    return new ResponseEntity<Set<Follower>>(followers, status);
   }
 
   @RequestMapping(path = "/follow", method = RequestMethod.POST)

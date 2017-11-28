@@ -45,11 +45,16 @@ public class UserServiceImpl implements UserService{
   }
 
   @Override
-  public Set<User> getFollowers(Integer userId) {
-    Set<User> followers = null;
+  public Set<Follower> getFollowers(Integer userId) {
+    Set<Follower> followers = null;
     User user = userRepository.findUserByUserId(userId);
     if(user != null){
-      followers = user.getFollowers();
+      Set<User> followersSet = user.getFollowers();
+      for(User follower : followersSet){
+        Follower followerToAdd = new Follower(follower.getUserId(), follower.getFirstName(), follower.getLastName(),
+                                              follower.getUserName(), follower.getProfilePicture());
+        followers.add(followerToAdd);
+      }
     }
     return followers;
   }

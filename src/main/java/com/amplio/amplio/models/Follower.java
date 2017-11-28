@@ -7,6 +7,14 @@ public class Follower {
   private String userName;
   private byte[] profilePicture;
 
+  public Follower(Integer userId, String firstName, String lastName, String userName, byte[] profilePicture) {
+    this.userId = userId;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.userName = userName;
+    this.profilePicture = profilePicture;
+  }
+
   public Integer getUserId() {
     return userId;
   }
