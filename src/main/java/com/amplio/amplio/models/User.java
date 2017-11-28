@@ -32,8 +32,6 @@ public class User {
   private Set<User> followers;
   @ManyToMany(mappedBy = "followers")
   private Set<User> following;
-  @ManyToMany(cascade = CascadeType.ALL)
-  private Set<User> friends;
   @OneToMany
   private Set<Song> savedSongs;
   @OneToMany
@@ -172,23 +170,6 @@ public class User {
     }
     if(toUnfollow.followers != null) {
       toUnfollow.followers.remove(this);
-    }
-  }
-
-  public Set<User> getFriends() {
-    return friends;
-  }
-
-  public void friend(User friend) {
-    if(friends == null) {
-      friends = new HashSet<>();
-    }
-    friends.add(friend);
-  }
-
-  public void unfriend(User friend) {
-    if(friends != null) {
-      friends.remove(friend);
     }
   }
 

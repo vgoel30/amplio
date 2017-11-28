@@ -1,5 +1,6 @@
 package com.amplio.amplio.controllers;
 
+import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.impl.UserServiceImpl;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/user")
@@ -60,6 +62,30 @@ public class UserController {
     }
 
     return new ResponseEntity<List<User>>(users, status);
+  }
+
+  @RequestMapping(path = "/followers/{id}", method = RequestMethod.GET)
+  public ResponseEntity<Set<User>> getFollowers(@PathVariable String id){
+    Set<User> followers = null;
+    HttpStatus status;
+    Integer userId;
+
+    try {
+      userId = Integer.parseInt(id);
+    } catch(NumberFormatException numberFormatException) {
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Set<User>>(followers, status);
+    }
+
+    followers = userService.getFollowers(userId);
+
+    if(followers == null) {
+      status = HttpStatus.NOT_FOUND;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Set<User>>(followers, status);
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)

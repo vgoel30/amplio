@@ -1,5 +1,6 @@
 package com.amplio.amplio.service.impl;
 
+import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -40,5 +42,15 @@ public class UserServiceImpl implements UserService{
   public List<User> searchUser(String query) {
     List<User> users = userRepository.findTop10ByUserNameContainingIgnoreCase(query);
     return users;
+  }
+
+  @Override
+  public Set<User> getFollowers(Integer userId) {
+    Set<User> followers = null;
+    User user = userRepository.findUserByUserId(userId);
+    if(user != null){
+      followers = user.getFollowers();
+    }
+    return followers;
   }
 }

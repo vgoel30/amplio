@@ -1,5 +1,6 @@
 package com.amplio.amplio.repository;
 
+import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.User;
 import org.springframework.data.repository.CrudRepository;
 
