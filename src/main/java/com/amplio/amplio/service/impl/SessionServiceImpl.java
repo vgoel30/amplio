@@ -27,7 +27,8 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public User registerUser(RegisterForm registerForm) {
         String userName = registerForm.getUserName();
-        if(userRepository.getUserByUsername(userName) != null){
+        User existingUser = userRepository.findByUserName(userName);
+        if(existingUser != null){
             return null;
         }
         String firstName = registerForm.getFirstName();
@@ -46,13 +47,15 @@ public class SessionServiceImpl implements SessionService {
   public User loginUser(LoginForm loginForm, HttpServletRequest request, HttpSession session) {
     session.invalidate();
     HttpSession newSession = request.getSession();
-    String userName = loginForm.getUsername();
+    String userName = loginForm.getUserName();
     String password = loginForm.getPassword();
-    User user = userRepository.getUserByUsername(userName);
+    User user = userRepository.findByUserName(userName);
     if(user == null) {
       return null;
     }
-    if(user.getPassword().equals(password)) {
+    Boolean v = passwordEncoder.matches(password, user.getPassword());
+    System.out.println(v);
+    if(v) {
       newSession.setAttribute("user", user);
       return user;
     }

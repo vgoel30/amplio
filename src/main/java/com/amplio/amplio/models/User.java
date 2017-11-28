@@ -10,9 +10,9 @@ import java.util.*;
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID userId;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  private Integer userId;
   @NotNull
   private String firstName;
   @NotNull
@@ -21,7 +21,7 @@ public class User {
   private String email;
   @NotNull
   @Column(unique = true)
-  private String username;
+  private String userName;
   @NotNull
   private String password;
   @NotNull
@@ -54,7 +54,7 @@ public class User {
     firstName = "";
     lastName = "";
     email = "";
-    username = "";
+    userName = "";
     password = "";
     isPremium = false;
   }
@@ -63,16 +63,16 @@ public class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
-    this.username = username;
+    this.userName = username;
     this.password = password;
     this.isPremium = isPremium;
   }
 
-  public UUID getUserId() {
+  public Integer getUserId() {
     return userId;
   }
 
-  public void setUserId(UUID userId) {
+  public void setUserId(Integer userId) {
     this.userId = userId;
   }
 
@@ -101,11 +101,11 @@ public class User {
   }
 
   public String getUsername() {
-    return username;
+    return userName;
   }
 
   public void setUsername(String username) {
-    this.username = username;
+    this.userName = username;
   }
 
   public String getPassword() {
