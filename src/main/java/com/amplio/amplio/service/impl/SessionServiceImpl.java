@@ -44,16 +44,15 @@ public class SessionServiceImpl implements SessionService {
   }
 
   @Override
-  public User loginUser(LoginForm loginForm, HttpServletRequest request, HttpSession session) {
-    session.invalidate();
-    HttpSession newSession = request.getSession();
+  public User loginUser(LoginForm loginForm, HttpServletRequest request) {
+    HttpSession session = request.getSession();
     String userName = loginForm.getUserName();
     String password = loginForm.getPassword();
     User user = userRepository.findByUserName(userName);
 
     if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
-        newSession.setAttribute("user", user);
+        session.setAttribute("user", user);
       } else {
         user = null;
       }

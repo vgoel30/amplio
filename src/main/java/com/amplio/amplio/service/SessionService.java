@@ -6,12 +6,11 @@ import com.amplio.amplio.models.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public interface SessionService {
   User registerUser(RegisterForm registerForm);
 
-  User loginUser(LoginForm loginForm, HttpServletRequest request, HttpSession session);
+  User loginUser(LoginForm loginForm, HttpServletRequest request);
 
   String logoutUser(HttpServletRequest request, HttpServletResponse response);
 }

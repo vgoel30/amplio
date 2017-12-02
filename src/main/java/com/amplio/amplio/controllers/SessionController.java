@@ -36,8 +36,9 @@ public class SessionController {
 
   @RequestMapping(path = "/login", method = RequestMethod.POST)
   public ResponseEntity<User> login(@RequestBody LoginForm loginForm, HttpServletRequest request, HttpSession session) {
+    session.invalidate();
     HttpStatus status;
-    User user = sessionService.loginUser(loginForm, request, session);
+    User user = sessionService.loginUser(loginForm, request);
     if(user == null) {
       status = HttpStatus.FORBIDDEN;
     } else {
@@ -48,6 +49,7 @@ public class SessionController {
 
   @RequestMapping(path = "/logout", method = RequestMethod.POST)
   public String logout(HttpServletRequest request, HttpServletResponse response) {
+    HttpSession session = request.getSession();
     return sessionService.logoutUser(request, response);
   }
 }
