@@ -1,10 +1,12 @@
 package com.amplio.amplio.models;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Follower {
+  @Id
   @NotNull
   private Integer userId;
   @NotNull

@@ -84,9 +84,9 @@ public class UserController {
   }
 
   @RequestMapping(path = "/follow", method = RequestMethod.POST)
-  public ResponseEntity<Set<User>> addFollowers(@RequestBody User user, HttpSession session) {
+  public ResponseEntity<Set<Follower>> addFollowers(@RequestBody User user, HttpSession session) {
     HttpStatus status;
-    Set<User> following = userService.addFollower(session, user.getUserId());
+    Set<Follower> following = userService.addFollower(session, user.getUserId());
 
     if(following == null) {
       status = HttpStatus.UNAUTHORIZED;
@@ -94,7 +94,7 @@ public class UserController {
       status = HttpStatus.OK;
     }
 
-    return new ResponseEntity<Set<User>>(following, status);
+    return new ResponseEntity<Set<Follower>>(following, status);
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)
