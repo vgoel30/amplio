@@ -15,14 +15,6 @@ public class Playlist extends SongCollection {
   @NotNull
   private boolean isPublic;
 
-  public void addSong(Song song) {
-    getSongs().add(song);
-  }
-
-  public void removeSong(Song song) {
-    getSongs().remove(song);
-  }
-
   public String getImage() {
     return image;
   }

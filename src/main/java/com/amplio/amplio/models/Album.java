@@ -3,8 +3,7 @@ package com.amplio.amplio.models;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 public class Album extends SongCollection {
@@ -12,12 +11,14 @@ public class Album extends SongCollection {
   @NotNull
   @OneToOne
   private Artist artist;
-  private SimpleDateFormat date;
+  private Date date;
 
-  public Album(Artist artist, SimpleDateFormat date, List<Song> songs, String title) {
+  public Album() {
+  }
+
+  public Album(Artist artist, Date date, String title) {
     this.artist = artist;
     this.date = date;
-    setSongs(songs);
     setTitle(title);
   }
 
@@ -33,11 +34,11 @@ public class Album extends SongCollection {
     this.artist = artist;
   }
 
-  public SimpleDateFormat getDate() {
+  public Date getDate() {
     return date;
   }
 
-  public void setDate(SimpleDateFormat date) {
+  public void setDate(Date date) {
     this.date = date;
   }
 }

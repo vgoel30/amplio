@@ -22,7 +22,6 @@ public class Advertiser {
   @NotNull
   private String email;
 
-  /* TODO: Use the PasswordEncoder interface */
   @NotNull
   private String password;
 

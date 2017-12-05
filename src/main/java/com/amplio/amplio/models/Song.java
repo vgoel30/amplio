@@ -25,7 +25,7 @@ public class Song {
   private Set<GenreEnum> GenreEnum;
 
   @NotNull
-  @OneToMany
+  @ManyToMany
   private List<Artist> artists;
 
   @NotNull
@@ -34,7 +34,11 @@ public class Song {
 
   @NotNull
   private Integer duration;
+  @Column(columnDefinition = "LONGTEXT")
   private String lyrics;
+
+  public Song() {
+  }
 
   public Song(String songName, Integer numberPlays, Set<GenreEnum> GenreEnum, List<Artist> artists, Album album,
               Integer duration) {

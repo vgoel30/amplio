@@ -11,16 +11,12 @@ public class Artist {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-//  @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private Integer artistID;
 
   @NotNull
   private String name;
   private String bibliography;
 
-  @NotNull
-  @OneToMany
-  private Set<Album> albums;
 
   @ManyToMany(cascade = CascadeType.ALL)
   private Set<Concert> concerts;
@@ -31,10 +27,12 @@ public class Artist {
   @OneToMany
   private List<Song> uploadRequests;
 
-  public Artist(String name, String bibliography, Set<Album> albums, Set<Concert> concerts) {
+  public Artist() {
+  }
+
+  public Artist(String name, String bibliography, Set<Concert> concerts) {
     this.name = name;
     this.bibliography = bibliography;
-    this.albums = albums;
     this.concerts = concerts;
   }
 
@@ -60,14 +58,6 @@ public class Artist {
 
   public void setBibliography(String bibliography) {
     this.bibliography = bibliography;
-  }
-
-  public Set<Album> getAlbums() {
-    return albums;
-  }
-
-  public void setAlbums(HashSet<Album> albums) {
-    this.albums = albums;
   }
 
   @JoinTable(

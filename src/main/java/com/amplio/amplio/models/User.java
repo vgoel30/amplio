@@ -267,12 +267,4 @@ public class User {
     }
     songHistory.add(song);
   }
-
-  //TODO: Methods like isFollower etc.
-
-    /*
-    * FUTURE BUILDS
-    * BillingDetails
-    * Login with FB?
-     */
 }

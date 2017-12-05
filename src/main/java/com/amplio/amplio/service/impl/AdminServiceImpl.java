@@ -2,10 +2,7 @@ package com.amplio.amplio.service.impl;
 
 import com.amplio.amplio.forms.AlbumForm;
 import com.amplio.amplio.forms.ArtistForm;
-import com.amplio.amplio.models.Album;
-import com.amplio.amplio.models.Artist;
-import com.amplio.amplio.models.Concert;
-import com.amplio.amplio.models.Song;
+import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.AlbumRepository;
 import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.SongRepository;
@@ -13,10 +10,9 @@ import com.amplio.amplio.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -36,9 +32,8 @@ public class AdminServiceImpl implements AdminService {
       return null;
     }
 
-    Set<Album> albums = new HashSet<Album>();
     Set<Concert> concerts = new HashSet<Concert>();
-    Artist artist = new Artist(name, bibliography, albums, concerts);
+    Artist artist = new Artist(name, bibliography, concerts);
     artistRepository.save(artist);
     return artist;
   }
@@ -46,7 +41,14 @@ public class AdminServiceImpl implements AdminService {
   @Override
   public Album addAlbum(AlbumForm albumForm) {
     Artist artist = artistRepository.getArtistByArtistID(albumForm.getArtistID());
-    SimpleDateFormat date = new SimpleDateFormat(albumForm.getDate());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
+    Date date = null;
+    try {
+      date = dateFormat.parse(albumForm.getDate());
+    } catch(ParseException e) {
+      System.out.println("Date parse error");
+      date = new Date();
+    }
     String title = albumForm.getTitle();
     List<Song> songs = albumForm.getSongs();
 
@@ -54,18 +56,26 @@ public class AdminServiceImpl implements AdminService {
       return null;
     }
 
-    Album album = new Album(artist, date, songs, title);
+    Album album = new Album(artist, date, title);
+
+    albumRepository.save(album);
+
+    Set<GenreEnum> genres = new HashSet<GenreEnum>();
+    for(String genre : albumForm.getGenres()) {
+      genres.add(GenreEnum.valueOf(genre));
+    }
 
     for(Song song : songs) {
-      //TODO: Figure out artists references
       song.setAlbum(album);
+      List<Artist> artists = new ArrayList<Artist>();
+      artists.add(artist);
+      song.setArtists(artists);
+      song.setNumberPlays(0);
+
+      song.setGenreEnum(genres);
       songRepository.save(song);
     }
 
-    artist.getAlbums().add(album);
-    artistRepository.save(artist);
-
-    albumRepository.save(album);
     return album;
   }
 }
