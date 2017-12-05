@@ -8,4 +8,5 @@ import javax.servlet.http.HttpSession;
 public interface PlaylistService {
   Playlist createPlaylist(PlaylistForm playlistForm, HttpSession session);
   Playlist getPlaylist(Integer playlistId);
+  Playlist deletePlaylist(Integer playlistId, HttpSession session);
 }
