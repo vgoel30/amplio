@@ -12,6 +12,8 @@ public class Playlist{
   @NotNull
   private String title;
 
+  private String description;
+
   private String image;
 
   @NotNull
@@ -20,6 +22,13 @@ public class Playlist{
 
   @NotNull
   private boolean isPublic;
+
+  public Playlist(String title, String description, String image, User owner) {
+    this.title = title;
+    this.description = description;
+    this.image = image;
+    this.owner = owner;
+  }
 
   public Integer getPlaylistId() {
     return playlistId;
@@ -35,6 +44,14 @@ public class Playlist{
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public String getImage() {
