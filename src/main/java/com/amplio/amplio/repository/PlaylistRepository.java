@@ -1,6 +1,9 @@
 package com.amplio.amplio.repository;
 
 
-public interface PlaylistRepository extends SongCollectionRepository {
+import com.amplio.amplio.models.Playlist;
+import org.springframework.data.repository.CrudRepository;
 
+public interface PlaylistRepository extends CrudRepository<Playlist, Integer> {
+  Playlist getPlaylistByPlaylistId(Integer playlistId);
 }
