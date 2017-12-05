@@ -13,7 +13,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
   @Override
   public Playlist getPlaylist(Integer playlistId) {
-    Playlist playlist = (Playlist) playlistRepository.findByCollectionId(playlistId);
+    Playlist playlist = (Playlist) playlistRepository.getPlaylistByPlaylistId(playlistId);
     return playlist;
   }
 }
