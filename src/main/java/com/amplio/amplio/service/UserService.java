@@ -19,4 +19,6 @@ public interface UserService {
   Set<Follower> addFollower(HttpSession session, Integer userId);
 
   Set<Follower> getFollowers(Integer userId);
+
+  Boolean deleteUser(HttpSession session);
 }

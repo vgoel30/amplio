@@ -3,6 +3,7 @@ package com.amplio.amplio.service.impl;
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
+import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.UserRepository;
 import com.amplio.amplio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private PlaylistRepository playlistRepository;
 
   public User getUser(Integer userId) {
     User user = userRepository.findUserByUserId(userId);
@@ -54,6 +58,48 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public Boolean deleteUser(HttpSession session) {
+    Boolean deletionSuccess = false;
+    User currentUser = (User) session.getAttribute("user");
+    if(currentUser != null){
+      Integer userToDeleteId = currentUser.getUserId();
+
+      //1. delete this user from the following list of their followers
+      for(Follower follower : currentUser.getFollowers()){
+        Integer followerId = follower.getUserId();
+        User followerAsUser = userRepository.findUserByUserId(followerId);
+        Set<Follower> followingSet = followerAsUser.getFollowing();
+        for(Follower following: followingSet){
+          if(following.getUserId().equals(userToDeleteId)){
+            followingSet.remove(following);
+            break;
+          }
+        }
+      }
+
+      //2. delete this user from the followers list of the people that they are following
+      for(Follower following : currentUser.getFollowing()){
+        Integer followingId = following.getUserId();
+        User followingAsUser = userRepository.findUserByUserId(followingId);
+        Set<Follower> followerSet = followingAsUser.getFollowers();
+        for(Follower follower : followerSet){
+          if(follower.getUserId().equals(userToDeleteId)){
+            followerSet.remove(follower);
+            break;
+          }
+        }
+      }
+
+      userRepository.delete(currentUser);
+      deletionSuccess = true;
+
+      //TODO: Delete the playlists for this user.
+    }
+    return deletionSuccess;
+  }
+
+
+  @Override
   public Set<Follower> addFollower(HttpSession session, Integer userId) {
     Set<Follower> followers = null;
     User currentUser = (User) session.getAttribute("user");
@@ -66,4 +112,6 @@ public class UserServiceImpl implements UserService {
     }
     return followers;
   }
+
+
 }

@@ -4,6 +4,7 @@ import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.impl.UserServiceImpl;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,14 @@ import java.util.Set;
 public class UserController {
   @Autowired
   private UserServiceImpl userService;
+
+  @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
+  public ResponseEntity<Boolean> deleteUser(HttpSession session){
+    Boolean deletionSuccess = false;
+    HttpStatus status = null;
+
+    return new ResponseEntity<Boolean>(deletionSuccess, status);
+  }
 
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
   public ResponseEntity<User> getUser(@PathVariable String id) {
