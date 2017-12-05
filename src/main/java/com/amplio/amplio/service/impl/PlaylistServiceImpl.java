@@ -26,6 +26,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     if(playlistOwner != null){
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
+      playlistRepository.save(newPlaylist);
     }
 
     return newPlaylist;
