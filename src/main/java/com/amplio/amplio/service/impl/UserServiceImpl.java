@@ -90,10 +90,14 @@ public class UserServiceImpl implements UserService {
         }
       }
 
+      //3: Delete the playlists for this user.
+      List<Playlist> userPlaylists = currentUser.getPlaylists();
+      for(Playlist userPlaylist : userPlaylists){
+        playlistRepository.delete(userPlaylist);
+      }
+
       userRepository.delete(currentUser);
       deletionSuccess = true;
-
-      //TODO: Delete the playlists for this user.
     }
     return deletionSuccess;
   }
