@@ -1,5 +1,6 @@
 package com.amplio.amplio.controllers;
 
+import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.service.impl.PlaylistServiceImpl;
@@ -28,6 +29,28 @@ public class PlaylistController {
     }
 
     return new ResponseEntity<Playlist>(createdPlaylist, status);
+  }
+
+  @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Playlist> editPlaylist(@PathVariable String id, @RequestBody EditPlaylistForm editPlaylistForm, HttpSession session){
+    Playlist editedPlaylist = null;
+    HttpStatus status;
+    Integer playlistId;
+    try{
+      playlistId = Integer.parseInt(id);
+    } catch(NumberFormatException numberFormatException){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Playlist>(editedPlaylist, status);
+    }
+    editedPlaylist = playlistService.editPlaylist(playlistId, editPlaylistForm, session);
+
+    if(editedPlaylist == null){
+      status = HttpStatus.BAD_REQUEST;
+    } else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Playlist>(editedPlaylist, status);
   }
 
   @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
