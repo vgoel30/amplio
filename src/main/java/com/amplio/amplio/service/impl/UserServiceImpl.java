@@ -34,6 +34,15 @@ public class UserServiceImpl implements UserService {
     return currentUser.getPlaylists();
   }
 
+
+  public Set<Playlist> getFollowedPlaylists(HttpSession session) {
+    User currentUser = (User) session.getAttribute("user");
+    if(currentUser == null) {
+      return null;
+    }
+    return currentUser.getFollowedPlaylists();
+  }
+
   @Override
   public List<User> searchUser(String query) {
     List<User> users = userRepository.findTop10ByUserNameContainingIgnoreCase(query);

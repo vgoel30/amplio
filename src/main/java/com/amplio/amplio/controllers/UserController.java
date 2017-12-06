@@ -130,7 +130,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)
-  public ResponseEntity<Set<Playlist>> getPlaylist(HttpSession session) {
+  public ResponseEntity<Set<Playlist>> getPlaylists(HttpSession session) {
     HttpStatus status;
     Set<Playlist> userPlaylists = userService.getPlaylists(session);
 
@@ -141,5 +141,19 @@ public class UserController {
     }
 
     return new ResponseEntity<Set<Playlist>>(userPlaylists, status);
+  }
+
+  @RequestMapping(path = "/followedplaylists", method = RequestMethod.GET)
+  public ResponseEntity<Set<Playlist>> getFollowedPlaylists(HttpSession session) {
+    HttpStatus status;
+    Set<Playlist> followedPlaylists = userService.getFollowedPlaylists(session);
+
+    if(followedPlaylists == null) {
+      status = HttpStatus.UNAUTHORIZED;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Set<Playlist>>(followedPlaylists, status);
   }
 }
