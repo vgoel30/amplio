@@ -75,10 +75,18 @@ public class UserController {
     return new ResponseEntity<List<User>>(users, status);
   }
 
-  @RequestMapping(path = "/follow", method = RequestMethod.POST)
-  public ResponseEntity<Set<Follower>> addFollower(@RequestBody User user, HttpSession session) {
+  @RequestMapping(path = "/follow/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Set<Follower>> follow(@PathVariable String userId, HttpSession session) {
     HttpStatus status;
-    Set<Follower> following = userService.addFollower(session, user.getUserId());
+    Integer followId;
+    Set<Follower> following = null;
+
+    try {
+      followId = Integer.parseInt(userId);
+      following = userService.follow(session, followId);
+    } catch(NumberFormatException numberFormatException) {
+      status = HttpStatus.BAD_REQUEST;
+    }
 
     if(following == null) {
       status = HttpStatus.UNAUTHORIZED;
@@ -105,8 +113,25 @@ public class UserController {
     return new ResponseEntity<Set<Follower>>(followers, status);
   }
 
-  @RequestMapping(path = "/followers/remove/{id}", method = RequestMethod.GET)
-  public ResponseEntity<Follower> removeFollower(@PathVariable String followerId, HttpSession session){
+  @RequestMapping(path = "/following", method = RequestMethod.GET)
+  public ResponseEntity<Set<Follower>> getFollowing(HttpSession session) {
+    Set<Follower> following = null;
+
+    HttpStatus status;
+
+    following = userService.getFollowing(session);
+
+    if(following == null) {
+      status = HttpStatus.NOT_FOUND;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Set<Follower>>(following, status);
+  }
+
+  @RequestMapping(path = "/unfollow/{id}", method = RequestMethod.GET)
+  public ResponseEntity<Follower> unFollow(@PathVariable String followerId, HttpSession session){
     HttpStatus status;
     Follower followerToRemove = null;
     Integer followerToRemoveId;
@@ -118,7 +143,7 @@ public class UserController {
       return new ResponseEntity<Follower>(followerToRemove, status);
     }
 
-    followerToRemove = userService.deleteFollower(followerToRemoveId, session);
+    followerToRemove = userService.unFollow(followerToRemoveId, session);
 
     if(followerToRemove == null){
       status = HttpStatus.NOT_FOUND;

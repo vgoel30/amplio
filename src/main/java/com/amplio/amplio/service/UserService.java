@@ -13,11 +13,11 @@ public interface UserService {
   User getUser(Integer userId);
 
   Set<Playlist> getPlaylists(HttpSession session);
-
   Set<Playlist> getFollowedPlaylists(HttpSession session);
   List<User> searchUser(String query);
-  Set<Follower> addFollower(HttpSession session, Integer userId);
+  Set<Follower> follow(HttpSession session, Integer userId);
+  Follower unFollow(Integer followerId, HttpSession session);
   Set<Follower> getFollowers(HttpSession session);
-  Follower deleteFollower(Integer followerId, HttpSession session);
+  Set<Follower> getFollowing(HttpSession session);
   Boolean deleteUser(HttpSession session);
 }

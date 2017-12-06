@@ -21,11 +21,13 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private PlaylistRepository playlistRepository;
 
+  @Override
   public User getUser(Integer userId) {
     User user = userRepository.findUserByUserId(userId);
     return user;
   }
 
+  @Override
   public Set<Playlist> getPlaylists(HttpSession session) {
     User currentUser = (User) session.getAttribute("user");
     if(currentUser == null) {
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService {
     return currentUser.getPlaylists();
   }
 
-
+  @Override
   public Set<Playlist> getFollowedPlaylists(HttpSession session) {
     User currentUser = (User) session.getAttribute("user");
     if(currentUser == null) {
@@ -60,22 +62,22 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Follower deleteFollower(Integer followerId, HttpSession session){
+  public Set<Follower> getFollowing(HttpSession session) {
+    Set<Follower> following = null;
+    User user = (User)session.getAttribute("user");
+    if(user != null) {
+      following = user.getFollowing();
+    }
+    return following;
+  }
+
+  @Override
+  public Follower unFollow(Integer followingId, HttpSession session){
     Follower followerToRemove = null;
     User user = (User)session.getAttribute("user");
+    User following = userRepository.findUserByUserId(followingId);
     if(user != null){
-      Set<Follower> followersSet = user.getFollowers();
-      if(followersSet != null) {
-        for(Follower follower : followersSet) {
-          if(follower.getUserId().equals(followerId)) {
-            followerToRemove = follower;
-            break;
-          }
-        }
-      }
-      if(followerToRemove != null){
-        followersSet.remove(followerToRemove);
-      }
+      user.unfollow(following);
     }
     return followerToRemove;
   }
@@ -127,17 +129,17 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public Set<Follower> addFollower(HttpSession session, Integer userId) {
-    Set<Follower> followers = null;
+  public Set<Follower> follow(HttpSession session, Integer userId) {
+    Set<Follower> following = null;
     User currentUser = (User) session.getAttribute("user");
     if(currentUser != null) {
       User user = userRepository.findUserByUserId(userId);
       if(user != null) {
-        followers = currentUser.follow(user);
+        following = currentUser.follow(user);
         userRepository.save(currentUser);
       }
     }
-    return followers;
+    return following;
   }
 
 
