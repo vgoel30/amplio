@@ -23,10 +23,11 @@ public class Album {
   public Album() {
   }
 
-  public Album(Artist artist, Date date, String title) {
+  public Album(Artist artist, Date date, String title, String image) {
     this.artist = artist;
     this.date = date;
     this.title = title;
+    this.image = image;
   }
 
   public Album(Artist artist) {

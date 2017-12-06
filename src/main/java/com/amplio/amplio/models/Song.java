@@ -37,17 +37,20 @@ public class Song {
   @Column(columnDefinition = "LONGTEXT")
   private String lyrics;
 
+  private String image;
+
   public Song() {
   }
 
   public Song(String songName, Integer numberPlays, Set<GenreEnum> GenreEnum, List<Artist> artists, Album album,
-              Integer duration) {
+              Integer duration, String image) {
     this.songName = songName;
     this.numberPlays = numberPlays;
     this.GenreEnum = GenreEnum;
     this.artists = artists;
     this.album = album;
     this.duration = duration;
+    this.image = image;
   }
 
   public String getSongName() {
@@ -112,5 +115,13 @@ public class Song {
 
   public void incrementNumPlays() {
     this.numberPlays++;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 }

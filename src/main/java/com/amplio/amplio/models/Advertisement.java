@@ -1,45 +1,40 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Advertisement {
 
   // Attributes
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID adId;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer adId;
 
   @Enumerated(EnumType.STRING)
   @ElementCollection(targetClass = AdCategoryEnum.class)
   private List<AdCategoryEnum> categories;
 
-  @Lob
-  private byte[] image;
+  private String image;
 
   private Double price;
 
   private Integer numClicks;
 
   // Constructors
-  public Advertisement(ArrayList<AdCategoryEnum> categories, byte[] image, Double price, Integer numClicks) {
+  public Advertisement(ArrayList<AdCategoryEnum> categories, String image, Double price, Integer numClicks) {
     this.categories = categories;
     this.image = image;
     this.price = price;
   }
 
   // Accessor and Mutator Methods
-  public UUID getAdId() {
+  public Integer getAdId() {
     return adId;
   }
 
-  public void setAdId(UUID adId) {
+  public void setAdId(Integer adId) {
     this.adId = adId;
   }
 
@@ -51,11 +46,11 @@ public class Advertisement {
     this.categories = categories;
   }
 
-  public byte[] getImage() {
+  public String getImage() {
     return image;
   }
 
-  public void setImage(byte[] image) {
+  public void setImage(String image) {
     this.image = image;
   }
 

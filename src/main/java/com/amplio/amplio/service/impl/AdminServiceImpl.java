@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     Set<Concert> concerts = new HashSet<Concert>();
-    Artist artist = new Artist(name, bibliography, concerts);
+    Artist artist = new Artist(name, bibliography, concerts, "");
     artistRepository.save(artist);
     return artist;
   }
@@ -56,7 +56,7 @@ public class AdminServiceImpl implements AdminService {
       return null;
     }
 
-    Album album = new Album(artist, date, title);
+    Album album = new Album(artist, date, title, "");
 
     albumRepository.save(album);
 

@@ -27,13 +27,16 @@ public class Artist {
   @OneToMany
   private List<Song> uploadRequests;
 
+  private String image;
+
   public Artist() {
   }
 
-  public Artist(String name, String bibliography, Set<Concert> concerts) {
+  public Artist(String name, String bibliography, Set<Concert> concerts, String image) {
     this.name = name;
     this.bibliography = bibliography;
     this.concerts = concerts;
+    this.image = image;
   }
 
   public Integer getArtistID() {
@@ -89,4 +92,11 @@ public class Artist {
     this.uploadRequests = uploadRequests;
   }
 
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
 }
