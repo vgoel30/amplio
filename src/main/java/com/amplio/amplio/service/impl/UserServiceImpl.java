@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,17 +27,11 @@ public class UserServiceImpl implements UserService {
   }
 
   public Set<Playlist> getPlaylists(HttpSession session) {
-    Set<Playlist> userPlaylist = null;
     User currentUser = (User) session.getAttribute("user");
-    if(currentUser != null) {
-      Set<Playlist> playlists = currentUser.getPlaylists();
-      if(playlists == null) {
-        userPlaylist = new HashSet<Playlist>();
-      } else {
-        userPlaylist = playlists;
-      }
+    if(currentUser == null) {
+      return null;
     }
-    return userPlaylist;
+    return currentUser.getPlaylists();
   }
 
   @Override
@@ -63,10 +56,12 @@ public class UserServiceImpl implements UserService {
     User user = (User)session.getAttribute("user");
     if(user != null){
       Set<Follower> followersSet = user.getFollowers();
-      for(Follower follower : followersSet){
-        if(follower.getUserId().equals(followerId)){
-          followerToRemove = follower;
-          break;
+      if(followersSet != null) {
+        for(Follower follower : followersSet) {
+          if(follower.getUserId().equals(followerId)) {
+            followerToRemove = follower;
+            break;
+          }
         }
       }
       if(followerToRemove != null){
