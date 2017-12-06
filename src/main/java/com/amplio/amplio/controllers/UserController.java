@@ -76,7 +76,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/follow", method = RequestMethod.POST)
-  public ResponseEntity<Set<Follower>> addFollowers(@RequestBody User user, HttpSession session) {
+  public ResponseEntity<Set<Follower>> addFollower(@RequestBody User user, HttpSession session) {
     HttpStatus status;
     Set<Follower> following = userService.addFollower(session, user.getUserId());
 

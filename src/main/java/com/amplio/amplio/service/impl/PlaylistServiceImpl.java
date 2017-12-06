@@ -43,7 +43,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     if(playlistToDelete != null){
       User playlistToDeleteOwner = playlistToDelete.getOwner();
       User sessionUser = (User)session.getAttribute("user");
-      if(!playlistToDeleteOwner.equals(sessionUser)){
+      if(!playlistToDeleteOwner.getUserId().equals(sessionUser.getUserId())){
         playlistToDelete = null;
       }
       else{
