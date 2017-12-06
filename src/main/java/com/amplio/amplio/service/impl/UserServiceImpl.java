@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,13 +27,13 @@ public class UserServiceImpl implements UserService {
     return user;
   }
 
-  public List<Playlist> getPlaylists(HttpSession session) {
-    List<Playlist> userPlaylist = null;
+  public Set<Playlist> getPlaylists(HttpSession session) {
+    Set<Playlist> userPlaylist = null;
     User currentUser = (User) session.getAttribute("user");
     if(currentUser != null) {
-      List<Playlist> playlists = currentUser.getPlaylists();
+      Set<Playlist> playlists = currentUser.getPlaylists();
       if(playlists == null) {
-        userPlaylist = new ArrayList<Playlist>();
+        userPlaylist = new HashSet<Playlist>();
       } else {
         userPlaylist = playlists;
       }
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
       }
 
       //3: Delete the playlists for this user.
-      List<Playlist> userPlaylists = currentUser.getPlaylists();
+      Set<Playlist> userPlaylists = currentUser.getPlaylists();
       for(Playlist userPlaylist : userPlaylists){
         playlistRepository.delete(userPlaylist);
       }

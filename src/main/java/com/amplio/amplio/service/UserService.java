@@ -11,7 +11,8 @@ import java.util.Set;
 
 public interface UserService {
   User getUser(Integer userId);
-  List<Playlist> getPlaylists(HttpSession session);
+
+  Set<Playlist> getPlaylists(HttpSession session);
   List<User> searchUser(String query);
   Set<Follower> addFollower(HttpSession session, Integer userId);
   Set<Follower> getFollowers(HttpSession session);

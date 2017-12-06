@@ -28,27 +28,30 @@ public class User {
   private Boolean isPremium;
   @Lob
   private byte[] profilePicture;
-  @OneToMany
+  @ManyToMany
   private Set<Follower> followers;
-  @OneToMany
+  @ManyToMany
   private Set<Follower> following;
-  @OneToMany
+  @ManyToMany
   private Set<Song> savedSongs;
-  @OneToMany
+  @ManyToMany
   private Set<Song> likedSongs;
-  @OneToMany
+  @ManyToMany
   private Set<Song> dislikedSongs;
-  @OneToMany
+  @ManyToMany
   private List<Song> songHistory;
   @OneToOne
   private SongQueue songQueue;
-  @OneToMany
+  @ManyToMany
   private Set<Album> favoriteAlbums;
   @OneToMany
-  private List<Playlist> playlists;
+  private Set<Playlist> playlists;
   @ElementCollection(targetClass = AdCategoryEnum.class)
   @Enumerated(EnumType.STRING)
   private List<AdCategoryEnum> adPrefs;
+  @ManyToMany
+  private Set<Playlist> followedPlaylists;
+
 
   public User() {
     firstName = "";
@@ -57,6 +60,8 @@ public class User {
     userName = "";
     password = "";
     isPremium = false;
+    playlists = new HashSet<Playlist>();
+    followedPlaylists = new HashSet<Playlist>();
   }
 
   public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
@@ -66,6 +71,8 @@ public class User {
     this.userName = username;
     this.password = password;
     this.isPremium = isPremium;
+    playlists = new HashSet<Playlist>();
+    followedPlaylists = new HashSet<Playlist>();
   }
 
   public Integer getUserId() {
@@ -132,11 +139,11 @@ public class User {
     this.profilePicture = profilePicture;
   }
 
-  public List<Playlist> getPlaylists() {
+  public Set<Playlist> getPlaylists() {
     return playlists;
   }
 
-  public void setPlaylists(List<Playlist> playlists) {
+  public void setPlaylists(Set<Playlist> playlists) {
     this.playlists = playlists;
   }
 
@@ -266,5 +273,13 @@ public class User {
       songHistory = new ArrayList<>();
     }
     songHistory.add(song);
+  }
+
+  public Set<Playlist> getFollowedPlaylists() {
+    return followedPlaylists;
+  }
+
+  public void setFollowedPlaylists(Set<Playlist> followedPlaylists) {
+    this.followedPlaylists = followedPlaylists;
   }
 }
