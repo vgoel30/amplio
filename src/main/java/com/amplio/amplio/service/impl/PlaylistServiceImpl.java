@@ -24,6 +24,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     User playlistOwner = (User)session.getAttribute("user");
 
     if(playlistOwner != null){
+      playlistOwner.getPlaylists().add(newPlaylist);
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
       playlistRepository.save(newPlaylist);
     }
