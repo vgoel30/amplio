@@ -27,7 +27,7 @@ public class SessionController {
     HttpStatus status;
     User user = sessionService.registerUser(registerForm);
     if(user == null) {
-      status = HttpStatus.FORBIDDEN;
+      status = HttpStatus.CONFLICT;
     } else {
       status = HttpStatus.CREATED;
     }
