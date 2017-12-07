@@ -46,6 +46,30 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public Set<Playlist> followPlaylist(HttpSession session, Integer playlistId) {
+    Playlist playlistToFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
+    User currentUser = (User) session.getAttribute("user");
+    if(currentUser == null || playlistToFollow == null) {
+      return null;
+    }
+    Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
+    followedPlaylists.add(playlistToFollow);
+    return followedPlaylists;
+  }
+
+  @Override
+  public Set<Playlist> unFollowPlaylist(HttpSession session, Integer playlistId) {
+    Playlist playlistToUnFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
+    User currentUser = (User) session.getAttribute("user");
+    if(currentUser == null || playlistToUnFollow == null) {
+      return null;
+    }
+    Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
+    followedPlaylists.remove(playlistToUnFollow);
+    return followedPlaylists;
+  }
+
+  @Override
   public List<User> searchUser(String query) {
     List<User> users = userRepository.findTop10ByUserNameContainingIgnoreCase(query);
     return users;
