@@ -2,6 +2,8 @@ package com.amplio.amplio.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Playlist{
@@ -11,6 +13,9 @@ public class Playlist{
 
   @NotNull
   private String title;
+
+  @ManyToMany
+  private List<Song> songs;
 
   private String description;
 
@@ -28,6 +33,7 @@ public class Playlist{
     this.description = description;
     this.image = image;
     this.owner = owner;
+    this.songs = new ArrayList<>();
   }
 
   public Integer getPlaylistId() {
@@ -44,6 +50,14 @@ public class Playlist{
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public List<Song> getSongs() {
+    return songs;
+  }
+
+  public void setSongs(List<Song> songs) {
+    this.songs = songs;
   }
 
   public String getDescription() {
