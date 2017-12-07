@@ -99,5 +99,14 @@ public class PlaylistServiceImpl implements PlaylistService {
     return playlist;
   }
 
+  @Override
+  public Set<Playlist> getGeneratedPlaylists() {
+    User amplioUser = userRepository.findByUserName("Amplio");
+    Set<Playlist> generatedPlaylists = null;
 
+    if(amplioUser != null) {
+      generatedPlaylists = playlistRepository.getPlaylistsByOwner(amplioUser);
+    }
+    return generatedPlaylists;
+  }
 }

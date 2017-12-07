@@ -3,6 +3,7 @@ package com.amplio.amplio.controllers;
 import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
+import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.impl.PlaylistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/playlist")
@@ -100,9 +102,27 @@ public class PlaylistController {
     return new ResponseEntity<Playlist>(playlist, status);
   }
 
+  @RequestMapping(path = "/generated", method = RequestMethod.GET)
+  public ResponseEntity<Set<Playlist>> getGeneratedPLaylists(HttpSession session) {
+    User currentUser = (User) session.getAttribute("user");
+    Set<Playlist> generatedPlaylists = null;
+    HttpStatus status;
+
+    if(currentUser == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      generatedPlaylists = playlistService.getGeneratedPlaylists();
+      if(generatedPlaylists == null) {
+        status = HttpStatus.NO_CONTENT;
+      } else {
+        status = HttpStatus.OK;
+      }
+    }
+    return new ResponseEntity<Set<Playlist>>(generatedPlaylists, status);
+  }
+
   @RequestMapping(path = "/genre/{genreName}", method = RequestMethod.POST)
   public ResponseEntity<Playlist> generateGenrePlaylist(@PathVariable String genreName) {
     return new ResponseEntity<Playlist>(playlistService.generateGenrePlaylist(genreName),HttpStatus.OK);
   }
-
 }

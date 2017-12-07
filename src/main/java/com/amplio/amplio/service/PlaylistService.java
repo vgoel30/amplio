@@ -5,6 +5,7 @@ import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 
 import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 public interface PlaylistService {
   Playlist createPlaylist(PlaylistForm playlistForm, HttpSession session);
@@ -12,4 +13,6 @@ public interface PlaylistService {
   Playlist getPlaylist(Integer playlistId);
   Playlist deletePlaylist(Integer playlistId, HttpSession session);
   Playlist generateGenrePlaylist(String genre);
+
+  Set<Playlist> getGeneratedPlaylists();
 }
