@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     if(currentUser == null) {
       return null;
     }
-    return currentUser.getPlaylists();
+    return playlistRepository.getPlaylistsByOwner(currentUser);
   }
 
   @Override
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
       }
 
       //3: Delete the playlists for this user.
-      Set<Playlist> userPlaylists = currentUser.getPlaylists();
+      Set<Playlist> userPlaylists = playlistRepository.getPlaylistsByOwner(currentUser);
       for(Playlist userPlaylist : userPlaylists){
         playlistRepository.delete(userPlaylist);
       }

@@ -100,4 +100,9 @@ public class PlaylistController {
     return new ResponseEntity<Playlist>(playlist, status);
   }
 
+  @RequestMapping(path = "/genre/{genreName}", method = RequestMethod.POST)
+  public ResponseEntity<Playlist> generateGenrePlaylist(@PathVariable String genreName) {
+    return new ResponseEntity<Playlist>(playlistService.generateGenrePlaylist(genreName),HttpStatus.OK);
+  }
+
 }

@@ -44,8 +44,6 @@ public class User {
   private SongQueue songQueue;
   @ManyToMany
   private Set<Album> favoriteAlbums;
-  @OneToMany
-  private Set<Playlist> playlists;
   @ElementCollection(targetClass = AdCategoryEnum.class)
   @Enumerated(EnumType.STRING)
   private List<AdCategoryEnum> adPrefs;
@@ -60,7 +58,6 @@ public class User {
     userName = "";
     password = "";
     isPremium = false;
-    playlists = new HashSet<Playlist>();
     followedPlaylists = new HashSet<Playlist>();
   }
 
@@ -71,7 +68,6 @@ public class User {
     this.userName = username;
     this.password = password;
     this.isPremium = isPremium;
-    playlists = new HashSet<Playlist>();
     followedPlaylists = new HashSet<Playlist>();
   }
 
@@ -137,14 +133,6 @@ public class User {
 
   public void setProfilePicture(byte[] profilePicture) {
     this.profilePicture = profilePicture;
-  }
-
-  public Set<Playlist> getPlaylists() {
-    return playlists;
-  }
-
-  public void setPlaylists(Set<Playlist> playlists) {
-    this.playlists = playlists;
   }
 
   public Set<Follower> getFollowers() {

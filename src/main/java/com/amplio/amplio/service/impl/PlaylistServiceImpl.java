@@ -5,16 +5,23 @@ import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.PlaylistRepository;
+import com.amplio.amplio.repository.SongRepository;
+import com.amplio.amplio.repository.UserRepository;
 import com.amplio.amplio.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
   @Autowired
   private PlaylistRepository playlistRepository;
+  @Autowired
+  private SongRepository songRepository;
+  @Autowired
+  private UserRepository userRepository;
 
   @Override
   public Playlist createPlaylist(PlaylistForm playlistForm, HttpSession session) {
@@ -25,7 +32,6 @@ public class PlaylistServiceImpl implements PlaylistService {
     User playlistOwner = (User)session.getAttribute("user");
 
     if(playlistOwner != null){
-      playlistOwner.getPlaylists().add(newPlaylist);
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
       playlistRepository.save(newPlaylist);
     }
@@ -71,10 +77,27 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistToDelete = null;
       }
       else{
-        playlistToDeleteOwner.getPlaylists().remove(playlistToDelete);
         playlistRepository.delete(playlistToDelete);
       }
     }
     return playlistToDelete;
   }
+
+  @Override
+  public Playlist generateGenrePlaylist(String genre) {
+      User user = userRepository.findByUserName("Amplio");
+
+    Set<Integer> songIds = songRepository.getSongsByGenreEnum(genre);
+
+    Playlist playlist = new Playlist(genre,genre + " playlist", "" , user);
+    playlist.setPublic(true);
+    for(Integer songId: songIds) {
+      playlist.getSongs().add(songRepository.getSongBySongId(songId));
+    }
+    playlistRepository.save(playlist);
+
+    return playlist;
+  }
+
+
 }

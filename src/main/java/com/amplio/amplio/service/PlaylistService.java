@@ -11,4 +11,5 @@ public interface PlaylistService {
   Playlist editPlaylist(Integer playlistId, EditPlaylistForm editPlaylistForm, HttpSession session);
   Playlist getPlaylist(Integer playlistId);
   Playlist deletePlaylist(Integer playlistId, HttpSession session);
+  Playlist generateGenrePlaylist(String genre);
 }
