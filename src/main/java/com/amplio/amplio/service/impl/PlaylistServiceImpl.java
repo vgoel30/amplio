@@ -89,7 +89,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     Set<Integer> songIds = songRepository.getSongsByGenreEnum(genre);
 
-    Playlist playlist = new Playlist(genre,genre + " playlist", "" , user);
+    Playlist playlist = new Playlist(genre, genre + " playlist", "../../assets/images/genre/" + genre + ".JPG", user);
     playlist.setPublic(true);
     for(Integer songId: songIds) {
       playlist.getSongs().add(songRepository.getSongBySongId(songId));

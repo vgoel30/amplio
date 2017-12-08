@@ -24,7 +24,7 @@ public class AlbumForm {
     return artistId;
   }
 
-  public void setArtistID(int artistId) {
+  public void setArtistId(int artistId) {
     this.artistId = artistId;
   }
 
