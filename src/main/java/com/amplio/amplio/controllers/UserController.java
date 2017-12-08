@@ -2,6 +2,7 @@ package com.amplio.amplio.controllers;
 
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
+import com.amplio.amplio.models.Song;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,5 +181,33 @@ public class UserController {
     }
 
     return new ResponseEntity<Set<Playlist>>(followedPlaylists, status);
+  }
+
+  @RequestMapping(path = "/queue/add", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> addSongToQueue(Song songToAdd, HttpSession session){
+    HttpStatus status;
+    Boolean songAdded = userService.addSongToQueue(songToAdd, session);
+
+    if(songAdded == false){
+      status = HttpStatus.BAD_REQUEST;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(songAdded, status);
+  }
+
+  @RequestMapping(path = "/queue/delete", method = RequestMethod.DELETE)
+  public ResponseEntity<Boolean> deleteSongFromQueue(Song songToDelete, HttpSession session){
+    HttpStatus status;
+    Boolean songDeleted = userService.deleteSongFromQueue(songToDelete, session);
+
+    if(songDeleted == false){
+      status = HttpStatus.BAD_REQUEST;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(songDeleted, status);
   }
 }

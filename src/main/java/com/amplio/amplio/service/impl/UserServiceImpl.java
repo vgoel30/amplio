@@ -2,6 +2,7 @@ package com.amplio.amplio.service.impl;
 
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
+import com.amplio.amplio.models.Song;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.UserRepository;
@@ -151,7 +152,6 @@ public class UserServiceImpl implements UserService {
     return deletionSuccess;
   }
 
-
   @Override
   public Set<Follower> follow(HttpSession session, Integer userId) {
     Set<Follower> following = null;
@@ -166,5 +166,31 @@ public class UserServiceImpl implements UserService {
     return following;
   }
 
+  @Override
+  public Boolean addSongToQueue(Song songToAdd, HttpSession session) {
+    Boolean songAdded = false;
+    User user = (User)session.getAttribute("user");
 
+    if(user != null){
+      user.getSongQueue().getSongs().add(songToAdd);
+      userRepository.save(user);
+      songAdded = true;
+    }
+
+    return songAdded;
+  }
+
+  @Override
+  public Boolean deleteSongFromQueue(Song songToDelete, HttpSession session){
+    Boolean songDeleted = false;
+    User user = (User)session.getAttribute("user");
+
+    if(user != null){
+      songDeleted = user.getSongQueue().getSongs().remove(songToDelete);
+      userRepository.save(user);
+    }
+
+    return songDeleted;
+
+  }
 }

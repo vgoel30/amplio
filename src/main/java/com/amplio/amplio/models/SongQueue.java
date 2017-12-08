@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +37,7 @@ public class SongQueue {
 
   public SongQueue(User user) {
     this.user = user;
+    this.songs = new ArrayList<>();
     this.isRadio = false;
     this.repeatSongs = false;
     this.shuffleSongs = false;

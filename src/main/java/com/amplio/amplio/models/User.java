@@ -69,6 +69,8 @@ public class User {
     this.password = password;
     this.isPremium = isPremium;
     followedPlaylists = new HashSet<Playlist>();
+    songHistory = new ArrayList<>();
+    songQueue = new SongQueue(this);
   }
 
   public Integer getUserId() {

@@ -2,6 +2,7 @@ package com.amplio.amplio.service;
 
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
+import com.amplio.amplio.models.Song;
 import com.amplio.amplio.models.User;
 
 import javax.servlet.http.HttpSession;
@@ -24,4 +25,7 @@ public interface UserService {
   Set<Follower> getFollowers(HttpSession session);
   Set<Follower> getFollowing(HttpSession session);
   Boolean deleteUser(HttpSession session);
+
+  Boolean addSongToQueue(Song songToAdd, HttpSession session);
+  Boolean deleteSongFromQueue(Song songToDelete, HttpSession session);
 }
