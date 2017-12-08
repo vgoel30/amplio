@@ -90,6 +90,7 @@ public class UserController {
       following = userService.follow(session, followId);
     } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Set<Follower>>(following, status);
     }
 
     if(following == null) {

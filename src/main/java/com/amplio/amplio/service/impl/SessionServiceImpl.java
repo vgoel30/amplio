@@ -34,7 +34,6 @@ public class SessionServiceImpl implements SessionService {
     String userName = registerForm.getUserName();
     User existingUser = userRepository.findByUserName(userName);
     User user = null;
-    Follower userAsFollower = null;
 
     if(existingUser == null) {
       String firstName = registerForm.getFirstName();
@@ -47,7 +46,7 @@ public class SessionServiceImpl implements SessionService {
 
       userRepository.save(user);
 
-      userAsFollower = new Follower(user);
+      Follower userAsFollower = new Follower(user);
       followerRepository.save(userAsFollower);
     }
     return user;

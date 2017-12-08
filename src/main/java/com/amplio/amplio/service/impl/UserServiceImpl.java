@@ -151,9 +151,9 @@ public class UserServiceImpl implements UserService {
     User currentUser = (User) session.getAttribute("user");
 
     if(currentUser != null) {
+      following = currentUser.getFollowing();
       Follower followerToFollow = followerRepository.findByUserId(userId);
       if(followerToFollow != null) {
-        following = currentUser.getFollowing();
         following.add(followerToFollow);
         userRepository.save(currentUser);
 
