@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService {
     Boolean deletionSuccess = false;
     User currentUser = (User) session.getAttribute("user");
     if(currentUser != null){
+      currentUser = userRepository.findUserByUserId(currentUser.getUserId());
       Integer userToDeleteId = currentUser.getUserId();
 
       //1. delete this user from the following list of their followers
@@ -151,6 +152,7 @@ public class UserServiceImpl implements UserService {
     User currentUser = (User) session.getAttribute("user");
 
     if(currentUser != null) {
+      currentUser = userRepository.findUserByUserId(currentUser.getUserId());
       following = currentUser.getFollowing();
       Follower followerToFollow = followerRepository.findByUserId(userId);
       if(followerToFollow != null) {
@@ -205,6 +207,7 @@ public class UserServiceImpl implements UserService {
     User user = (User)session.getAttribute("user");
 
     if(user != null){
+      user = userRepository.findUserByUserId(user.getUserId());
       user.getSongQueue().getSongs().add(songToAdd);
       userRepository.save(user);
       songAdded = true;
@@ -219,6 +222,7 @@ public class UserServiceImpl implements UserService {
     User user = (User)session.getAttribute("user");
 
     if(user != null){
+      user = userRepository.findUserByUserId(user.getUserId());
       songDeleted = user.getSongQueue().getSongs().remove(songToDelete);
       userRepository.save(user);
     }
