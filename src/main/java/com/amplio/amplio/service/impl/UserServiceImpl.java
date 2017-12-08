@@ -172,8 +172,9 @@ public class UserServiceImpl implements UserService {
     User currentUser = (User) session.getAttribute("user");
 
     if(currentUser != null) {
-      Follower followerToUnFollow = followerRepository.findByUserId(followingId);
-      if(followerToUnFollow != null) {
+      User userToUnFollow = userRepository.findUserByUserId(followingId);
+      if(userToUnFollow != null) {
+        currentUser = userRepository.findUserByUserId(currentUser.getUserId());
         followingSet = currentUser.getFollowing();
         for(Follower person : followingSet){
           if(person.getUserId().equals(followingId)){
@@ -185,7 +186,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(currentUser);
 
         //Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
-        User userToUnFollow = userRepository.findUserByUserId(followingId);
         Set<Follower> followerSet = userToUnFollow.getFollowers();
         for(Follower follower : followerSet){
           if(follower.getUserId().equals(currentUser.getUserId())){
