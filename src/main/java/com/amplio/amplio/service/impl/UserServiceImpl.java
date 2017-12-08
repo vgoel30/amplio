@@ -168,23 +168,36 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Set<Follower> unFollow(HttpSession session, Integer followingId) {
-    Set<Follower> following = null;
+    Set<Follower> followingSet = null;
     User currentUser = (User) session.getAttribute("user");
 
     if(currentUser != null) {
       Follower followerToUnFollow = followerRepository.findByUserId(followingId);
       if(followerToUnFollow != null) {
-        following = currentUser.getFollowing();
-        following.remove(followerToUnFollow);
+        followingSet = currentUser.getFollowing();
+        for(Follower person : followingSet){
+          if(person.getUserId().equals(followingId)){
+            followingSet.remove(person);
+            break;
+          }
+        }
+        //followingSet.remove(followerToUnFollow);
         userRepository.save(currentUser);
 
-        Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
+        //Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
         User userToUnFollow = userRepository.findUserByUserId(followingId);
-        userToUnFollow.getFollowers().remove(currentFollower);
+        Set<Follower> followerSet = userToUnFollow.getFollowers();
+        for(Follower follower : followerSet){
+          if(follower.getUserId().equals(currentUser.getUserId())){
+            userToUnFollow.getFollowers().remove(follower);
+            break;
+          }
+        }
+        //userToUnFollow.getFollowers().remove(currentFollower);
         userRepository.save(userToUnFollow);
       }
     }
-    return following;
+    return followingSet;
   }
 
   @Override
