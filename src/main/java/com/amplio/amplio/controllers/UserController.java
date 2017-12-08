@@ -8,7 +8,10 @@ import com.amplio.amplio.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -76,7 +79,7 @@ public class UserController {
     return new ResponseEntity<List<User>>(users, status);
   }
 
-  @RequestMapping(path = "/follow/{id}", method = RequestMethod.POST)
+  @RequestMapping(path = "/follow/{userId}", method = RequestMethod.POST)
   public ResponseEntity<Set<Follower>> follow(@PathVariable String userId, HttpSession session) {
     HttpStatus status;
     Integer followId;
@@ -131,28 +134,27 @@ public class UserController {
     return new ResponseEntity<Set<Follower>>(following, status);
   }
 
-  @RequestMapping(path = "/unfollow/{id}", method = RequestMethod.GET)
-  public ResponseEntity<Follower> unFollow(@PathVariable String followerId, HttpSession session){
+  @RequestMapping(path = "/unfollow/{followerId}", method = RequestMethod.POST)
+  public ResponseEntity<Set<Follower>> unFollow(@PathVariable String followerId, HttpSession session) {
     HttpStatus status;
-    Follower followerToRemove = null;
-    Integer followerToRemoveId;
+    Set<Follower> following = null;
+    Integer followingtoRemoveId;
 
     try {
-      followerToRemoveId = Integer.parseInt(followerId);
+      followingtoRemoveId = Integer.parseInt(followerId);
+      following = userService.unFollow(session, followingtoRemoveId);
+
+      if(following == null) {
+        status = HttpStatus.NOT_FOUND;
+      } else {
+        status = HttpStatus.OK;
+      }
+
     } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
-      return new ResponseEntity<Follower>(followerToRemove, status);
     }
 
-    followerToRemove = userService.unFollow(followerToRemoveId, session);
-
-    if(followerToRemove == null){
-      status = HttpStatus.NOT_FOUND;
-    } else{
-      status = HttpStatus.OK;
-    }
-
-    return new ResponseEntity<Follower>(followerToRemove, status);
+    return new ResponseEntity<Set<Follower>>(following, status);
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)

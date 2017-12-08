@@ -40,7 +40,7 @@ public class AdminServiceImpl implements AdminService {
 
   @Override
   public Album addAlbum(AlbumForm albumForm) {
-    Artist artist = artistRepository.getArtistByArtistID(albumForm.getArtistID());
+    Artist artist = artistRepository.findByArtistId(albumForm.getArtistID());
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
     Date date = null;
     try {

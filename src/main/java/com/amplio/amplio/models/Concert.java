@@ -1,21 +1,17 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 public class Concert {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID concertID;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer concertID;
 
   @NotNull
   @ManyToMany(mappedBy = "concerts")
@@ -33,11 +29,11 @@ public class Concert {
     this.location = location;
   }
 
-  public UUID getConcertID() {
+  public Integer getConcertID() {
     return concertID;
   }
 
-  public void setConcertID(UUID concertID) {
+  public void setConcertID(Integer concertID) {
     this.concertID = concertID;
   }
 

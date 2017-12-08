@@ -2,7 +2,9 @@ package com.amplio.amplio.service.impl;
 
 import com.amplio.amplio.forms.LoginForm;
 import com.amplio.amplio.forms.RegisterForm;
+import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.User;
+import com.amplio.amplio.repository.FollowerRepository;
 import com.amplio.amplio.repository.UserRepository;
 import com.amplio.amplio.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,15 @@ public class SessionServiceImpl implements SessionService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  @Autowired
+  private FollowerRepository followerRepository;
+
   @Override
   public User registerUser(RegisterForm registerForm) {
     String userName = registerForm.getUserName();
     User existingUser = userRepository.findByUserName(userName);
     User user = null;
+    Follower userAsFollower = null;
 
     if(existingUser == null) {
       String firstName = registerForm.getFirstName();
@@ -38,7 +44,11 @@ public class SessionServiceImpl implements SessionService {
       password = passwordEncoder.encode(password);
       Boolean isPremium = false;
       user = new User(firstName, lastName, email, userName, password, isPremium);
+
       userRepository.save(user);
+
+      userAsFollower = new Follower(user);
+      followerRepository.save(userAsFollower);
     }
     return user;
   }

@@ -37,8 +37,6 @@ public class Song {
   @Column(columnDefinition = "LONGTEXT")
   private String lyrics;
 
-  private String song;
-
   public Song() {
   }
 
@@ -50,7 +48,6 @@ public class Song {
     this.artists = artists;
     this.album = album;
     this.duration = duration;
-    this.song = song;
   }
 
   public String getSongName() {
@@ -117,11 +114,4 @@ public class Song {
     this.numberPlays++;
   }
 
-  public String getSong() {
-    return song;
-  }
-
-  public void setSong(String song) {
-    this.song = song;
-  }
 }

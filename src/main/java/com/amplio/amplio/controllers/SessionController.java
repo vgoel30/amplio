@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping(value = "/api/user")
+@RequestMapping(value = "/api/session")
 public class SessionController {
   @Autowired
   private SessionServiceImpl sessionService;

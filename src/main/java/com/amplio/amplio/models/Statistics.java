@@ -1,17 +1,13 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Statistics {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID statsID;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer statsID;
 
   @OneToMany
   private List<Artist> topArtists;
@@ -42,11 +38,11 @@ public class Statistics {
 
   }
 
-  public UUID getStatsID() {
+  public Integer getStatsID() {
     return statsID;
   }
 
-  public void setStatsID(UUID statsID) {
+  public void setStatsID(Integer statsID) {
     this.statsID = statsID;
   }
 

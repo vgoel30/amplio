@@ -1,20 +1,16 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
 
 @Entity
 public class Advertiser {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID advertiserId;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer advertiserId;
 
   @NotNull
   private String name;
@@ -34,11 +30,11 @@ public class Advertiser {
     this.password = password;
   }
 
-  public UUID getAdvertiserId() {
+  public Integer getAdvertiserId() {
     return advertiserId;
   }
 
-  public void setAdvertiserId(UUID advertiserId) {
+  public void setAdvertiserId(Integer advertiserId) {
     this.advertiserId = advertiserId;
   }
 

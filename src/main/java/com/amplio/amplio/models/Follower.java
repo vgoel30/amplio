@@ -17,6 +17,9 @@ public class Follower {
   private String userName;
   private byte[] profilePicture;
 
+  public Follower() {
+  }
+
   public Follower(Integer userId, String firstName, String lastName, String userName, byte[] profilePicture) {
     this.userId = userId;
     this.firstName = firstName;

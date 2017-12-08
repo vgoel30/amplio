@@ -11,7 +11,7 @@ public class Artist {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer artistID;
+  private Integer artistId;
 
   @NotNull
   private String name;
@@ -39,12 +39,12 @@ public class Artist {
     this.image = image;
   }
 
-  public Integer getArtistID() {
-    return artistID;
+  public Integer getArtistid() {
+    return artistId;
   }
 
-  public void setArtistID(Integer artistID) {
-    this.artistID = artistID;
+  public void setArtistid(Integer artistid) {
+    this.artistId = artistid;
   }
 
   public String getName() {

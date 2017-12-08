@@ -59,6 +59,8 @@ public class User {
     password = "";
     isPremium = false;
     followedPlaylists = new HashSet<Playlist>();
+    following = new HashSet<>();
+    songHistory = new ArrayList<>();
   }
 
   public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
@@ -68,9 +70,9 @@ public class User {
     this.userName = username;
     this.password = password;
     this.isPremium = isPremium;
-    followedPlaylists = new HashSet<Playlist>();
-    songHistory = new ArrayList<>();
-    songQueue = new SongQueue(this);
+    this.following = new HashSet<>();
+    this.followedPlaylists = new HashSet<Playlist>();
+    this.songHistory = new ArrayList<>();
   }
 
   public Integer getUserId() {
@@ -143,45 +145,6 @@ public class User {
 
   public Set<Follower> getFollowing() {
     return following;
-  }
-
-  public Set<Follower> follow(User toFollow) {
-    if(following == null) {
-      following = new HashSet<>();
-    }
-    following.add(new Follower(toFollow));
-    if(toFollow.followers == null) {
-      toFollow.followers = new HashSet<>();
-    }
-    toFollow.followers.add(new Follower(this));
-    return following;
-  }
-
-  public void unfollow(User toUnfollow) {
-    if(following != null) {
-      Follower target = null;
-      for(Follower follower : following) {
-        if(follower.getUserId() == toUnfollow.getUserId()) {
-          target = follower;
-          break;
-        }
-      }
-      if(target != null) {
-        following.remove(target);
-      }
-    }
-    if(toUnfollow.followers != null) {
-      Follower target = null;
-      for(Follower follower : followers) {
-        if(follower.getUserId() == this.getUserId()) {
-          target = follower;
-          break;
-        }
-      }
-      if(target != null) {
-        toUnfollow.followers.remove(this);
-      }
-    }
   }
 
   public Set<Song> getSavedSongs() {

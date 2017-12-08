@@ -4,6 +4,7 @@ import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.Song;
 import com.amplio.amplio.models.User;
+import com.amplio.amplio.repository.FollowerRepository;
 import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.UserRepository;
 import com.amplio.amplio.service.UserService;
@@ -18,6 +19,9 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private FollowerRepository followerRepository;
 
   @Autowired
   private PlaylistRepository playlistRepository;
@@ -97,17 +101,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Follower unFollow(Integer followingId, HttpSession session){
-    Follower followerToRemove = null;
-    User user = (User)session.getAttribute("user");
-    User following = userRepository.findUserByUserId(followingId);
-    if(user != null){
-      user.unfollow(following);
-    }
-    return followerToRemove;
-  }
-
-  @Override
   public Boolean deleteUser(HttpSession session) {
     Boolean deletionSuccess = false;
     User currentUser = (User) session.getAttribute("user");
@@ -156,11 +149,39 @@ public class UserServiceImpl implements UserService {
   public Set<Follower> follow(HttpSession session, Integer userId) {
     Set<Follower> following = null;
     User currentUser = (User) session.getAttribute("user");
+
     if(currentUser != null) {
-      User user = userRepository.findUserByUserId(userId);
-      if(user != null) {
-        following = currentUser.follow(user);
+      Follower followerToFollow = followerRepository.findByUserId(userId);
+      if(followerToFollow != null) {
+        following = currentUser.getFollowing();
+        following.add(followerToFollow);
         userRepository.save(currentUser);
+
+        Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
+        User userToFollow = userRepository.findUserByUserId(userId);
+        userToFollow.getFollowers().add(currentFollower);
+        userRepository.save(userToFollow);
+      }
+    }
+    return following;
+  }
+
+  @Override
+  public Set<Follower> unFollow(HttpSession session, Integer followingId) {
+    Set<Follower> following = null;
+    User currentUser = (User) session.getAttribute("user");
+
+    if(currentUser != null) {
+      Follower followerToUnFollow = followerRepository.findByUserId(followingId);
+      if(followerToUnFollow != null) {
+        following = currentUser.getFollowing();
+        following.remove(followerToUnFollow);
+        userRepository.save(currentUser);
+
+        Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
+        User userToUnFollow = userRepository.findUserByUserId(followingId);
+        userToUnFollow.getFollowers().remove(currentFollower);
+        userRepository.save(userToUnFollow);
       }
     }
     return following;
