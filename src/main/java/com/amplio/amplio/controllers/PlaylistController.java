@@ -4,7 +4,7 @@ import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
-import com.amplio.amplio.service.impl.PlaylistServiceImpl;
+import com.amplio.amplio.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.Set;
 @RequestMapping(value = "/api/playlist")
 public class PlaylistController {
   @Autowired
-  private PlaylistServiceImpl playlistService;
+  private PlaylistService playlistService;
 
   @RequestMapping(path = "/create", method = RequestMethod.POST)
   public ResponseEntity<Playlist> createPlaylist(@RequestBody PlaylistForm playlistForm, HttpSession session){

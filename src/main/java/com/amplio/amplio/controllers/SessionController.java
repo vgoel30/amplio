@@ -3,7 +3,7 @@ package com.amplio.amplio.controllers;
 import com.amplio.amplio.forms.LoginForm;
 import com.amplio.amplio.forms.RegisterForm;
 import com.amplio.amplio.models.User;
-import com.amplio.amplio.service.impl.SessionServiceImpl;
+import com.amplio.amplio.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/api/session")
 public class SessionController {
   @Autowired
-  private SessionServiceImpl sessionService;
+  private SessionService sessionService;
 
   @RequestMapping(path = "/register", method = RequestMethod.POST)
   public ResponseEntity<User> register(@RequestBody RegisterForm registerForm) {

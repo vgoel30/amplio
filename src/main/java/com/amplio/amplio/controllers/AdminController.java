@@ -4,7 +4,7 @@ import com.amplio.amplio.forms.AlbumForm;
 import com.amplio.amplio.forms.ArtistForm;
 import com.amplio.amplio.models.Album;
 import com.amplio.amplio.models.Artist;
-import com.amplio.amplio.service.impl.AdminServiceImpl;
+import com.amplio.amplio.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/admin")
 public class AdminController {
   @Autowired
-  private AdminServiceImpl adminService;
+  private AdminService adminService;
 
 
   @RequestMapping(path = "/uploadArtist", method = RequestMethod.POST)
