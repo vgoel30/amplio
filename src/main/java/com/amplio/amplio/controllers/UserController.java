@@ -25,10 +25,8 @@ public class UserController {
 
   @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
   public ResponseEntity<Boolean> deleteUser(HttpSession session) {
-    Boolean deletionSuccess = false;
     HttpStatus status;
-
-    deletionSuccess = userService.deleteUser(session);
+    Boolean deletionSuccess = userService.deleteUser(session);
 
     if(deletionSuccess) {
       status = HttpStatus.OK;
@@ -65,10 +63,8 @@ public class UserController {
 
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
   public ResponseEntity<List<User>> searchUser(@PathVariable String query) {
-    List<User> users = null;
     HttpStatus status;
-
-    users = userService.searchUser(query);
+    List<User> users = userService.searchUser(query);
 
     if(users == null) {
       status = HttpStatus.BAD_REQUEST;
@@ -104,10 +100,8 @@ public class UserController {
 
   @RequestMapping(path = "/followers", method = RequestMethod.GET)
   public ResponseEntity<Set<Follower>> getFollowers(HttpSession session) {
-    Set<Follower> followers = null;
     HttpStatus status;
-
-    followers = userService.getFollowers(session);
+    Set<Follower> followers = userService.getFollowers(session);
 
     if(followers == null) {
       status = HttpStatus.NOT_FOUND;
@@ -120,11 +114,8 @@ public class UserController {
 
   @RequestMapping(path = "/following", method = RequestMethod.GET)
   public ResponseEntity<Set<Follower>> getFollowing(HttpSession session) {
-    Set<Follower> following = null;
-
     HttpStatus status;
-
-    following = userService.getFollowing(session);
+    Set<Follower> following = userService.getFollowing(session);
 
     if(following == null) {
       status = HttpStatus.NOT_FOUND;
@@ -136,14 +127,14 @@ public class UserController {
   }
 
   @RequestMapping(path = "/unfollow/{followerId}", method = RequestMethod.POST)
-  public ResponseEntity<Set<Follower>> unFollow(@PathVariable String followerId, HttpSession session) {
+  public ResponseEntity<Set<Follower>> unfollow(@PathVariable String followerId, HttpSession session) {
     HttpStatus status;
     Set<Follower> following = null;
-    Integer followingtoRemoveId;
+    Integer followingToRemoveId;
 
     try {
-      followingtoRemoveId = Integer.parseInt(followerId);
-      following = userService.unFollow(session, followingtoRemoveId);
+      followingToRemoveId = Integer.parseInt(followerId);
+      following = userService.unFollow(session, followingToRemoveId);
 
       if(following == null) {
         status = HttpStatus.NOT_FOUND;
@@ -187,11 +178,11 @@ public class UserController {
   }
 
   @RequestMapping(path = "/queue/add", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> addSongToQueue(Song songToAdd, HttpSession session){
+  public ResponseEntity<Boolean> addSongToQueue(Song songToAdd, HttpSession session) {
     HttpStatus status;
     Boolean songAdded = userService.addSongToQueue(songToAdd, session);
 
-    if(songAdded == false){
+    if(songAdded == false) {
       status = HttpStatus.BAD_REQUEST;
     } else {
       status = HttpStatus.OK;
@@ -201,11 +192,11 @@ public class UserController {
   }
 
   @RequestMapping(path = "/queue/delete", method = RequestMethod.DELETE)
-  public ResponseEntity<Boolean> deleteSongFromQueue(Song songToDelete, HttpSession session){
+  public ResponseEntity<Boolean> deleteSongFromQueue(Song songToDelete, HttpSession session) {
     HttpStatus status;
     Boolean songDeleted = userService.deleteSongFromQueue(songToDelete, session);
 
-    if(songDeleted == false){
+    if(songDeleted == false) {
       status = HttpStatus.BAD_REQUEST;
     } else {
       status = HttpStatus.OK;

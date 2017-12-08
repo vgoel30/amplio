@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Entity
 public class User {
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer userId;
@@ -50,7 +49,6 @@ public class User {
   @ManyToMany
   private Set<Playlist> followedPlaylists;
 
-
   public User() {
     firstName = "";
     lastName = "";
@@ -71,6 +69,7 @@ public class User {
     this.password = password;
     this.isPremium = isPremium;
     this.following = new HashSet<>();
+    this.followers = new HashSet<>();
     this.followedPlaylists = new HashSet<Playlist>();
     this.songHistory = new ArrayList<>();
   }
@@ -151,17 +150,6 @@ public class User {
     return savedSongs;
   }
 
-  public void saveSong(Song song) {
-    if(savedSongs == null) {
-      savedSongs = new HashSet<>();
-    }
-    savedSongs.add(song);
-  }
-
-  public void unsaveSong(Song song) {
-    savedSongs.remove(song);
-  }
-
   public Set<Song> getLikedSongs() {
     return likedSongs;
   }
@@ -184,17 +172,8 @@ public class User {
     dislikedSongs.add(song);
   }
 
-  //TODO: Methods like isFollower etc.
-
   public Set<Album> getFavoriteAlbums() {
     return favoriteAlbums;
-  }
-
-  public void favoriteAlbum(Album album) {
-    if(favoriteAlbums == null) {
-      favoriteAlbums = new HashSet<>();
-    }
-    favoriteAlbums.add(album);
   }
 
   public void unfavoriteAlbum(Album album) {
@@ -219,13 +198,6 @@ public class User {
 
   public List<Song> getSongHistory() {
     return songHistory;
-  }
-
-  public void addHistory(Song song) {
-    if(songHistory == null) {
-      songHistory = new ArrayList<>();
-    }
-    songHistory.add(song);
   }
 
   public Set<Playlist> getFollowedPlaylists() {
