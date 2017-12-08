@@ -28,12 +28,16 @@ public class Playlist{
   @NotNull
   private boolean isPublic;
 
+  public Playlist() {
+    this.songs = new ArrayList<Song>();
+  }
+
   public Playlist(String title, String description, String image, User owner) {
     this.title = title;
     this.description = description;
     this.image = image;
     this.owner = owner;
-    this.songs = new ArrayList<>();
+    this.songs = new ArrayList<Song>();
   }
 
   public Integer getPlaylistId() {
