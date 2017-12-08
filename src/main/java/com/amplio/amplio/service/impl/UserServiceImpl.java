@@ -182,7 +182,6 @@ public class UserServiceImpl implements UserService {
             break;
           }
         }
-        //followingSet.remove(followerToUnFollow);
         userRepository.save(currentUser);
 
         //Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
