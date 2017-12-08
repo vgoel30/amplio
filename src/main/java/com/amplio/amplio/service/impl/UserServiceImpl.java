@@ -181,10 +181,8 @@ public class UserServiceImpl implements UserService {
             break;
           }
         }
-        //followingSet.remove(followerToUnFollow);
         userRepository.save(currentUser);
 
-        //Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
         User userToUnFollow = userRepository.findUserByUserId(followingId);
         Set<Follower> followerSet = userToUnFollow.getFollowers();
         for(Follower follower : followerSet){
@@ -193,7 +191,6 @@ public class UserServiceImpl implements UserService {
             break;
           }
         }
-        //userToUnFollow.getFollowers().remove(currentFollower);
         userRepository.save(userToUnFollow);
       }
     }

@@ -32,7 +32,7 @@ public class Follower {
     this.userId = user.getUserId();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();
-    this.userName = user.getLastName();
+    this.userName = user.getUserName();
     this.profilePicture = user.getProfilePicture();
   }
 
