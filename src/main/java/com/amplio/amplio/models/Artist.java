@@ -39,11 +39,11 @@ public class Artist {
     this.image = image;
   }
 
-  public Integer getArtistid() {
+  public Integer getArtistId() {
     return artistId;
   }
 
-  public void setArtistid(Integer artistid) {
+  public void setArtistId(Integer artistid) {
     this.artistId = artistid;
   }
 
