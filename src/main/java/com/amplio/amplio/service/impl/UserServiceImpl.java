@@ -19,10 +19,8 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
-
   @Autowired
   private FollowerRepository followerRepository;
-
   @Autowired
   private PlaylistRepository playlistRepository;
 
@@ -38,6 +36,7 @@ public class UserServiceImpl implements UserService {
     if(currentUser == null) {
       return null;
     }
+    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
     return playlistRepository.getPlaylistsByOwner(currentUser);
   }
 
@@ -47,6 +46,7 @@ public class UserServiceImpl implements UserService {
     if(currentUser == null) {
       return null;
     }
+    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
     return currentUser.getFollowedPlaylists();
   }
 
@@ -57,18 +57,20 @@ public class UserServiceImpl implements UserService {
     if(currentUser == null || playlistToFollow == null) {
       return null;
     }
+    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
     followedPlaylists.add(playlistToFollow);
     return followedPlaylists;
   }
 
   @Override
-  public Set<Playlist> unFollowPlaylist(HttpSession session, Integer playlistId) {
+  public Set<Playlist> unfollowPlaylist(HttpSession session, Integer playlistId) {
     Playlist playlistToUnFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
     User currentUser = (User) session.getAttribute("user");
     if(currentUser == null || playlistToUnFollow == null) {
       return null;
     }
+    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
     followedPlaylists.remove(playlistToUnFollow);
     return followedPlaylists;
@@ -85,6 +87,7 @@ public class UserServiceImpl implements UserService {
     Set<Follower> followers = null;
     User user = (User)session.getAttribute("user");
     if(user != null) {
+      user = userRepository.findUserByUserId(user.getUserId());
       followers = user.getFollowers();
     }
     return followers;
@@ -95,6 +98,7 @@ public class UserServiceImpl implements UserService {
     Set<Follower> following = null;
     User user = (User)session.getAttribute("user");
     if(user != null) {
+      user = userRepository.findUserByUserId(user.getUserId());
       following = user.getFollowing();
     }
     return following;
@@ -169,7 +173,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Set<Follower> unFollow(HttpSession session, Integer followingId) {
+  public Set<Follower> unfollow(HttpSession session, Integer followingId) {
     Set<Follower> followingSet = null;
     User currentUser = (User) session.getAttribute("user");
 

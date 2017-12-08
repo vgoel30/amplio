@@ -134,7 +134,7 @@ public class UserController {
 
     try {
       followingToRemoveId = Integer.parseInt(followerId);
-      following = userService.unFollow(session, followingToRemoveId);
+      following = userService.unfollow(session, followingToRemoveId);
 
       if(following == null) {
         status = HttpStatus.NOT_FOUND;
