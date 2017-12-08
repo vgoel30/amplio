@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Set<Follower> getFollowers(HttpSession session) {
     Set<Follower> followers = null;
-    User user = (User)session.getAttribute("user");
+    User user = (User) session.getAttribute("user");
     if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
       followers = user.getFollowers();
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Set<Follower> getFollowing(HttpSession session) {
     Set<Follower> following = null;
-    User user = (User)session.getAttribute("user");
+    User user = (User) session.getAttribute("user");
     if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
       following = user.getFollowing();
@@ -108,17 +108,17 @@ public class UserServiceImpl implements UserService {
   public Boolean deleteUser(HttpSession session) {
     Boolean deletionSuccess = false;
     User currentUser = (User) session.getAttribute("user");
-    if(currentUser != null){
+    if(currentUser != null) {
       currentUser = userRepository.findUserByUserId(currentUser.getUserId());
       Integer userToDeleteId = currentUser.getUserId();
 
       //1. delete this user from the following list of their followers
-      for(Follower follower : currentUser.getFollowers()){
+      for(Follower follower : currentUser.getFollowers()) {
         Integer followerId = follower.getUserId();
         User followerAsUser = userRepository.findUserByUserId(followerId);
         Set<Follower> followingSet = followerAsUser.getFollowing();
-        for(Follower following: followingSet){
-          if(following.getUserId().equals(userToDeleteId)){
+        for(Follower following : followingSet) {
+          if(following.getUserId().equals(userToDeleteId)) {
             followingSet.remove(following);
             break;
           }
@@ -126,12 +126,12 @@ public class UserServiceImpl implements UserService {
       }
 
       //2. delete this user from the followers list of the people that they are following
-      for(Follower following : currentUser.getFollowing()){
+      for(Follower following : currentUser.getFollowing()) {
         Integer followingId = following.getUserId();
         User followingAsUser = userRepository.findUserByUserId(followingId);
         Set<Follower> followerSet = followingAsUser.getFollowers();
-        for(Follower follower : followerSet){
-          if(follower.getUserId().equals(userToDeleteId)){
+        for(Follower follower : followerSet) {
+          if(follower.getUserId().equals(userToDeleteId)) {
             followerSet.remove(follower);
             break;
           }
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 
       //3: Delete the playlists for this user.
       Set<Playlist> userPlaylists = playlistRepository.getPlaylistsByOwner(currentUser);
-      for(Playlist userPlaylist : userPlaylists){
+      for(Playlist userPlaylist : userPlaylists) {
         playlistRepository.delete(userPlaylist);
       }
 
@@ -182,23 +182,21 @@ public class UserServiceImpl implements UserService {
       if(userToUnFollow != null) {
         currentUser = userRepository.findUserByUserId(currentUser.getUserId());
         followingSet = currentUser.getFollowing();
-        for(Follower person : followingSet){
-          if(person.getUserId().equals(followingId)){
+        for(Follower person : followingSet) {
+          if(person.getUserId().equals(followingId)) {
             followingSet.remove(person);
             break;
           }
         }
         userRepository.save(currentUser);
 
-        //Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
         Set<Follower> followerSet = userToUnFollow.getFollowers();
-        for(Follower follower : followerSet){
-          if(follower.getUserId().equals(currentUser.getUserId())){
+        for(Follower follower : followerSet) {
+          if(follower.getUserId().equals(currentUser.getUserId())) {
             userToUnFollow.getFollowers().remove(follower);
             break;
           }
         }
-        //userToUnFollow.getFollowers().remove(currentFollower);
         userRepository.save(userToUnFollow);
       }
     }
@@ -208,30 +206,27 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean addSongToQueue(Song songToAdd, HttpSession session) {
     Boolean songAdded = false;
-    User user = (User)session.getAttribute("user");
+    User user = (User) session.getAttribute("user");
 
-    if(user != null){
+    if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
       user.getSongQueue().getSongs().add(songToAdd);
       userRepository.save(user);
       songAdded = true;
     }
-
     return songAdded;
   }
 
   @Override
-  public Boolean deleteSongFromQueue(Song songToDelete, HttpSession session){
+  public Boolean deleteSongFromQueue(Song songToDelete, HttpSession session) {
     Boolean songDeleted = false;
-    User user = (User)session.getAttribute("user");
+    User user = (User) session.getAttribute("user");
 
-    if(user != null){
+    if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
       songDeleted = user.getSongQueue().getSongs().remove(songToDelete);
       userRepository.save(user);
     }
-
     return songDeleted;
-
   }
 }
