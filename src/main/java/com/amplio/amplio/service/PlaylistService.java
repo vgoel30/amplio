@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
@@ -28,7 +29,7 @@ public class PlaylistService{
     String playlistTitle = playlistForm.getTitle();
     String description = playlistForm.getDescription();
     String image = playlistForm.getImage();
-    User playlistOwner = (User)session.getAttribute("user");
+    User playlistOwner = (User)session.getAttribute(Constants.SESSION_USER);
 
     if(playlistOwner != null){
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
@@ -43,7 +44,7 @@ public class PlaylistService{
 
     if(playlistToEdit != null){
       User playlistToEditOwner = playlistToEdit.getOwner();
-      User sessionUser = (User)session.getAttribute("user");
+      User sessionUser = (User)session.getAttribute(Constants.SESSION_USER);
       if(!playlistToEditOwner.getUserId().equals(sessionUser.getUserId())){
         playlistToEdit = null;
       }
@@ -71,7 +72,7 @@ public class PlaylistService{
 
     if(playlistToDelete != null){
       User playlistToDeleteOwner = playlistToDelete.getOwner();
-      User sessionUser = (User)session.getAttribute("user");
+      User sessionUser = (User)session.getAttribute(Constants.SESSION_USER);
       if(!playlistToDeleteOwner.getUserId().equals(sessionUser.getUserId())){
         playlistToDelete = null;
       }

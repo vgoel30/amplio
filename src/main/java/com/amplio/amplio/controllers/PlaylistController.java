@@ -1,5 +1,6 @@
 package com.amplio.amplio.controllers;
 
+import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
@@ -104,7 +105,7 @@ public class PlaylistController {
 
   @RequestMapping(path = "/generated", method = RequestMethod.GET)
   public ResponseEntity<Set<Playlist>> getGeneratedPLaylists(HttpSession session) {
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     Set<Playlist> generatedPlaylists = null;
     HttpStatus status;
 

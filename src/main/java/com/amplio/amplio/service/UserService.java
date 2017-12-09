@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.Song;
@@ -31,7 +32,7 @@ public class UserService {
 
 
   public Set<Playlist> getPlaylists(HttpSession session) {
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     if(currentUser == null) {
       return null;
     }
@@ -41,7 +42,7 @@ public class UserService {
 
 
   public Set<Playlist> getFollowedPlaylists(HttpSession session) {
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     if(currentUser == null) {
       return null;
     }
@@ -52,7 +53,7 @@ public class UserService {
 
   public Set<Playlist> followPlaylist(HttpSession session, Integer playlistId) {
     Playlist playlistToFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     if(currentUser == null || playlistToFollow == null) {
       return null;
     }
@@ -65,7 +66,7 @@ public class UserService {
 
   public Set<Playlist> unfollowPlaylist(HttpSession session, Integer playlistId) {
     Playlist playlistToUnFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     if(currentUser == null || playlistToUnFollow == null) {
       return null;
     }
@@ -84,7 +85,7 @@ public class UserService {
 
   public Set<Follower> getFollowers(HttpSession session) {
     Set<Follower> followers = null;
-    User user = (User) session.getAttribute("user");
+    User user = (User) session.getAttribute(Constants.SESSION_USER);
     if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
       followers = user.getFollowers();
@@ -95,7 +96,7 @@ public class UserService {
 
   public Set<Follower> getFollowing(HttpSession session) {
     Set<Follower> following = null;
-    User user = (User) session.getAttribute("user");
+    User user = (User) session.getAttribute(Constants.SESSION_USER);
     if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
       following = user.getFollowing();
@@ -106,7 +107,7 @@ public class UserService {
 
   public Boolean deleteUser(HttpSession session) {
     Boolean deletionSuccess = false;
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     if(currentUser != null) {
       currentUser = userRepository.findUserByUserId(currentUser.getUserId());
       Integer userToDeleteId = currentUser.getUserId();
@@ -152,7 +153,7 @@ public class UserService {
 
   public Set<Follower> follow(HttpSession session, Integer userId) {
     Set<Follower> following = null;
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
 
     if(currentUser != null) {
       currentUser = userRepository.findUserByUserId(currentUser.getUserId());
@@ -174,7 +175,7 @@ public class UserService {
 
   public Set<Follower> unfollow(HttpSession session, Integer followingId) {
     Set<Follower> followingSet = null;
-    User currentUser = (User) session.getAttribute("user");
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
 
     if(currentUser != null) {
       User userToUnFollow = userRepository.findUserByUserId(followingId);
@@ -205,7 +206,7 @@ public class UserService {
 
   public Boolean addSongToQueue(Song songToAdd, HttpSession session) {
     Boolean songAdded = false;
-    User user = (User) session.getAttribute("user");
+    User user = (User) session.getAttribute(Constants.SESSION_USER);
 
     if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
@@ -219,7 +220,7 @@ public class UserService {
 
   public Boolean deleteSongFromQueue(Song songToDelete, HttpSession session) {
     Boolean songDeleted = false;
-    User user = (User) session.getAttribute("user");
+    User user = (User) session.getAttribute(Constants.SESSION_USER);
 
     if(user != null) {
       user = userRepository.findUserByUserId(user.getUserId());
