@@ -20,7 +20,7 @@ public class SongController {
   private SongService songService;
 
   @RequestMapping(path = "/play/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> playSong(HttpSession session, String id) {
+  public ResponseEntity<Boolean> playSong(HttpSession session,@PathVariable String id) {
     HttpStatus status;
     Boolean queuesUpdated = false;
     Integer songId;

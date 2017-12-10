@@ -31,7 +31,9 @@ public class SongService {
 
     if(user != null && song != null){
       user.getSongHistory().add(song);
-      song.setNumberPlays(song.getNumberPlays() + 1);
+      userRepository.save(user);
+      song.incrementNumPlays();
+      songRepository.save(song);
       queuesUpdated = true;
     }
 
