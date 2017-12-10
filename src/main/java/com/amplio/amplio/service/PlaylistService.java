@@ -87,12 +87,12 @@ public class PlaylistService{
   public Playlist generateGenrePlaylist(String genre) {
     User user = userRepository.findByUserName("Amplio");
 
-    Set<Integer> songIds = songRepository.getSongsByGenreEnum(genre);
+    Set<Integer> songIds = songRepository.findSongsByGenre(genre);
 
     Playlist playlist = new Playlist(genre, genre + " playlist", "../../assets/images/genre/" + genre + ".JPG", user);
     playlist.setPublic(true);
     for(Integer songId: songIds) {
-      playlist.getSongs().add(songRepository.getSongBySongId(songId));
+      playlist.getSongs().add(songRepository.findSongBySongId(songId));
     }
     playlistRepository.save(playlist);
 

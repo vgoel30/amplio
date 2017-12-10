@@ -6,7 +6,6 @@ import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.AlbumRepository;
 import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.SongRepository;
-import com.amplio.amplio.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,9 +65,7 @@ public class AdminService{
 
     for(Song song : songs) {
       song.setAlbum(album);
-      List<Artist> artists = new ArrayList<Artist>();
-      artists.add(artist);
-      song.setArtists(artists);
+      song.setArtist(artist);
       song.setNumberPlays(0);
 
       song.setGenreEnum(genres);

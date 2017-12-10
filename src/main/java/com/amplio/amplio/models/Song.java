@@ -25,8 +25,8 @@ public class Song {
   private Set<GenreEnum> GenreEnum;
 
   @NotNull
-  @ManyToMany
-  private List<Artist> artists;
+  @ManyToOne
+  private Artist artist;
 
   @NotNull
   @OneToOne
@@ -43,12 +43,12 @@ public class Song {
   public Song() {
   }
 
-  public Song(String songName, Integer numberPlays, Set<GenreEnum> GenreEnum, List<Artist> artists, Album album,
+  public Song(String songName, Integer numberPlays, Set<GenreEnum> GenreEnum, Artist artist, Album album,
               Integer duration, String song) {
     this.songName = songName;
     this.numberPlays = numberPlays;
     this.GenreEnum = GenreEnum;
-    this.artists = artists;
+    this.artist = artist;
     this.album = album;
     this.duration = duration;
   }
@@ -81,12 +81,12 @@ public class Song {
     this.GenreEnum = GenreEnum;
   }
 
-  public List<Artist> getArtists() {
-    return artists;
+  public Artist getArtist() {
+    return artist;
   }
 
-  public void setArtists(List<Artist> artists) {
-    this.artists = artists;
+  public void setArtist(Artist artist) {
+    this.artist = artist;
   }
 
   public Album getAlbum() {
