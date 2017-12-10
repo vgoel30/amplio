@@ -21,7 +21,7 @@ public class SongService {
     Boolean queuesUpdated = false;
     User user = (User)session.getAttribute(Constants.SESSION_USER);
     user = userRepository.findUserByUserId(user.getUserId());
-    Song song = songRepository.getSongBySongId(songId);
+    Song song = songRepository.findSongBySongId(songId);
 
     if(user != null && song != null){
       user.getSongHistory().add(song);
