@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AlbumForm {
-  private int artistId;
+  private Integer artistId;
   private String date;
   private String title;
   private List<Song> songs;
@@ -20,11 +20,11 @@ public class AlbumForm {
     this.genres = genres;
   }
 
-  public int getArtistID() {
+  public Integer getArtistID() {
     return artistId;
   }
 
-  public void setArtistId(int artistId) {
+  public void setArtistId(Integer artistId) {
     this.artistId = artistId;
   }
 
