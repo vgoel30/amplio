@@ -37,6 +37,9 @@ public class Song {
   @Column(columnDefinition = "LONGTEXT")
   private String lyrics;
 
+
+  private String path;
+
   public Song() {
   }
 
@@ -113,5 +116,14 @@ public class Song {
   public void incrementNumPlays() {
     this.numberPlays++;
   }
+
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
+
 
 }
