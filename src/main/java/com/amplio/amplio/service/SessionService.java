@@ -2,11 +2,12 @@ package com.amplio.amplio.service;
 
 import com.amplio.amplio.forms.LoginForm;
 import com.amplio.amplio.forms.RegisterForm;
+import com.amplio.amplio.models.Admin;
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.User;
+import com.amplio.amplio.repository.AdminRepository;
 import com.amplio.amplio.repository.FollowerRepository;
 import com.amplio.amplio.repository.UserRepository;
-import com.amplio.amplio.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static com.amplio.amplio.constants.Constants.SESSION_USER;
+
 @Service
 public class SessionService{
   @Autowired
@@ -28,6 +31,9 @@ public class SessionService{
 
   @Autowired
   private FollowerRepository followerRepository;
+
+  @Autowired
+  private AdminRepository adminRepository;
 
   public User registerUser(RegisterForm registerForm) {
     String userName = registerForm.getUserName();
@@ -60,7 +66,7 @@ public class SessionService{
 
     if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
-        session.setAttribute("user", user);
+        session.setAttribute(SESSION_USER, user);
       } else {
         user = null;
       }
@@ -75,5 +81,39 @@ public class SessionService{
       new SecurityContextLogoutHandler().logout(request, response, auth);
     }
     return "redirect:/login?logout";
+  }
+
+  public Admin loginAdmin(LoginForm loginForm, HttpServletRequest request) {
+    HttpSession session = request.getSession();
+    String username = loginForm.getUserName();
+    String password = loginForm.getPassword();
+    Admin admin = adminRepository.findByUsername(username);
+
+    if(admin != null) {
+      if(passwordEncoder.matches(password, admin.getPassword())) {
+        session.setAttribute("admin", admin);
+      } else {
+        admin = null;
+      }
+    }
+    return admin;
+  }
+
+  public Admin registerAdmin(RegisterForm registerForm) {
+    String username = registerForm.getUserName();
+    Admin existingUser = adminRepository.findByUsername(username);
+    Admin admin = null;
+
+    if(existingUser == null) {
+      String firstName = registerForm.getFirstName();
+      String lastName = registerForm.getLastName();
+      String email = registerForm.getEmail();
+      String password = registerForm.getPassword();
+      password = passwordEncoder.encode(password);
+      admin = new Admin(firstName, lastName, email, username, password);
+
+      adminRepository.save(admin);
+    }
+    return admin;
   }
 }

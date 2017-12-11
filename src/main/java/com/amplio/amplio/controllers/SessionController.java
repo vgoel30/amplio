@@ -2,6 +2,7 @@ package com.amplio.amplio.controllers;
 
 import com.amplio.amplio.forms.LoginForm;
 import com.amplio.amplio.forms.RegisterForm;
+import com.amplio.amplio.models.Admin;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,31 @@ public class SessionController {
   public String logout(HttpServletRequest request, HttpServletResponse response) {
     HttpSession session = request.getSession();
     return sessionService.logoutUser(request, response);
+  }
+
+  @RequestMapping(path = "/admin/login", method = RequestMethod.POST)
+  public ResponseEntity<Admin> adminLogin(@RequestBody LoginForm loginForm, HttpServletRequest request,
+                                          HttpSession session) {
+    session.invalidate();
+    HttpStatus status;
+    Admin admin = sessionService.loginAdmin(loginForm, request);
+    if(admin == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status = HttpStatus.CREATED;
+    }
+    return new ResponseEntity<Admin>(admin, status);
+  }
+
+  @RequestMapping(path = "/admin/register", method = RequestMethod.POST)
+  public ResponseEntity<Admin> adminRegister(@RequestBody RegisterForm registerForm) {
+    HttpStatus status;
+    Admin admin = sessionService.registerAdmin(registerForm);
+    if(admin == null) {
+      status = HttpStatus.CONFLICT;
+    } else {
+      status = HttpStatus.CREATED;
+    }
+    return new ResponseEntity<Admin>(admin, status);
   }
 }
