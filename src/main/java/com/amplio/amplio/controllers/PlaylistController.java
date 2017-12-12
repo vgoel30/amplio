@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -125,5 +126,29 @@ public class PlaylistController {
   @RequestMapping(path = "/genre/{genreName}", method = RequestMethod.POST)
   public ResponseEntity<Playlist> generateGenrePlaylist(@PathVariable String genreName) {
     return new ResponseEntity<Playlist>(playlistService.generateGenrePlaylist(genreName),HttpStatus.OK);
+  }
+
+  @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
+  public ResponseEntity<Set<Playlist>> getPlaylistsByUser(@PathVariable String id, HttpSession session) {
+    HttpStatus status;
+    Set<Playlist> playlists = null;
+    Integer userId;
+
+    try {
+      userId = Integer.parseInt(id);
+
+      playlists = playlistService.getPlaylistsByUser(userId, session);
+
+      if(playlists == null) {
+        status = HttpStatus.FORBIDDEN;
+      }
+      else {
+        status = HttpStatus.OK;
+      }
+    } catch(NumberFormatException numberFormatException) {
+      status = HttpStatus.BAD_REQUEST;
+    }
+
+    return new ResponseEntity<Set<Playlist>>(playlists, status);
   }
 }

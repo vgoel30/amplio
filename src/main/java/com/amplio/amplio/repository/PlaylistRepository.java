@@ -9,5 +9,5 @@ import java.util.Set;
 
 public interface PlaylistRepository extends CrudRepository<Playlist, Integer> {
   Playlist getPlaylistByPlaylistId(Integer playlistId);
-  Set<Playlist> getPlaylistsByOwner(User owner);
+  Set<Playlist> findPlaylistsByOwner(User owner);
 }

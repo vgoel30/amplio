@@ -1,6 +1,5 @@
 package com.amplio.amplio.service;
 
-import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
@@ -13,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Set;
+
+import static com.amplio.amplio.constants.Constants.SESSION_USER;
 
 @Service
 public class PlaylistService{
@@ -29,7 +30,7 @@ public class PlaylistService{
     String playlistTitle = playlistForm.getTitle();
     String description = playlistForm.getDescription();
     String image = playlistForm.getImage();
-    User playlistOwner = (User)session.getAttribute(Constants.SESSION_USER);
+    User playlistOwner = (User)session.getAttribute(SESSION_USER);
 
     if(playlistOwner != null){
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
@@ -44,7 +45,7 @@ public class PlaylistService{
 
     if(playlistToEdit != null){
       User playlistToEditOwner = playlistToEdit.getOwner();
-      User sessionUser = (User)session.getAttribute(Constants.SESSION_USER);
+      User sessionUser = (User)session.getAttribute(SESSION_USER);
       if(!playlistToEditOwner.getUserId().equals(sessionUser.getUserId())){
         playlistToEdit = null;
       }
@@ -72,7 +73,7 @@ public class PlaylistService{
 
     if(playlistToDelete != null){
       User playlistToDeleteOwner = playlistToDelete.getOwner();
-      User sessionUser = (User)session.getAttribute(Constants.SESSION_USER);
+      User sessionUser = (User)session.getAttribute(SESSION_USER);
       if(!playlistToDeleteOwner.getUserId().equals(sessionUser.getUserId())){
         playlistToDelete = null;
       }
@@ -105,8 +106,20 @@ public class PlaylistService{
     Set<Playlist> generatedPlaylists = null;
 
     if(amplioUser != null) {
-      generatedPlaylists = playlistRepository.getPlaylistsByOwner(amplioUser);
+      generatedPlaylists = playlistRepository.findPlaylistsByOwner(amplioUser);
     }
     return generatedPlaylists;
+  }
+
+  public Set<Playlist> getPlaylistsByUser(Integer userId, HttpSession session) {
+    User user = (User) session.getAttribute(SESSION_USER);
+    User playlistOwner = userRepository.findUserByUserId(userId);
+    Set<Playlist> playlists = null;
+
+    if(user != null && playlistOwner != null) {
+      playlists = playlistRepository.findPlaylistsByOwner(playlistOwner);
+    }
+
+    return playlists;
   }
 }

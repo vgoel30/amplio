@@ -37,7 +37,7 @@ public class UserService {
       return null;
     }
     currentUser = userRepository.findUserByUserId(currentUser.getUserId());
-    return playlistRepository.getPlaylistsByOwner(currentUser);
+    return playlistRepository.findPlaylistsByOwner(currentUser);
   }
 
 
@@ -139,7 +139,7 @@ public class UserService {
       }
 
       //3: Delete the playlists for this user.
-      Set<Playlist> userPlaylists = playlistRepository.getPlaylistsByOwner(currentUser);
+      Set<Playlist> userPlaylists = playlistRepository.findPlaylistsByOwner(currentUser);
       for(Playlist userPlaylist : userPlaylists) {
         playlistRepository.delete(userPlaylist);
       }
