@@ -1,5 +1,6 @@
 package com.amplio.amplio.repository;
 
+import com.amplio.amplio.models.Album;
 import com.amplio.amplio.models.Artist;
 import com.amplio.amplio.models.Song;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,5 @@ public interface SongRepository extends CrudRepository<Song, Integer> {
   Set<Integer> findSongsByGenre(@Param("genre") String genre);
   Song findSongBySongId(Integer songId);
   List<Song> findTop25SongsByArtistOrderByNumberPlaysDesc(Artist Artist);
+  List<Song> findSongsByAlbum(Album album);
 }
