@@ -1,5 +1,7 @@
 package com.amplio.amplio.models;
 
+import org.hibernate.annotations.ManyToAny;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class User {
   private List<AdCategoryEnum> adPrefs;
   @ManyToMany
   private Set<Playlist> followedPlaylists;
+  @ManyToMany
+  private Set<Artist> followedArtists;
 
   public User() {
     firstName = "";
@@ -57,6 +61,7 @@ public class User {
     password = "";
     isPremium = false;
     followedPlaylists = new HashSet<Playlist>();
+    followedArtists = new HashSet<Artist>();
     following = new HashSet<>();
     songHistory = new ArrayList<>();
   }
@@ -71,6 +76,7 @@ public class User {
     this.following = new HashSet<>();
     this.followers = new HashSet<>();
     this.followedPlaylists = new HashSet<Playlist>();
+    this.followedArtists = new HashSet<Artist>();
     this.songHistory = new ArrayList<>();
   }
 
@@ -206,5 +212,13 @@ public class User {
 
   public void setFollowedPlaylists(Set<Playlist> followedPlaylists) {
     this.followedPlaylists = followedPlaylists;
+  }
+
+  public Set<Artist> getFollowedArtists() {
+    return followedArtists;
+  }
+
+  public void setFollowedArtists(Set<Artist> followedArtists) {
+    this.followedArtists = followedArtists;
   }
 }
