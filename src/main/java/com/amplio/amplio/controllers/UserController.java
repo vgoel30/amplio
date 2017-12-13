@@ -1,9 +1,6 @@
 package com.amplio.amplio.controllers;
 
-import com.amplio.amplio.models.Follower;
-import com.amplio.amplio.models.Playlist;
-import com.amplio.amplio.models.Song;
-import com.amplio.amplio.models.User;
+import com.amplio.amplio.models.*;
 import com.amplio.amplio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -147,6 +144,52 @@ public class UserController {
     }
 
     return new ResponseEntity<Set<Follower>>(following, status);
+  }
+
+  @RequestMapping(path = "/followartist/{artistId}", method = RequestMethod.POST)
+  public ResponseEntity<Set<Artist>> followArtist(@PathVariable String artistId, HttpSession session){
+    HttpStatus status;
+    Integer artistToFollowId;
+    Set<Artist> followingArtist = null;
+
+    try{
+      artistToFollowId = Integer.parseInt(artistId);
+      followingArtist = userService.followArtist(session, artistToFollowId);
+    } catch(NumberFormatException e){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Set<Artist>>(followingArtist, status);
+    }
+
+    if(followingArtist == null){
+      status = HttpStatus.UNAUTHORIZED;
+    } else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Set<Artist>>(followingArtist, status);
+  }
+
+  @RequestMapping(path = "/unfollowartist/{artistId}", method = RequestMethod.POST)
+  public ResponseEntity<Set<Artist>> unfollowArtist(@PathVariable String artistId, HttpSession session){
+    HttpStatus status;
+    Integer artistToUnfollowId;
+    Set<Artist> followingArtist = null;
+
+    try{
+      artistToUnfollowId = Integer.parseInt(artistId);
+      followingArtist = userService.unfollowArtist(session, artistToUnfollowId);
+    } catch(NumberFormatException e){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Set<Artist>>(followingArtist, status);
+    }
+
+    if(followingArtist == null){
+      status = HttpStatus.UNAUTHORIZED;
+    } else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Set<Artist>>(followingArtist, status);
   }
 
   @RequestMapping(path = "/playlists", method = RequestMethod.GET)

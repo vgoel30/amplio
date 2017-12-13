@@ -1,9 +1,7 @@
 package com.amplio.amplio.service;
 
-import com.amplio.amplio.models.Follower;
-import com.amplio.amplio.models.Playlist;
-import com.amplio.amplio.models.Song;
-import com.amplio.amplio.models.User;
+import com.amplio.amplio.models.*;
+import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.FollowerRepository;
 import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.UserRepository;
@@ -24,6 +22,8 @@ public class UserService {
   private FollowerRepository followerRepository;
   @Autowired
   private PlaylistRepository playlistRepository;
+  @Autowired
+  private ArtistRepository artistRepository;
 
 
   public User getUser(Integer userId) {
@@ -61,6 +61,7 @@ public class UserService {
     currentUser = userRepository.findUserById(currentUser.getId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
     followedPlaylists.add(playlistToFollow);
+    userRepository.save(currentUser);
     return followedPlaylists;
   }
 
@@ -74,7 +75,38 @@ public class UserService {
     currentUser = userRepository.findUserById(currentUser.getId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
     followedPlaylists.remove(playlistToUnFollow);
+    userRepository.save(currentUser);
     return followedPlaylists;
+  }
+
+  public Set<Artist> followArtist(HttpSession session, Integer artistId) {
+    Artist artistToFollow = artistRepository.findById(artistId);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+
+    if(currentUser == null || artistToFollow == null){
+      return null;
+    }
+
+    currentUser = userRepository.findUserById(currentUser.getId());
+    Set<Artist> followingArtists = currentUser.getFollowedArtists();
+    followingArtists.add(artistToFollow);
+    userRepository.save(currentUser);
+    return followingArtists;
+  }
+
+  public Set<Artist> unfollowArtist(HttpSession session, Integer artistId) {
+    Artist artistToUnfollow = artistRepository.findById(artistId);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+
+    if(currentUser == null || artistToUnfollow == null){
+      return null;
+    }
+
+    currentUser = userRepository.findUserById(currentUser.getId());
+    Set<Artist> followingArtists = currentUser.getFollowedArtists();
+    followingArtists.remove(artistToUnfollow);
+    userRepository.save(currentUser);
+    return followingArtists;
   }
 
 
