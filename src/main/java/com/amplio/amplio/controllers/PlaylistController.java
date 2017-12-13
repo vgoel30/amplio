@@ -151,4 +151,18 @@ public class PlaylistController {
 
     return new ResponseEntity<Set<Playlist>>(playlists, status);
   }
+
+  @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
+  public ResponseEntity<List<Playlist>> searchPlaylist(@PathVariable String query, HttpSession session){
+    HttpStatus status;
+    List<Playlist> playlists = playlistService.searchPlaylist(query, session);
+
+    if(playlists == null){
+      status = HttpStatus.FORBIDDEN;
+    } else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<List<Playlist>>(playlists, status);
+  }
 }

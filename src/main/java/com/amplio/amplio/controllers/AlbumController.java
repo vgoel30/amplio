@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -63,6 +64,20 @@ public class AlbumController {
     }
 
     return new ResponseEntity<List<Album>>(artistAlbums, status);
+  }
+
+  @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
+  public ResponseEntity<List<Album>> searchAlbum(@PathVariable String query, HttpSession session){
+    HttpStatus status;
+    List<Album> albums = albumService.searchAlbum(query, session);
+
+    if(albums == null){
+      status = HttpStatus.FORBIDDEN;
+    } else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<List<Album>>(albums, status);
   }
 
 }
