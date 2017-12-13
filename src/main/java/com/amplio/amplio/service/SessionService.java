@@ -4,9 +4,11 @@ import com.amplio.amplio.forms.LoginForm;
 import com.amplio.amplio.forms.RegisterForm;
 import com.amplio.amplio.models.Admin;
 import com.amplio.amplio.models.Follower;
+import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.AdminRepository;
 import com.amplio.amplio.repository.FollowerRepository;
+import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.util.Set;
 
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
 
@@ -34,6 +38,8 @@ public class SessionService{
 
   @Autowired
   private AdminRepository adminRepository;
+
+  @Autowired PlaylistRepository playlistRepository;
 
   public User registerUser(RegisterForm registerForm) {
     String userName = registerForm.getUserName();
@@ -63,9 +69,10 @@ public class SessionService{
     String userName = loginForm.getUserName();
     String password = loginForm.getPassword();
     User user = userRepository.findByUserName(userName);
-
     if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
+        Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
+        user.setPlaylists(playlists);
         session.setAttribute(SESSION_USER, user);
       } else {
         user = null;

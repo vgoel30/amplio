@@ -28,6 +28,8 @@ public class UserService {
 
   public User getUser(Integer userId) {
     User user = userRepository.findUserById(userId);
+    Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
+    user.setPlaylists(playlists);
     return user;
   }
 
@@ -140,7 +142,6 @@ public class UserService {
     }
     return following;
   }
-
 
   public Boolean deleteUser(HttpSession session) {
     Boolean deletionSuccess = false;

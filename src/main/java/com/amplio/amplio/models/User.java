@@ -1,7 +1,5 @@
 package com.amplio.amplio.models;
 
-import org.hibernate.annotations.ManyToAny;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -27,8 +25,7 @@ public class User {
   private String password;
   @NotNull
   private Boolean isPremium;
-  @Lob
-  private byte[] profilePicture;
+  private String profilePicture;
   @ManyToMany
   private Set<Follower> followers;
   @ManyToMany
@@ -52,6 +49,8 @@ public class User {
   private Set<Playlist> followedPlaylists;
   @ManyToMany
   private Set<Artist> followedArtists;
+  @Transient
+  private Set<Playlist> playlists;
 
   public User() {
     firstName = "";
@@ -136,11 +135,11 @@ public class User {
     isPremium = premium;
   }
 
-  public byte[] getProfilePicture() {
+  public String getProfilePicture() {
     return profilePicture;
   }
 
-  public void setProfilePicture(byte[] profilePicture) {
+  public void setProfilePicture(String profilePicture) {
     this.profilePicture = profilePicture;
   }
 
@@ -220,5 +219,13 @@ public class User {
 
   public void setFollowedArtists(Set<Artist> followedArtists) {
     this.followedArtists = followedArtists;
+  }
+
+  public Set<Playlist> getPlaylists() {
+    return playlists;
+  }
+
+  public void setPlaylists(Set<Playlist> playlists) {
+    this.playlists = playlists;
   }
 }

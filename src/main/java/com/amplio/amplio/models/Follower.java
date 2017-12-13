@@ -15,12 +15,12 @@ public class Follower {
   private String lastName;
   @NotNull
   private String userName;
-  private byte[] profilePicture;
+  private String profilePicture;
 
   public Follower() {
   }
 
-  public Follower(Integer id, String firstName, String lastName, String userName, byte[] profilePicture) {
+  public Follower(Integer id, String firstName, String lastName, String userName, String profilePicture) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -68,11 +68,11 @@ public class Follower {
     this.userName = userName;
   }
 
-  public byte[] getProfilePicture() {
+  public String getProfilePicture() {
     return profilePicture;
   }
 
-  public void setProfilePicture(byte[] profilePicture) {
+  public void setProfilePicture(String profilePicture) {
     this.profilePicture = profilePicture;
   }
 }
