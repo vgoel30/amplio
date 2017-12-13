@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class Admin {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer adminId;
+  private Integer id;
 
   @NotNull
   private String firstName;
@@ -39,12 +39,12 @@ public class Admin {
     this.password = password;
   }
 
-  public Integer getAdminId() {
-    return adminId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setAdminId(Integer adminId) {
-    this.adminId = adminId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getFirstName() {

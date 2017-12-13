@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class Follower {
   @Id
   @NotNull
-  private Integer userId;
+  private Integer id;
   @NotNull
   private String firstName;
   @NotNull
@@ -20,8 +20,8 @@ public class Follower {
   public Follower() {
   }
 
-  public Follower(Integer userId, String firstName, String lastName, String userName, byte[] profilePicture) {
-    this.userId = userId;
+  public Follower(Integer id, String firstName, String lastName, String userName, byte[] profilePicture) {
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.userName = userName;
@@ -29,19 +29,19 @@ public class Follower {
   }
 
   public Follower(User user) {
-    this.userId = user.getUserId();
+    this.id = user.getId();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();
     this.userName = user.getUserName();
     this.profilePicture = user.getProfilePicture();
   }
 
-  public Integer getUserId() {
-    return userId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getFirstName() {

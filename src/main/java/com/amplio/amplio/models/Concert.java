@@ -11,7 +11,7 @@ public class Concert {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer concertID;
+  private Integer id;
 
   @NotNull
   @ManyToMany(mappedBy = "concerts")
@@ -29,12 +29,12 @@ public class Concert {
     this.location = location;
   }
 
-  public Integer getConcertID() {
-    return concertID;
+  public Integer getId() {
+    return id;
   }
 
-  public void setConcertID(Integer concertID) {
-    this.concertID = concertID;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public Set<Artist> getArtists() {

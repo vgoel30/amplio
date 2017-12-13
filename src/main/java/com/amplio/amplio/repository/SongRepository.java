@@ -16,7 +16,10 @@ public interface SongRepository extends CrudRepository<Song, Integer> {
   @Query(value = "select s.song_id from song_genre_enum g join song s on s.song_id = g.song_song_id " +
       "where g.genre_enum = :genre group by s.song_name limit " + SONG_QUERY_LIMIT, nativeQuery = true)
   Set<Integer> findSongsByGenre(@Param("genre") String genre);
-  Song findSongBySongId(Integer songId);
+
+  Song findSongById(Integer songId);
   List<Song> findTop25SongsByArtistOrderByNumberPlaysDesc(Artist Artist);
   List<Song> findSongsByAlbum(Album album);
+
+  List<Song> findTop10SongsBySongNameContainingOrderByNumberPlaysDesc(String songName);
 }

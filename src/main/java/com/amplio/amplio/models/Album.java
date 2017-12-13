@@ -8,7 +8,7 @@ import java.util.Date;
 public class Album {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer albumId;
+  private Integer id;
 
   @NotNull
   private String title;
@@ -34,12 +34,12 @@ public class Album {
     this.artist = artist;
   }
 
-  public Integer getAlbumId() {
-    return albumId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setAlbumId(Integer albumId) {
-    this.albumId = albumId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getTitle() {

@@ -11,7 +11,7 @@ public class SongQueue {
   @NotNull
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer qID;
+  private Integer id;
 
   @NotNull
   @OneToOne
@@ -55,12 +55,12 @@ public class SongQueue {
     return songs.get(currentSongIndex - 1);
   }
 
-  public Integer getqID() {
-    return qID;
+  public Integer getId() {
+    return id;
   }
 
-  public void setqID(Integer qID) {
-    this.qID = qID;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public User getUser() {

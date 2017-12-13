@@ -9,7 +9,7 @@ import java.util.List;
 public class Playlist{
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer playlistId;
+  private Integer id;
 
   @NotNull
   private String title;
@@ -40,12 +40,12 @@ public class Playlist{
     this.songs = new ArrayList<Song>();
   }
 
-  public Integer getPlaylistId() {
-    return playlistId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setPlaylistId(Integer playlistId) {
-    this.playlistId = playlistId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getTitle() {

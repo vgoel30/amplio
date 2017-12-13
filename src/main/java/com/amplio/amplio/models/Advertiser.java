@@ -10,7 +10,7 @@ public class Advertiser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer advertiserId;
+  private Integer id;
 
   @NotNull
   private String name;
@@ -30,12 +30,12 @@ public class Advertiser {
     this.password = password;
   }
 
-  public Integer getAdvertiserId() {
-    return advertiserId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setAdvertiserId(Integer advertiserId) {
-    this.advertiserId = advertiserId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getName() {

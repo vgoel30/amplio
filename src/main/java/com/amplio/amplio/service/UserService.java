@@ -1,6 +1,5 @@
 package com.amplio.amplio.service;
 
-import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.models.Follower;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.Song;
@@ -15,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
+import static com.amplio.amplio.constants.Constants.SESSION_USER;
+
 @Service
 public class UserService {
   @Autowired
@@ -26,38 +27,38 @@ public class UserService {
 
 
   public User getUser(Integer userId) {
-    User user = userRepository.findUserByUserId(userId);
+    User user = userRepository.findUserById(userId);
     return user;
   }
 
 
   public Set<Playlist> getPlaylists(HttpSession session) {
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
     if(currentUser == null) {
       return null;
     }
-    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
+    currentUser = userRepository.findUserById(currentUser.getId());
     return playlistRepository.findPlaylistsByOwner(currentUser);
   }
 
 
   public Set<Playlist> getFollowedPlaylists(HttpSession session) {
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
     if(currentUser == null) {
       return null;
     }
-    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
+    currentUser = userRepository.findUserById(currentUser.getId());
     return currentUser.getFollowedPlaylists();
   }
 
 
   public Set<Playlist> followPlaylist(HttpSession session, Integer playlistId) {
-    Playlist playlistToFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    Playlist playlistToFollow = playlistRepository.getPlaylistById(playlistId);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
     if(currentUser == null || playlistToFollow == null) {
       return null;
     }
-    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
+    currentUser = userRepository.findUserById(currentUser.getId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
     followedPlaylists.add(playlistToFollow);
     return followedPlaylists;
@@ -65,29 +66,33 @@ public class UserService {
 
 
   public Set<Playlist> unfollowPlaylist(HttpSession session, Integer playlistId) {
-    Playlist playlistToUnFollow = playlistRepository.getPlaylistByPlaylistId(playlistId);
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    Playlist playlistToUnFollow = playlistRepository.getPlaylistById(playlistId);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
     if(currentUser == null || playlistToUnFollow == null) {
       return null;
     }
-    currentUser = userRepository.findUserByUserId(currentUser.getUserId());
+    currentUser = userRepository.findUserById(currentUser.getId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
     followedPlaylists.remove(playlistToUnFollow);
     return followedPlaylists;
   }
 
 
-  public List<User> searchUser(String query) {
-    List<User> users = userRepository.findTop10ByUserNameContainingIgnoreCase(query);
+  public List<User> searchUser(String query, HttpSession session) {
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+    List<User> users = null;
+    if(currentUser != null) {
+      users = userRepository.findTop10UsersByUserNameContainingIgnoreCase(query);
+    }
     return users;
   }
 
 
   public Set<Follower> getFollowers(HttpSession session) {
     Set<Follower> followers = null;
-    User user = (User) session.getAttribute(Constants.SESSION_USER);
+    User user = (User) session.getAttribute(SESSION_USER);
     if(user != null) {
-      user = userRepository.findUserByUserId(user.getUserId());
+      user = userRepository.findUserById(user.getId());
       followers = user.getFollowers();
     }
     return followers;
@@ -96,9 +101,9 @@ public class UserService {
 
   public Set<Follower> getFollowing(HttpSession session) {
     Set<Follower> following = null;
-    User user = (User) session.getAttribute(Constants.SESSION_USER);
+    User user = (User) session.getAttribute(SESSION_USER);
     if(user != null) {
-      user = userRepository.findUserByUserId(user.getUserId());
+      user = userRepository.findUserById(user.getId());
       following = user.getFollowing();
     }
     return following;
@@ -107,18 +112,18 @@ public class UserService {
 
   public Boolean deleteUser(HttpSession session) {
     Boolean deletionSuccess = false;
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
     if(currentUser != null) {
-      currentUser = userRepository.findUserByUserId(currentUser.getUserId());
-      Integer userToDeleteId = currentUser.getUserId();
+      currentUser = userRepository.findUserById(currentUser.getId());
+      Integer userToDeleteId = currentUser.getId();
 
       //1. delete this user from the following list of their followers
       for(Follower follower : currentUser.getFollowers()) {
-        Integer followerId = follower.getUserId();
-        User followerAsUser = userRepository.findUserByUserId(followerId);
+        Integer followerId = follower.getId();
+        User followerAsUser = userRepository.findUserById(followerId);
         Set<Follower> followingSet = followerAsUser.getFollowing();
         for(Follower following : followingSet) {
-          if(following.getUserId().equals(userToDeleteId)) {
+          if(following.getId().equals(userToDeleteId)) {
             followingSet.remove(following);
             break;
           }
@@ -127,11 +132,11 @@ public class UserService {
 
       //2. delete this user from the followers list of the people that they are following
       for(Follower following : currentUser.getFollowing()) {
-        Integer followingId = following.getUserId();
-        User followingAsUser = userRepository.findUserByUserId(followingId);
+        Integer followingId = following.getId();
+        User followingAsUser = userRepository.findUserById(followingId);
         Set<Follower> followerSet = followingAsUser.getFollowers();
         for(Follower follower : followerSet) {
-          if(follower.getUserId().equals(userToDeleteId)) {
+          if(follower.getId().equals(userToDeleteId)) {
             followerSet.remove(follower);
             break;
           }
@@ -153,18 +158,18 @@ public class UserService {
 
   public Set<Follower> follow(HttpSession session, Integer userId) {
     Set<Follower> following = null;
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
 
     if(currentUser != null) {
-      currentUser = userRepository.findUserByUserId(currentUser.getUserId());
+      currentUser = userRepository.findUserById(currentUser.getId());
       following = currentUser.getFollowing();
-      Follower followerToFollow = followerRepository.findByUserId(userId);
+      Follower followerToFollow = followerRepository.findById(userId);
       if(followerToFollow != null) {
         following.add(followerToFollow);
         userRepository.save(currentUser);
 
-        Follower currentFollower = followerRepository.findByUserId(currentUser.getUserId());
-        User userToFollow = userRepository.findUserByUserId(userId);
+        Follower currentFollower = followerRepository.findById(currentUser.getId());
+        User userToFollow = userRepository.findUserById(userId);
         userToFollow.getFollowers().add(currentFollower);
         userRepository.save(userToFollow);
       }
@@ -175,15 +180,15 @@ public class UserService {
 
   public Set<Follower> unfollow(HttpSession session, Integer followingId) {
     Set<Follower> followingSet = null;
-    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(SESSION_USER);
 
     if(currentUser != null) {
-      User userToUnFollow = userRepository.findUserByUserId(followingId);
+      User userToUnFollow = userRepository.findUserById(followingId);
       if(userToUnFollow != null) {
-        currentUser = userRepository.findUserByUserId(currentUser.getUserId());
+        currentUser = userRepository.findUserById(currentUser.getId());
         followingSet = currentUser.getFollowing();
         for(Follower person : followingSet) {
-          if(person.getUserId().equals(followingId)) {
+          if(person.getId().equals(followingId)) {
             followingSet.remove(person);
             break;
           }
@@ -192,7 +197,7 @@ public class UserService {
 
         Set<Follower> followerSet = userToUnFollow.getFollowers();
         for(Follower follower : followerSet) {
-          if(follower.getUserId().equals(currentUser.getUserId())) {
+          if(follower.getId().equals(currentUser.getId())) {
             userToUnFollow.getFollowers().remove(follower);
             break;
           }
@@ -206,10 +211,10 @@ public class UserService {
 
   public Boolean addSongToQueue(Song songToAdd, HttpSession session) {
     Boolean songAdded = false;
-    User user = (User) session.getAttribute(Constants.SESSION_USER);
+    User user = (User) session.getAttribute(SESSION_USER);
 
     if(user != null) {
-      user = userRepository.findUserByUserId(user.getUserId());
+      user = userRepository.findUserById(user.getId());
       user.getSongQueue().getSongs().add(songToAdd);
       userRepository.save(user);
       songAdded = true;
@@ -220,10 +225,10 @@ public class UserService {
 
   public Boolean deleteSongFromQueue(Song songToDelete, HttpSession session) {
     Boolean songDeleted = false;
-    User user = (User) session.getAttribute(Constants.SESSION_USER);
+    User user = (User) session.getAttribute(SESSION_USER);
 
     if(user != null) {
-      user = userRepository.findUserByUserId(user.getUserId());
+      user = userRepository.findUserById(user.getId());
       songDeleted = user.getSongQueue().getSongs().remove(songToDelete);
       userRepository.save(user);
     }

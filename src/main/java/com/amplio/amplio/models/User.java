@@ -11,7 +11,7 @@ import java.util.Set;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer userId;
+  private Integer id;
   @NotNull
   private String firstName;
   @NotNull
@@ -74,12 +74,12 @@ public class User {
     this.songHistory = new ArrayList<>();
   }
 
-  public Integer getUserId() {
-    return userId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getFirstName() {

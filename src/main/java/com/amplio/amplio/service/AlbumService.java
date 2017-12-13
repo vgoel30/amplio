@@ -17,12 +17,12 @@ public class AlbumService {
   private ArtistRepository artistRepository;
 
   public Album getAlbum(Integer albumId) {
-    return albumRepository.findByAlbumId(albumId);
+    return albumRepository.findById(albumId);
   }
 
   public List<Album> getArtistAlbums(Integer artistId) {
     List<Album> artistAlbums = null;
-    Artist artist = artistRepository.findByArtistId(artistId);
+    Artist artist = artistRepository.findById(artistId);
     if(artist != null) {
       artistAlbums = albumRepository.findAlbumsByArtist(artist);
     }

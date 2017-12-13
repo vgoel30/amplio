@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface AlbumRepository extends CrudRepository<Album, Integer> {
-  Album findByAlbumId(Integer albumId);
+  Album findById(Integer albumId);
   List<Album> findAlbumsByArtist(Artist artist);
 }

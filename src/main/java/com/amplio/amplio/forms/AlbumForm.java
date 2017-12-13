@@ -9,6 +9,7 @@ public class AlbumForm {
   private Integer artistId;
   private String date;
   private String title;
+  private String image;
   private List<Song> songs;
   private Set<String> genres;
 
@@ -50,5 +51,9 @@ public class AlbumForm {
 
   public void setSongs(List<Song> songs) {
     this.songs = songs;
+  }
+
+  public String getImage() {
+    return image;
   }
 }

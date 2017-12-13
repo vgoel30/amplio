@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
   User findByUserName(String userName);
-  User findUserByUserId(Integer userId);
-  List<User> findTop10ByUserNameContainingIgnoreCase(String userName);
+
+  User findUserById(Integer userId);
+
+  List<User> findTop10UsersByUserNameContainingIgnoreCase(String userName);
 }

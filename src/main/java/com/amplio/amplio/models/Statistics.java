@@ -7,7 +7,7 @@ import java.util.List;
 public class Statistics {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer statsID;
+  private Integer id;
 
   @OneToMany
   private List<Artist> topArtists;
@@ -38,12 +38,12 @@ public class Statistics {
 
   }
 
-  public Integer getStatsID() {
-    return statsID;
+  public Integer getId() {
+    return id;
   }
 
-  public void setStatsID(Integer statsID) {
-    this.statsID = statsID;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public List<Artist> getTopArtists() {

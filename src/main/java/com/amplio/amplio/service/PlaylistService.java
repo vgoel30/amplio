@@ -41,12 +41,12 @@ public class PlaylistService{
 
 
   public Playlist editPlaylist(Integer playlistId, EditPlaylistForm editPlaylistForm, HttpSession session) {
-    Playlist playlistToEdit = playlistRepository.getPlaylistByPlaylistId(playlistId);
+    Playlist playlistToEdit = playlistRepository.getPlaylistById(playlistId);
 
     if(playlistToEdit != null){
       User playlistToEditOwner = playlistToEdit.getOwner();
       User sessionUser = (User)session.getAttribute(SESSION_USER);
-      if(!playlistToEditOwner.getUserId().equals(sessionUser.getUserId())){
+      if(!playlistToEditOwner.getId().equals(sessionUser.getId())) {
         playlistToEdit = null;
       }
       else{
@@ -63,18 +63,18 @@ public class PlaylistService{
 
 
   public Playlist getPlaylist(Integer playlistId) {
-    Playlist playlist = playlistRepository.getPlaylistByPlaylistId(playlistId);
+    Playlist playlist = playlistRepository.getPlaylistById(playlistId);
     return playlist;
   }
 
 
   public Playlist deletePlaylist(Integer playlistId, HttpSession session) {
-    Playlist playlistToDelete = playlistRepository.getPlaylistByPlaylistId(playlistId);
+    Playlist playlistToDelete = playlistRepository.getPlaylistById(playlistId);
 
     if(playlistToDelete != null){
       User playlistToDeleteOwner = playlistToDelete.getOwner();
       User sessionUser = (User)session.getAttribute(SESSION_USER);
-      if(!playlistToDeleteOwner.getUserId().equals(sessionUser.getUserId())){
+      if(!playlistToDeleteOwner.getId().equals(sessionUser.getId())) {
         playlistToDelete = null;
       }
       else{
@@ -93,7 +93,7 @@ public class PlaylistService{
     Playlist playlist = new Playlist(genre, genre + " playlist", "../../assets/images/genre/" + genre + ".JPG", user);
     playlist.setPublic(true);
     for(Integer songId: songIds) {
-      playlist.getSongs().add(songRepository.findSongBySongId(songId));
+      playlist.getSongs().add(songRepository.findSongById(songId));
     }
     playlistRepository.save(playlist);
 
@@ -113,7 +113,7 @@ public class PlaylistService{
 
   public Set<Playlist> getPlaylistsByUser(Integer userId, HttpSession session) {
     User user = (User) session.getAttribute(SESSION_USER);
-    User playlistOwner = userRepository.findUserByUserId(userId);
+    User playlistOwner = userRepository.findUserById(userId);
     Set<Playlist> playlists = null;
 
     if(user != null && playlistOwner != null) {

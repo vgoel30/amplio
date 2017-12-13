@@ -9,7 +9,7 @@ public abstract class SongCollection {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer collectionId;
+  private Integer id;
 
   @NotNull
   private String title;
@@ -28,7 +28,7 @@ public abstract class SongCollection {
 
 
   public Integer getId() {
-    return collectionId;
+    return id;
   }
 
 }

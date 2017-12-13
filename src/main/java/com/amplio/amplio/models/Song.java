@@ -2,7 +2,6 @@ package com.amplio.amplio.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,7 +10,7 @@ public class Song {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
 //  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private Integer songId;
+  private Integer id;
 
   @NotNull
   private String songName;
@@ -61,8 +60,8 @@ public class Song {
     this.songName = songName;
   }
 
-  public Integer getSongId() {
-    return songId;
+  public Integer getId() {
+    return id;
   }
 
   public Integer getNumberPlays() {

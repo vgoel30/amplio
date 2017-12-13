@@ -10,7 +10,7 @@ public class Advertisement {
   // Attributes
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer adId;
+  private Integer id;
 
   @Enumerated(EnumType.STRING)
   @ElementCollection(targetClass = AdCategoryEnum.class)
@@ -30,12 +30,12 @@ public class Advertisement {
   }
 
   // Accessor and Mutator Methods
-  public Integer getAdId() {
-    return adId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setAdId(Integer adId) {
-    this.adId = adId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public List<AdCategoryEnum> getCategories() {

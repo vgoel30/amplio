@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Set;
 
 public interface PlaylistRepository extends CrudRepository<Playlist, Integer> {
-  Playlist getPlaylistByPlaylistId(Integer playlistId);
+  Playlist getPlaylistById(Integer playlistId);
   Set<Playlist> findPlaylistsByOwner(User owner);
 }
