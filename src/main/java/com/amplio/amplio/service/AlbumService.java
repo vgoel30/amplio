@@ -1,12 +1,15 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.models.Album;
 import com.amplio.amplio.models.Artist;
+import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.AlbumRepository;
 import com.amplio.amplio.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -27,6 +30,15 @@ public class AlbumService {
       artistAlbums = albumRepository.findAlbumsByArtist(artist);
     }
     return artistAlbums;
+  }
+
+  public List<Album> searchAlbum(String query, HttpSession session){
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    List<Album> albums = null;
+    if(currentUser != null){
+      albums = albumRepository.findTop10AlbumsByTitleContaining(query);
+    }
+    return albums;
   }
 
 }

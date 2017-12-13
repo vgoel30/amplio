@@ -9,4 +9,5 @@ import java.util.List;
 public interface AlbumRepository extends CrudRepository<Album, Integer> {
   Album findById(Integer albumId);
   List<Album> findAlbumsByArtist(Artist artist);
+  List<Album> findTop10AlbumsByTitleContaining(String albumName);
 }

@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
@@ -24,6 +26,16 @@ public class PlaylistService{
   @Autowired
   private UserRepository userRepository;
 
+  public List<Playlist> searchPlaylist(String query, HttpSession session) {
+    List<Playlist> playlists = null;
+    User currentUser = (User)session.getAttribute(Constants.SESSION_USER);
+
+    if(currentUser != null){
+      playlists = playlistRepository.findTop10PlaylistsByTitleContaining(query);
+    }
+
+    return playlists;
+  }
 
   public Playlist createPlaylist(PlaylistForm playlistForm, HttpSession session) {
     Playlist newPlaylist = null;
