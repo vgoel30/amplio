@@ -18,7 +18,7 @@ import java.util.Set;
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
 
 @Service
-public class PlaylistService{
+public class PlaylistService {
   @Autowired
   private PlaylistRepository playlistRepository;
   @Autowired
@@ -28,9 +28,9 @@ public class PlaylistService{
 
   public List<Playlist> searchPlaylist(String query, HttpSession session) {
     List<Playlist> playlists = null;
-    User currentUser = (User)session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
 
-    if(currentUser != null){
+    if(currentUser != null) {
       playlists = playlistRepository.findTop10PlaylistsByTitleContaining(query);
     }
 
@@ -42,9 +42,9 @@ public class PlaylistService{
     String playlistTitle = playlistForm.getTitle();
     String description = playlistForm.getDescription();
     String image = playlistForm.getImage();
-    User playlistOwner = (User)session.getAttribute(SESSION_USER);
+    User playlistOwner = (User) session.getAttribute(SESSION_USER);
 
-    if(playlistOwner != null){
+    if(playlistOwner != null) {
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
       playlistRepository.save(newPlaylist);
     }
@@ -55,13 +55,12 @@ public class PlaylistService{
   public Playlist editPlaylist(Integer playlistId, EditPlaylistForm editPlaylistForm, HttpSession session) {
     Playlist playlistToEdit = playlistRepository.getPlaylistById(playlistId);
 
-    if(playlistToEdit != null){
+    if(playlistToEdit != null) {
       User playlistToEditOwner = playlistToEdit.getOwner();
-      User sessionUser = (User)session.getAttribute(SESSION_USER);
+      User sessionUser = (User) session.getAttribute(SESSION_USER);
       if(!playlistToEditOwner.getId().equals(sessionUser.getId())) {
         playlistToEdit = null;
-      }
-      else{
+      } else {
         String title = editPlaylistForm.getTitle();
         String description = editPlaylistForm.getDescription();
         playlistToEdit.setTitle(title);
@@ -83,13 +82,12 @@ public class PlaylistService{
   public Playlist deletePlaylist(Integer playlistId, HttpSession session) {
     Playlist playlistToDelete = playlistRepository.getPlaylistById(playlistId);
 
-    if(playlistToDelete != null){
+    if(playlistToDelete != null) {
       User playlistToDeleteOwner = playlistToDelete.getOwner();
-      User sessionUser = (User)session.getAttribute(SESSION_USER);
+      User sessionUser = (User) session.getAttribute(SESSION_USER);
       if(!playlistToDeleteOwner.getId().equals(sessionUser.getId())) {
         playlistToDelete = null;
-      }
-      else{
+      } else {
         playlistRepository.delete(playlistToDelete);
       }
     }
@@ -104,7 +102,7 @@ public class PlaylistService{
 
     Playlist playlist = new Playlist(genre, genre + " playlist", "../../assets/images/genre/" + genre + ".JPG", user);
     playlist.setPublic(true);
-    for(Integer songId: songIds) {
+    for(Integer songId : songIds) {
       playlist.getSongs().add(songRepository.findSongById(songId));
     }
     playlistRepository.save(playlist);

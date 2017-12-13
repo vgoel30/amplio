@@ -20,7 +20,7 @@ public class SongController {
   private SongService songService;
 
   @RequestMapping(path = "/play/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> playSong(HttpSession session,@PathVariable String id) {
+  public ResponseEntity<Boolean> playSong(HttpSession session, @PathVariable String id) {
     HttpStatus status;
     Boolean queuesUpdated = false;
     Integer songId;
@@ -51,7 +51,7 @@ public class SongController {
 
     try {
       artistId = Integer.parseInt(id);
-      songsByArtist = songService.getTopSongsByArtist(session,artistId);
+      songsByArtist = songService.getTopSongsByArtist(session, artistId);
       if(songsByArtist != null) {
         status = HttpStatus.OK;
       } else {
@@ -61,7 +61,7 @@ public class SongController {
       status = HttpStatus.BAD_REQUEST;
     }
 
-    return  new ResponseEntity<List<Song>>(songsByArtist,status);
+    return new ResponseEntity<List<Song>>(songsByArtist, status);
   }
 
   @RequestMapping(path = "/album/{id}", method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class SongController {
 
     try {
       albumId = Integer.parseInt(id);
-      albumSongs = songService.getSongsByAlbum(session,albumId);
+      albumSongs = songService.getSongsByAlbum(session, albumId);
       if(albumSongs != null) {
         status = HttpStatus.OK;
       } else {
@@ -82,7 +82,7 @@ public class SongController {
       status = HttpStatus.BAD_REQUEST;
     }
 
-    return  new ResponseEntity<List<Song>>(albumSongs,status);
+    return new ResponseEntity<List<Song>>(albumSongs, status);
   }
 
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)

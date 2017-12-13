@@ -32,10 +32,10 @@ public class AlbumService {
     return artistAlbums;
   }
 
-  public List<Album> searchAlbum(String query, HttpSession session){
+  public List<Album> searchAlbum(String query, HttpSession session) {
     User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     List<Album> albums = null;
-    if(currentUser != null){
+    if(currentUser != null) {
       albums = albumRepository.findTop10AlbumsByTitleContaining(query);
     }
     return albums;

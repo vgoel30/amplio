@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Playlist{
+public class Playlist {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;

@@ -21,7 +21,7 @@ public class ArtistService {
   @Autowired
   UserRepository userRepository;
 
-  public Artist getArtist(Integer artistId){
+  public Artist getArtist(Integer artistId) {
     Artist artist = artistRepository.findById(artistId);
     return artist;
   }
@@ -42,7 +42,7 @@ public class ArtistService {
     if(currentUser != null) {
       followerIds = userRepository.findUsersByFollowedArtist(artistId);
       followers = new HashSet<User>();
-      for(Integer followerId: followerIds) {
+      for(Integer followerId : followerIds) {
         User user = userRepository.findUserById(followerId);
         followers.add(user);
       }

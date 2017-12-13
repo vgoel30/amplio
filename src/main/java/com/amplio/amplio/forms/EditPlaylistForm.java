@@ -2,7 +2,7 @@ package com.amplio.amplio.forms;
 
 public class EditPlaylistForm {
   private String title;
-  private  String description;
+  private String description;
 
   public EditPlaylistForm(String title, String description) {
     this.title = title;

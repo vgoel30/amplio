@@ -28,13 +28,13 @@ public class SongService {
   @Autowired
   AlbumRepository albumRepository;
 
-  public Boolean playSong(HttpSession session, Integer songId){
+  public Boolean playSong(HttpSession session, Integer songId) {
     Boolean queuesUpdated = false;
-    User user = (User)session.getAttribute(Constants.SESSION_USER);
+    User user = (User) session.getAttribute(Constants.SESSION_USER);
     user = userRepository.findUserById(user.getId());
     Song song = songRepository.findSongById(songId);
 
-    if(user != null && song != null){
+    if(user != null && song != null) {
       user.getSongHistory().add(song);
       userRepository.save(user);
       song.incrementNumPlays();
@@ -42,11 +42,11 @@ public class SongService {
       queuesUpdated = true;
     }
 
-    return  queuesUpdated;
+    return queuesUpdated;
   }
 
   public List<Song> getTopSongsByArtist(HttpSession session, Integer artistId) {
-    User currentUser = (User)session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     Artist artist = artistRepository.findById(artistId);
     List<Song> songsByArtist = null;
 
@@ -58,7 +58,7 @@ public class SongService {
   }
 
   public List<Song> getSongsByAlbum(HttpSession session, Integer albumId) {
-    User currentUser = (User)session.getAttribute(Constants.SESSION_USER);
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     Album album = albumRepository.findById(albumId);
     List<Song> albumSongs = null;
 
