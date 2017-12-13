@@ -1,6 +1,7 @@
 package com.amplio.amplio.controllers;
 
 import com.amplio.amplio.models.Artist;
+import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/artist")
@@ -55,5 +57,26 @@ public class ArtistController {
     }
 
     return new ResponseEntity<List<Artist>>(artists, status);
+  }
+
+  @RequestMapping(path= "/followers/{id}", method = RequestMethod.GET)
+  public ResponseEntity<Set<User>> getFollowers(@PathVariable String id, HttpSession session) {
+    HttpStatus status;
+    Set<User> followers = null;
+    Integer artistId;
+
+    try {
+      artistId = Integer.parseInt(id);
+      followers = artistService.getFollowers(session,artistId);
+      if(followers != null) {
+        status = HttpStatus.OK;
+      } else {
+        status = HttpStatus.NOT_FOUND;
+      }
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+    }
+
+    return new ResponseEntity<Set<User>>(followers,status);
   }
 }
