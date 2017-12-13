@@ -72,6 +72,9 @@ public class SessionService{
     if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
         Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
+        for (Playlist playlist : playlists) {
+          playlist.setOwner(null);
+        }
         user.setPlaylists(playlists);
         session.setAttribute(SESSION_USER, user);
       } else {

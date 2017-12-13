@@ -29,6 +29,9 @@ public class UserService {
   public User getUser(Integer userId) {
     User user = userRepository.findUserById(userId);
     Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
+    for (Playlist playlist : playlists) {
+      playlist.setOwner(null);
+    }
     user.setPlaylists(playlists);
     return user;
   }
