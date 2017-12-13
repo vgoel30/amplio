@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,7 @@ public class ArtistService {
     Set<User> followers = null;
     if(currentUser != null) {
       followerIds = userRepository.findUsersByFollowedArtist(artistId);
+      followers = new HashSet<User>();
       for(Integer followerId: followerIds) {
         User user = userRepository.findUserById(followerId);
         followers.add(user);
