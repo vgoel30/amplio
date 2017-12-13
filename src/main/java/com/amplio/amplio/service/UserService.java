@@ -67,14 +67,14 @@ public class UserService {
 
 
   public Set<Playlist> unfollowPlaylist(HttpSession session, Integer playlistId) {
-    Playlist playlistToUnFollow = playlistRepository.getPlaylistById(playlistId);
+    Playlist playlistToUnfollow = playlistRepository.getPlaylistById(playlistId);
     User currentUser = (User) session.getAttribute(SESSION_USER);
-    if(currentUser == null || playlistToUnFollow == null) {
+    if(currentUser == null || playlistToUnfollow == null) {
       return null;
     }
     currentUser = userRepository.findUserById(currentUser.getId());
     Set<Playlist> followedPlaylists = currentUser.getFollowedPlaylists();
-    followedPlaylists.remove(playlistToUnFollow);
+    followedPlaylists.remove(playlistToUnfollow);
     userRepository.save(currentUser);
     return followedPlaylists;
   }
