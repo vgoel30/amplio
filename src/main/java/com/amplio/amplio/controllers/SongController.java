@@ -84,4 +84,18 @@ public class SongController {
 
     return  new ResponseEntity<List<Song>>(albumSongs,status);
   }
+
+  @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
+  public ResponseEntity<List<Song>> searchSong(@PathVariable String query, HttpSession session) {
+    HttpStatus status;
+    List<Song> songs = songService.searchSong(query, session);
+
+    if(songs == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<List<Song>>(songs, status);
+  }
 }

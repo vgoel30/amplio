@@ -62,12 +62,12 @@ public class UserController {
   }
 
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public ResponseEntity<List<User>> searchUser(@PathVariable String query) {
+  public ResponseEntity<List<User>> searchUser(@PathVariable String query, HttpSession session) {
     HttpStatus status;
-    List<User> users = userService.searchUser(query);
+    List<User> users = userService.searchUser(query, session);
 
     if(users == null) {
-      status = HttpStatus.BAD_REQUEST;
+      status = HttpStatus.FORBIDDEN;
     } else {
       status = HttpStatus.OK;
     }

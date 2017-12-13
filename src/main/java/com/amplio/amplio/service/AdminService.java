@@ -48,14 +48,13 @@ public class AdminService{
       date = new Date();
     }
     String title = albumForm.getTitle();
-    String image = albumForm.getImage();
     List<Song> songs = albumForm.getSongs();
 
     if(artist == null || date == null || title == null || songs == null) {
       return null;
     }
 
-    Album album = new Album(artist, date, title, image);
+    Album album = new Album(artist, date, title, "");
 
     albumRepository.save(album);
 
