@@ -338,4 +338,19 @@ public class UserController {
 
     return new ResponseEntity<Boolean>(downgraded, status);
   }
+
+  @RequestMapping(path = "/savesong/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> saveSong(String id, HttpSession session){
+    HttpStatus status;
+    Boolean savedSong = false;
+    Integer songId;
+
+    try{
+      songId = Integer.parseInt(id);
+    }
+    catch(NumberFormatException e){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Boolean>(savedSong, status);
+    }
+  }
 }

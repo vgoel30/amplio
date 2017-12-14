@@ -2,10 +2,7 @@ package com.amplio.amplio.service;
 
 import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
-import com.amplio.amplio.repository.ArtistRepository;
-import com.amplio.amplio.repository.FollowerRepository;
-import com.amplio.amplio.repository.PlaylistRepository;
-import com.amplio.amplio.repository.UserRepository;
+import com.amplio.amplio.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +22,8 @@ public class UserService {
   private PlaylistRepository playlistRepository;
   @Autowired
   private ArtistRepository artistRepository;
+  @Autowired
+  private SongRepository songRepository;
 
 
   public User getUser(Integer userId) {
@@ -301,7 +300,7 @@ public class UserService {
       currentUser = userRepository.findUserById(currentUser.getId());
     }
 
-    if(currentUser != null){
+    if(currentUser != null && !currentUser.getPremium()){
       currentUser.setPremium(true);
       userRepository.save(currentUser);
       upgraded = true;
@@ -318,12 +317,58 @@ public class UserService {
       currentUser = userRepository.findUserById(currentUser.getId());
     }
 
-    if(currentUser != null){
+    if(currentUser != null && currentUser.getPremium()){
       currentUser.setPremium(false);
       userRepository.save(currentUser);
       downgraded = true;
     }
 
     return downgraded;
+  }
+
+  public Boolean saveSong(Integer songId, HttpSession session){
+    Boolean songSaved = false;
+    Song songToSave = songRepository.findSongById(songId);
+
+    if(songToSave != null){
+      User currentUser = (User)session.getAttribute(SESSION_USER);
+      if(currentUser != null) {
+        currentUser = userRepository.findUserById(currentUser.getId());
+      }
+
+      if(currentUser != null){
+        currentUser.getSavedSongs().add(songToSave);
+        userRepository.save(currentUser);
+        songSaved = true;
+      }
+    }
+
+    return songSaved;
+  }
+
+  public Boolean unsaveSong(Integer songId, HttpSession session){
+    Boolean songUnsaved = false;
+    Song songToSave = songRepository.findSongById(songId);
+
+    if(songToSave != null){
+      User currentUser = (User)session.getAttribute(SESSION_USER);
+      if(currentUser != null) {
+        currentUser = userRepository.findUserById(currentUser.getId());
+      }
+
+      if(currentUser != null){
+        boolean songPresent = false;
+        for(Song savedSong : currentUser.getSavedSongs()){
+          if(savedSong.getId().equals(songId)){
+            currentUser.getSavedSongs().remove(savedSong);
+            songPresent = true;
+          }
+        }
+        userRepository.save(currentUser);
+        songUnsaved = songPresent;
+      }
+    }
+
+    return songUnsaved;
   }
 }

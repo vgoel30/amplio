@@ -62,6 +62,7 @@ public class User {
     followedPlaylists = new HashSet<Playlist>();
     followedArtists = new HashSet<Artist>();
     following = new HashSet<>();
+    savedSongs = new HashSet<>();
     songHistory = new ArrayList<>();
   }
 
@@ -76,6 +77,7 @@ public class User {
     this.followers = new HashSet<>();
     this.followedPlaylists = new HashSet<Playlist>();
     this.followedArtists = new HashSet<Artist>();
+    this.savedSongs = new HashSet<>();
     this.songHistory = new ArrayList<>();
   }
 
