@@ -101,4 +101,20 @@ public class ArtistController {
 
     return new ResponseEntity<List<Artist>>(relatedArtists, status);
   }
+
+  @RequestMapping(path = "/all", method = RequestMethod.GET)
+  public ResponseEntity<List<Artist>> getAll(HttpSession session) {
+    HttpStatus status;
+    List<Artist> artists = null;
+
+    artists = artistService.getAll(session);
+
+    if(artists != null ) {
+      status = HttpStatus.OK;
+    } else {
+      status = HttpStatus.NOT_FOUND;
+    }
+
+    return new ResponseEntity<List<Artist>>(artists,status);
+  }
 }
