@@ -148,13 +148,11 @@ public class UserService {
     return following;
   }
 
-  public Boolean deleteUser(HttpSession session) {
+  public Boolean deleteUser(Integer userToDeleteId){
     Boolean deletionSuccess = false;
-    User currentUser = (User) session.getAttribute(SESSION_USER);
-    if(currentUser != null) {
-      currentUser = userRepository.findUserById(currentUser.getId());
-      Integer userToDeleteId = currentUser.getId();
+    User currentUser = userRepository.findUserById(userToDeleteId);
 
+    if(currentUser != null){
       //1. delete this user from the following list of their followers
       for(Follower follower : currentUser.getFollowers()) {
         Integer followerId = follower.getId();
@@ -189,6 +187,18 @@ public class UserService {
 
       userRepository.delete(currentUser);
       deletionSuccess = true;
+    }
+
+    return deletionSuccess;
+  }
+
+  public Boolean deleteUser(HttpSession session) {
+    Boolean deletionSuccess = false;
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+    if(currentUser != null) {
+      currentUser = userRepository.findUserById(currentUser.getId());
+      Integer userToDeleteId = currentUser.getId();
+      deletionSuccess = deleteUser(userToDeleteId);
     }
     return deletionSuccess;
   }
