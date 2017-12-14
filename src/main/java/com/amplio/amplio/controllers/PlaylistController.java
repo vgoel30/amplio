@@ -60,24 +60,25 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<Playlist> deletePlaylist(@PathVariable String id, HttpSession session) {
+  public ResponseEntity<Boolean> deletePlaylist(@PathVariable String id, HttpSession session) {
     Playlist deletedPlaylist = null;
+    Boolean deleted = false;
     HttpStatus status;
     Integer playlistId;
     try {
       playlistId = Integer.parseInt(id);
     } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
-      return new ResponseEntity<Playlist>(deletedPlaylist, status);
+      return new ResponseEntity<Boolean>(deleted, status);
     }
-    deletedPlaylist = playlistService.deletePlaylist(playlistId, session);
+    deleted = playlistService.deletePlaylist(playlistId, session);
     if(deletedPlaylist == null) {
       status = HttpStatus.BAD_REQUEST;
     } else {
       status = HttpStatus.OK;
     }
 
-    return new ResponseEntity<Playlist>(deletedPlaylist, status);
+    return new ResponseEntity<Boolean>(deleted, status);
   }
 
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)

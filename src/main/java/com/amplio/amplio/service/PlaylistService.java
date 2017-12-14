@@ -81,7 +81,8 @@ public class PlaylistService {
   }
 
 
-  public Playlist deletePlaylist(Integer playlistId, HttpSession session) {
+  public Boolean deletePlaylist(Integer playlistId, HttpSession session) {
+    Boolean deleted = false;
     Playlist playlistToDelete = playlistRepository.getPlaylistById(playlistId);
 
     if(playlistToDelete != null) {
@@ -93,9 +94,10 @@ public class PlaylistService {
         playlistToDeleteOwner.getPlaylists().remove(playlistToDelete);
         playlistRepository.delete(playlistToDelete);
         userRepository.save(playlistToDeleteOwner);
+        deleted = true;
       }
     }
-    return playlistToDelete;
+    return deleted;
   }
 
 
