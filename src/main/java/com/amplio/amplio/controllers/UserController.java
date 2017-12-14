@@ -338,7 +338,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/savesong/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> saveSong(String id, HttpSession session) {
+  public ResponseEntity<Boolean> saveSong(@PathVariable String id, HttpSession session) {
     HttpStatus status;
     Boolean savedSong = false;
     Integer songId;
@@ -363,7 +363,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/unsavesong/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> unsaveSong(String id, HttpSession session) {
+  public ResponseEntity<Boolean> unsaveSong(@PathVariable String id, HttpSession session) {
     HttpStatus status;
     Boolean unsavedSong = false;
     Integer songId;
@@ -388,7 +388,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/savealbum/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> saveAlbum(String id, HttpSession session) {
+  public ResponseEntity<Boolean> saveAlbum(@PathVariable String id, HttpSession session) {
     HttpStatus status;
     Boolean savedAlbum = false;
     Integer albumId;
@@ -413,7 +413,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/unsavealbum/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> unsaveAlbum(String id, HttpSession session) {
+  public ResponseEntity<Boolean> unsaveAlbum(@PathVariable String id, HttpSession session) {
     HttpStatus status;
     Boolean unsavedAlbum = false;
     Integer albumId;
