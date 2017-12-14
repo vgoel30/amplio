@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
@@ -68,6 +69,9 @@ public class SessionService {
     if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
         Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
+        if(playlists == null) {
+          playlists = new HashSet<Playlist>();
+        }
         for(Playlist playlist : playlists) {
           playlist.setOwner(null);
         }
