@@ -41,7 +41,7 @@ public class User {
   @OneToOne
   private SongQueue songQueue;
   @ManyToMany
-  private Set<Album> favoriteAlbums;
+  private Set<Album> savedAlbums;
   @ElementCollection(targetClass = AdCategoryEnum.class)
   @Enumerated(EnumType.STRING)
   private List<AdCategoryEnum> adPrefs;
@@ -63,6 +63,7 @@ public class User {
     followedArtists = new HashSet<Artist>();
     following = new HashSet<>();
     savedSongs = new HashSet<>();
+    savedAlbums = new HashSet<>();
     songHistory = new ArrayList<>();
   }
 
@@ -78,6 +79,7 @@ public class User {
     this.followedPlaylists = new HashSet<Playlist>();
     this.followedArtists = new HashSet<Artist>();
     this.savedSongs = new HashSet<>();
+    this.savedAlbums = new HashSet<>();
     this.songHistory = new ArrayList<>();
   }
 
@@ -179,12 +181,12 @@ public class User {
     dislikedSongs.add(song);
   }
 
-  public Set<Album> getFavoriteAlbums() {
-    return favoriteAlbums;
+  public Set<Album> getSavedAlbums() {
+    return savedAlbums;
   }
 
   public void unfavoriteAlbum(Album album) {
-    favoriteAlbums.remove(album);
+    savedAlbums.remove(album);
   }
 
   public List<AdCategoryEnum> getAdPrefs() {

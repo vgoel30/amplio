@@ -267,7 +267,7 @@ public class UserController {
     return new ResponseEntity<Set<Playlist>>(followedPlaylists, status);
   }
 
-  @RequestMapping(path = "updatepicture", method = RequestMethod.POST)
+  @RequestMapping(path = "/updatepicture", method = RequestMethod.POST)
   public ResponseEntity<Boolean> updateProfilePicture(String imagePath, HttpSession session) {
     HttpStatus status;
     Boolean updatedPicture = userService.updateProfilePicture(imagePath, session);
@@ -385,5 +385,55 @@ public class UserController {
     }
 
     return new ResponseEntity<Boolean>(unsavedSong, status);
+  }
+
+  @RequestMapping(path = "/savealbum/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> saveAlbum(String id, HttpSession session) {
+    HttpStatus status;
+    Boolean savedAlbum = false;
+    Integer albumId;
+
+    try {
+      albumId = Integer.parseInt(id);
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Boolean>(savedAlbum, status);
+    }
+
+    savedAlbum = userService.saveAlbum(albumId, session);
+
+    if(savedAlbum){
+      status = HttpStatus.FORBIDDEN;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(savedAlbum, status);
+  }
+
+  @RequestMapping(path = "/unsavealbum/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> unsaveAlbum(String id, HttpSession session) {
+    HttpStatus status;
+    Boolean unsavedAlbum = false;
+    Integer albumId;
+
+    try {
+      albumId = Integer.parseInt(id);
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Boolean>(unsavedAlbum, status);
+    }
+
+    unsavedAlbum = userService.unsaveAlbum(albumId, session);
+
+    if(unsavedAlbum){
+      status = HttpStatus.FORBIDDEN;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(unsavedAlbum, status);
   }
 }

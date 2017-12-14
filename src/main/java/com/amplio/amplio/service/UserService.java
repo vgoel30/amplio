@@ -24,6 +24,8 @@ public class UserService {
   private ArtistRepository artistRepository;
   @Autowired
   private SongRepository songRepository;
+  @Autowired
+  private AlbumRepository albumRepository;
 
 
   public User getUser(Integer userId) {
@@ -370,5 +372,51 @@ public class UserService {
     }
 
     return songUnsaved;
+  }
+
+  public Boolean saveAlbum(Integer albumId, HttpSession session){
+    Boolean albumSaved = false;
+    Album albumToSave = albumRepository.findById(albumId);
+
+    if(albumToSave != null){
+      User currentUser = (User)session.getAttribute(SESSION_USER);
+      if(currentUser != null) {
+        currentUser = userRepository.findUserById(currentUser.getId());
+      }
+
+      if(currentUser != null){
+        currentUser.getSavedAlbums().add(albumToSave);
+        userRepository.save(currentUser);
+        albumSaved = true;
+      }
+    }
+
+    return albumSaved;
+  }
+
+  public Boolean unsaveAlbum(Integer albumId, HttpSession session){
+    Boolean albumUnsaved = false;
+    Album albumToUnsave = albumRepository.findById(albumId);
+
+    if(albumToUnsave != null){
+      User currentUser = (User)session.getAttribute(SESSION_USER);
+      if(currentUser != null) {
+        currentUser = userRepository.findUserById(currentUser.getId());
+      }
+
+      if(currentUser != null){
+        boolean albumPresent = false;
+        for(Album savedAlbum : currentUser.getSavedAlbums()){
+          if(savedAlbum.getId().equals(albumId)){
+            currentUser.getSavedSongs().remove(savedAlbum);
+            albumPresent = true;
+          }
+        }
+        userRepository.save(currentUser);
+        albumUnsaved = albumPresent;
+      }
+    }
+
+    return albumUnsaved;
   }
 }
