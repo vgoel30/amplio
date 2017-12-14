@@ -38,6 +38,7 @@ public class Playlist {
     this.image = image;
     this.owner = owner;
     this.songs = new ArrayList<Song>();
+    this.isPublic = true;
   }
 
   public Integer getId() {

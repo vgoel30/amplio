@@ -110,7 +110,6 @@ public class PlaylistService {
     return playlist;
   }
 
-
   public Set<Playlist> getGeneratedPlaylists() {
     User amplioUser = userRepository.findByUserName("Amplio");
     Set<Playlist> generatedPlaylists = null;
@@ -131,5 +130,23 @@ public class PlaylistService {
     }
 
     return playlists;
+  }
+
+  public Boolean togglePrivatePlaylist(Integer playlistId, HttpSession session){
+    Boolean toggledPrivatePlaylist = false;
+    User user = (User) session.getAttribute(SESSION_USER);
+    Playlist playlistToToggle = playlistRepository.getPlaylistById(playlistId);
+
+    if(user != null && playlistToToggle != null){
+      user = userRepository.findUserById(user.getId());
+      if(user != null && playlistToToggle.getOwner().equals(user)){
+        playlistToToggle.setPublic(!playlistToToggle.isPublic());
+        userRepository.save(user);
+        playlistRepository.save(playlistToToggle);
+        toggledPrivatePlaylist = true;
+      }
+    }
+
+    return toggledPrivatePlaylist;
   }
 }

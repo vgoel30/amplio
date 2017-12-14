@@ -6,6 +6,7 @@ import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.PlaylistService;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -162,5 +163,31 @@ public class PlaylistController {
     }
 
     return new ResponseEntity<List<Playlist>>(playlists, status);
+  }
+
+  @RequestMapping(path = "/toggleprivate/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> togglePrivatePlaylist(@PathVariable String id, HttpSession session){
+    HttpStatus status;
+    Boolean toggledPrivate = false;
+    Integer playlistId;
+
+    try{
+      playlistId = Integer.parseInt(id);
+    }
+    catch(Exception e){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Boolean>(toggledPrivate, status);
+    }
+
+    toggledPrivate = playlistService.togglePrivatePlaylist(playlistId, session);
+
+    if(toggledPrivate){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.FORBIDDEN;
+    }
+
+    return new ResponseEntity<Boolean>(toggledPrivate, status);
   }
 }
