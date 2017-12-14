@@ -1,7 +1,6 @@
 package com.amplio.amplio.service;
 
 import com.amplio.amplio.constants.Constants;
-import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
@@ -52,7 +51,7 @@ public class PlaylistService {
   }
 
 
-  public Playlist editPlaylist(Integer playlistId, EditPlaylistForm editPlaylistForm, HttpSession session) {
+  public Playlist editPlaylist(Integer playlistId, PlaylistForm editPlaylistForm, HttpSession session) {
     Playlist playlistToEdit = playlistRepository.getPlaylistById(playlistId);
 
     if(playlistToEdit != null) {

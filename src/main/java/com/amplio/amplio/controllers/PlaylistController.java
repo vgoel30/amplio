@@ -1,7 +1,6 @@
 package com.amplio.amplio.controllers;
 
 import com.amplio.amplio.constants.Constants;
-import com.amplio.amplio.forms.EditPlaylistForm;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
 import com.amplio.amplio.models.User;
@@ -36,7 +35,7 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Playlist> editPlaylist(@PathVariable String id, @RequestBody EditPlaylistForm editPlaylistForm,
+  public ResponseEntity<Playlist> editPlaylist(@PathVariable String id, @RequestBody PlaylistForm editPlaylistForm,
                                                HttpSession session) {
     Playlist editedPlaylist = null;
     HttpStatus status;
