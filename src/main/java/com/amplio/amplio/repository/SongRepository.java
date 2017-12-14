@@ -18,7 +18,9 @@ public interface SongRepository extends CrudRepository<Song, Integer> {
   Set<Integer> findSongsByGenre(@Param("genre") String genre);
 
   Song findSongById(Integer songId);
+
   List<Song> findTop25SongsByArtistOrderByNumberPlaysDesc(Artist Artist);
+
   List<Song> findSongsByAlbum(Album album);
 
   List<Song> findTop10SongsBySongNameContainingOrderByNumberPlaysDesc(String songName);

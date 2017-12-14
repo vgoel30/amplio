@@ -67,13 +67,13 @@ public class AlbumController {
   }
 
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public ResponseEntity<List<Album>> searchAlbum(@PathVariable String query, HttpSession session){
+  public ResponseEntity<List<Album>> searchAlbum(@PathVariable String query, HttpSession session) {
     HttpStatus status;
     List<Album> albums = albumService.searchAlbum(query, session);
 
-    if(albums == null){
+    if(albums == null) {
       status = HttpStatus.FORBIDDEN;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 

@@ -20,26 +20,22 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.util.Set;
 
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
 
 @Service
-public class SessionService{
+public class SessionService {
+  @Autowired
+  PlaylistRepository playlistRepository;
   @Autowired
   private UserRepository userRepository;
-
   @Autowired
   private PasswordEncoder passwordEncoder;
-
   @Autowired
   private FollowerRepository followerRepository;
-
   @Autowired
   private AdminRepository adminRepository;
-
-  @Autowired PlaylistRepository playlistRepository;
 
   public User registerUser(RegisterForm registerForm) {
     String userName = registerForm.getUserName();
@@ -72,7 +68,7 @@ public class SessionService{
     if(user != null) {
       if(passwordEncoder.matches(password, user.getPassword())) {
         Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
-        for (Playlist playlist : playlists) {
+        for(Playlist playlist : playlists) {
           playlist.setOwner(null);
         }
         user.setPlaylists(playlists);

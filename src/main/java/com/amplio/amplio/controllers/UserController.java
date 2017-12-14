@@ -1,5 +1,6 @@
 package com.amplio.amplio.controllers;
 
+import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,22 +148,22 @@ public class UserController {
   }
 
   @RequestMapping(path = "/followartist/{artistId}", method = RequestMethod.POST)
-  public ResponseEntity<Set<Artist>> followArtist(@PathVariable String artistId, HttpSession session){
+  public ResponseEntity<Set<Artist>> followArtist(@PathVariable String artistId, HttpSession session) {
     HttpStatus status;
     Integer artistToFollowId;
     Set<Artist> followingArtist = null;
 
-    try{
+    try {
       artistToFollowId = Integer.parseInt(artistId);
       followingArtist = userService.followArtist(session, artistToFollowId);
-    } catch(NumberFormatException e){
+    } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Set<Artist>>(followingArtist, status);
     }
 
-    if(followingArtist == null){
+    if(followingArtist == null) {
       status = HttpStatus.UNAUTHORIZED;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -170,22 +171,22 @@ public class UserController {
   }
 
   @RequestMapping(path = "/unfollowartist/{artistId}", method = RequestMethod.POST)
-  public ResponseEntity<Set<Artist>> unfollowArtist(@PathVariable String artistId, HttpSession session){
+  public ResponseEntity<Set<Artist>> unfollowArtist(@PathVariable String artistId, HttpSession session) {
     HttpStatus status;
     Integer artistToUnfollowId;
     Set<Artist> followingArtist = null;
 
-    try{
+    try {
       artistToUnfollowId = Integer.parseInt(artistId);
       followingArtist = userService.unfollowArtist(session, artistToUnfollowId);
-    } catch(NumberFormatException e){
+    } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Set<Artist>>(followingArtist, status);
     }
 
-    if(followingArtist == null){
+    if(followingArtist == null) {
       status = HttpStatus.UNAUTHORIZED;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -193,22 +194,22 @@ public class UserController {
   }
 
   @RequestMapping(path = "/followplaylist/{playlistId}", method = RequestMethod.POST)
-  public ResponseEntity<Set<Playlist>> followPlaylist(@PathVariable String playlistId, HttpSession session){
+  public ResponseEntity<Set<Playlist>> followPlaylist(@PathVariable String playlistId, HttpSession session) {
     HttpStatus status;
     Integer playlistToFollowId;
     Set<Playlist> followingPlaylists = null;
 
-    try{
+    try {
       playlistToFollowId = Integer.parseInt(playlistId);
       followingPlaylists = userService.followPlaylist(session, playlistToFollowId);
-    } catch(NumberFormatException e){
+    } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Set<Playlist>>(followingPlaylists, status);
     }
 
-    if(followingPlaylists == null){
+    if(followingPlaylists == null) {
       status = HttpStatus.UNAUTHORIZED;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -216,22 +217,22 @@ public class UserController {
   }
 
   @RequestMapping(path = "/unfollowplaylist/{playlistId}", method = RequestMethod.POST)
-  public ResponseEntity<Set<Playlist>> unfollowPlaylist(@PathVariable String playlistId, HttpSession session){
+  public ResponseEntity<Set<Playlist>> unfollowPlaylist(@PathVariable String playlistId, HttpSession session) {
     HttpStatus status;
     Integer playlistToUnfollowId;
     Set<Playlist> followingPlaylists = null;
 
-    try{
+    try {
       playlistToUnfollowId = Integer.parseInt(playlistId);
       followingPlaylists = userService.unfollowPlaylist(session, playlistToUnfollowId);
-    } catch(NumberFormatException e){
+    } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Set<Playlist>>(followingPlaylists, status);
     }
 
-    if(followingPlaylists == null){
+    if(followingPlaylists == null) {
       status = HttpStatus.UNAUTHORIZED;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -266,6 +267,20 @@ public class UserController {
     return new ResponseEntity<Set<Playlist>>(followedPlaylists, status);
   }
 
+  @RequestMapping(path = "updatepicture", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> updateProfilePicture(String imagePath, HttpSession session) {
+    HttpStatus status;
+    Boolean updatedPicture = userService.updateProfilePicture(imagePath, session);
+
+    if(updatedPicture == false) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(updatedPicture, status);
+  }
+
   @RequestMapping(path = "/queue/add", method = RequestMethod.POST)
   public ResponseEntity<Boolean> addSongToQueue(Song songToAdd, HttpSession session) {
     HttpStatus status;
@@ -292,5 +307,35 @@ public class UserController {
     }
 
     return new ResponseEntity<Boolean>(songDeleted, status);
+  }
+
+  @RequestMapping(path = "/upgrade", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session) {
+    HttpStatus status;
+    Boolean upgraded = userService.upgradeUser(upgradePremiumForm, session);
+
+    if(upgraded){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.FORBIDDEN;
+    }
+
+    return new ResponseEntity<Boolean>(upgraded, status);
+  }
+
+  @RequestMapping(path = "/downgrade", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> downgradeUser(HttpSession session) {
+    HttpStatus status;
+    Boolean downgraded = userService.downgradeUser(session);
+
+    if(downgraded){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.FORBIDDEN;
+    }
+
+    return new ResponseEntity<Boolean>(downgraded, status);
   }
 }

@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class AdminService{
+public class AdminService {
   @Autowired
   private ArtistRepository artistRepository;
   @Autowired

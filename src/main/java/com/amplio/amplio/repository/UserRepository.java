@@ -8,12 +8,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Set;
 
-import static com.amplio.amplio.constants.Constants.SONG_QUERY_LIMIT;
-
 public interface UserRepository extends CrudRepository<User, Integer> {
   @Query(value = "select user_id from user_followed_artists where followed_artists_id = :artistId ", nativeQuery = true)
   Set<Integer> findUsersByFollowedArtist(@Param("artistId") Integer artistId);
+
   User findByUserName(String userName);
+
   User findUserById(Integer userId);
+
   List<User> findTop10UsersByUserNameContainingIgnoreCase(String userName);
 }

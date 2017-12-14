@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ArtistRepository extends CrudRepository<Artist, Integer> {
   Artist findById(Integer artistId);
+
   List<Artist> findTop10ArtistsByNameContaining(String artistName);
 }

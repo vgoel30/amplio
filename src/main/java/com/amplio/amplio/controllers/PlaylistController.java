@@ -22,13 +22,13 @@ public class PlaylistController {
   private PlaylistService playlistService;
 
   @RequestMapping(path = "/create", method = RequestMethod.POST)
-  public ResponseEntity<Playlist> createPlaylist(@RequestBody PlaylistForm playlistForm, HttpSession session){
+  public ResponseEntity<Playlist> createPlaylist(@RequestBody PlaylistForm playlistForm, HttpSession session) {
     HttpStatus status;
     Playlist createdPlaylist = playlistService.createPlaylist(playlistForm, session);
 
-    if(createdPlaylist == null){
+    if(createdPlaylist == null) {
       status = HttpStatus.BAD_REQUEST;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -36,21 +36,22 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Playlist> editPlaylist(@PathVariable String id, @RequestBody EditPlaylistForm editPlaylistForm, HttpSession session){
+  public ResponseEntity<Playlist> editPlaylist(@PathVariable String id, @RequestBody EditPlaylistForm editPlaylistForm,
+                                               HttpSession session) {
     Playlist editedPlaylist = null;
     HttpStatus status;
     Integer playlistId;
-    try{
+    try {
       playlistId = Integer.parseInt(id);
-    } catch(NumberFormatException numberFormatException){
+    } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Playlist>(editedPlaylist, status);
     }
     editedPlaylist = playlistService.editPlaylist(playlistId, editPlaylistForm, session);
 
-    if(editedPlaylist == null){
+    if(editedPlaylist == null) {
       status = HttpStatus.BAD_REQUEST;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -58,22 +59,20 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<Playlist> deletePlaylist(@PathVariable String id, HttpSession session){
+  public ResponseEntity<Playlist> deletePlaylist(@PathVariable String id, HttpSession session) {
     Playlist deletedPlaylist = null;
     HttpStatus status;
     Integer playlistId;
-    try{
+    try {
       playlistId = Integer.parseInt(id);
-    }
-    catch(NumberFormatException numberFormatException){
+    } catch(NumberFormatException numberFormatException) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Playlist>(deletedPlaylist, status);
     }
     deletedPlaylist = playlistService.deletePlaylist(playlistId, session);
-    if(deletedPlaylist == null){
+    if(deletedPlaylist == null) {
       status = HttpStatus.BAD_REQUEST;
-    }
-    else{
+    } else {
       status = HttpStatus.OK;
     }
 
@@ -125,7 +124,7 @@ public class PlaylistController {
 
   @RequestMapping(path = "/genre/{genreName}", method = RequestMethod.POST)
   public ResponseEntity<Playlist> generateGenrePlaylist(@PathVariable String genreName) {
-    return new ResponseEntity<Playlist>(playlistService.generateGenrePlaylist(genreName),HttpStatus.OK);
+    return new ResponseEntity<Playlist>(playlistService.generateGenrePlaylist(genreName), HttpStatus.OK);
   }
 
   @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
@@ -141,8 +140,7 @@ public class PlaylistController {
 
       if(playlists == null) {
         status = HttpStatus.FORBIDDEN;
-      }
-      else {
+      } else {
         status = HttpStatus.OK;
       }
     } catch(NumberFormatException numberFormatException) {
@@ -153,13 +151,13 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public ResponseEntity<List<Playlist>> searchPlaylist(@PathVariable String query, HttpSession session){
+  public ResponseEntity<List<Playlist>> searchPlaylist(@PathVariable String query, HttpSession session) {
     HttpStatus status;
     List<Playlist> playlists = playlistService.searchPlaylist(query, session);
 
-    if(playlists == null){
+    if(playlists == null) {
       status = HttpStatus.FORBIDDEN;
-    } else{
+    } else {
       status = HttpStatus.OK;
     }
 

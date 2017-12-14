@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.FollowerRepository;
@@ -29,7 +30,7 @@ public class UserService {
   public User getUser(Integer userId) {
     User user = userRepository.findUserById(userId);
     Set<Playlist> playlists = playlistRepository.findPlaylistsByOwner(user);
-    for (Playlist playlist : playlists) {
+    for(Playlist playlist : playlists) {
       playlist.setOwner(null);
     }
     user.setPlaylists(playlists);
@@ -88,7 +89,7 @@ public class UserService {
     Artist artistToFollow = artistRepository.findById(artistId);
     User currentUser = (User) session.getAttribute(SESSION_USER);
 
-    if(currentUser == null || artistToFollow == null){
+    if(currentUser == null || artistToFollow == null) {
       return null;
     }
 
@@ -103,7 +104,7 @@ public class UserService {
     Artist artistToUnfollow = artistRepository.findById(artistId);
     User currentUser = (User) session.getAttribute(SESSION_USER);
 
-    if(currentUser == null || artistToUnfollow == null){
+    if(currentUser == null || artistToUnfollow == null) {
       return null;
     }
 
@@ -258,7 +259,6 @@ public class UserService {
     return songAdded;
   }
 
-
   public Boolean deleteSongFromQueue(Song songToDelete, HttpSession session) {
     Boolean songDeleted = false;
     User user = (User) session.getAttribute(SESSION_USER);
@@ -269,5 +269,61 @@ public class UserService {
       userRepository.save(user);
     }
     return songDeleted;
+  }
+
+  public Boolean updateProfilePicture(String imagePath, HttpSession session) {
+    Boolean updatedProfilePicture = false;
+    User user = (User) session.getAttribute(SESSION_USER);
+
+    if(user != null) {
+      user = userRepository.findUserById(user.getId());
+      user.setProfilePicture(imagePath);
+      userRepository.save(user);
+      updatedProfilePicture = true;
+    }
+
+    return updatedProfilePicture;
+  }
+
+  public Boolean upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session){
+    Boolean upgraded = false;
+    Integer creditCardNumber;
+
+    try{
+      creditCardNumber = Integer.parseInt(upgradePremiumForm.getCreditCardNumber());
+    }
+    catch(NumberFormatException e){
+      return upgraded;
+    }
+
+    User currentUser = (User)session.getAttribute(SESSION_USER);
+    if(currentUser != null) {
+      currentUser = userRepository.findUserById(currentUser.getId());
+    }
+
+    if(currentUser != null){
+      currentUser.setPremium(true);
+      userRepository.save(currentUser);
+      upgraded = true;
+    }
+
+    return upgraded;
+  }
+
+  public Boolean downgradeUser(HttpSession session){
+    Boolean downgraded = false;
+
+    User currentUser = (User)session.getAttribute(SESSION_USER);
+    if(currentUser != null) {
+      currentUser = userRepository.findUserById(currentUser.getId());
+    }
+
+    if(currentUser != null){
+      currentUser.setPremium(false);
+      userRepository.save(currentUser);
+      downgraded = true;
+    }
+
+    return downgraded;
   }
 }

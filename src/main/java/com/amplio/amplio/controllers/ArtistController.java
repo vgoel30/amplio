@@ -59,7 +59,7 @@ public class ArtistController {
     return new ResponseEntity<List<Artist>>(artists, status);
   }
 
-  @RequestMapping(path= "/followers/{id}", method = RequestMethod.GET)
+  @RequestMapping(path = "/followers/{id}", method = RequestMethod.GET)
   public ResponseEntity<Set<User>> getFollowers(@PathVariable String id, HttpSession session) {
     HttpStatus status;
     Set<User> followers = null;
@@ -67,7 +67,7 @@ public class ArtistController {
 
     try {
       artistId = Integer.parseInt(id);
-      followers = artistService.getFollowers(session,artistId);
+      followers = artistService.getFollowers(session, artistId);
       if(followers != null) {
         status = HttpStatus.OK;
       } else {
@@ -77,6 +77,6 @@ public class ArtistController {
       status = HttpStatus.BAD_REQUEST;
     }
 
-    return new ResponseEntity<Set<User>>(followers,status);
+    return new ResponseEntity<Set<User>>(followers, status);
   }
 }

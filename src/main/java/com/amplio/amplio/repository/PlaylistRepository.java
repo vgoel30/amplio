@@ -10,6 +10,8 @@ import java.util.Set;
 
 public interface PlaylistRepository extends CrudRepository<Playlist, Integer> {
   Playlist getPlaylistById(Integer playlistId);
+
   Set<Playlist> findPlaylistsByOwner(User owner);
+
   List<Playlist> findTop10PlaylistsByTitleContaining(String playlistName);
 }
