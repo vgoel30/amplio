@@ -3,6 +3,7 @@ package com.amplio.amplio.controllers;
 import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
+import com.amplio.amplio.models.Song;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +34,34 @@ public class PlaylistController {
     }
 
     return new ResponseEntity<Playlist>(createdPlaylist, status);
+  }
+
+  @RequestMapping(path = "/addsong/{playlistId}", method = RequestMethod.POST)
+  public ResponseEntity<Song> addSongToPlaylist(@PathVariable String playlistId, @RequestBody String songId, HttpSession session) {
+    HttpStatus status;
+    Song addedSong = null;
+    Integer playlistIntegerId;
+    Integer songIntegerId;
+
+    try{
+      playlistIntegerId = Integer.parseInt(playlistId);
+      songIntegerId = Integer.parseInt(songId);
+    }
+    catch(NumberFormatException e){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Song>(addedSong, status);
+    }
+
+    addedSong = playlistService.addSongToPlaylist(playlistIntegerId, songIntegerId, session);
+
+    if(addedSong != null){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.FORBIDDEN;
+    }
+
+    return new ResponseEntity<Song>(addedSong, status);
   }
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
@@ -59,7 +89,6 @@ public class PlaylistController {
 
   @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<Boolean> deletePlaylist(@PathVariable String id, HttpSession session) {
-    Playlist deletedPlaylist = null;
     Boolean deleted = false;
     HttpStatus status;
     Integer playlistId;

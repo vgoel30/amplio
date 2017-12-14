@@ -3,6 +3,7 @@ package com.amplio.amplio.service;
 import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.PlaylistForm;
 import com.amplio.amplio.models.Playlist;
+import com.amplio.amplio.models.Song;
 import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.SongRepository;
@@ -71,6 +72,24 @@ public class PlaylistService {
     return playlistToEdit;
   }
 
+  public Song addSongToPlaylist(Integer playlistId, Integer songId, HttpSession session){
+    Song songAdded = null;
+    User user = (User)session.getAttribute(SESSION_USER);
+    if(user != null){
+      user = userRepository.findUserById(user.getId());
+      Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+      Song song = songRepository.findSongById(songId);
+
+      if(song != null && playlist != null && playlist.getOwner().equals(user)){
+        playlist.getSongs().add(song);
+        userRepository.save(user);
+        playlistRepository.save(playlist);
+        songAdded = song;
+      }
+    }
+
+    return songAdded;
+  }
 
   public Playlist getPlaylist(Integer playlistId) {
     Playlist playlist = playlistRepository.getPlaylistById(playlistId);
