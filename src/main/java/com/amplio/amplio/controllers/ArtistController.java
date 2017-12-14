@@ -79,4 +79,26 @@ public class ArtistController {
 
     return new ResponseEntity<Set<User>>(followers, status);
   }
+
+  @RequestMapping(path = "/related/{id}", method = RequestMethod.GET)
+  public ResponseEntity<List<Artist>> getRelated(@PathVariable String id, HttpSession session) {
+    HttpStatus status;
+
+    List<Artist> relatedArtists = null;
+    Integer artistId;
+
+    try {
+      artistId = Integer.parseInt(id);
+      relatedArtists = artistService.findRelated(session, artistId);
+      if(relatedArtists != null) {
+        status = HttpStatus.OK;
+      } else {
+        status = HttpStatus.NOT_FOUND;
+      }
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+    }
+
+    return new ResponseEntity<List<Artist>>(relatedArtists, status);
+  }
 }

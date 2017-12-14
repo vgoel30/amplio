@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,5 +50,22 @@ public class ArtistService {
     }
 
     return followers;
+  }
+
+  public List<Artist> findRelated(HttpSession session, Integer artistId) {
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+    Artist currentArtist = artistRepository.findById(artistId);
+    List<Artist> relatedArtists = null;
+
+    if(currentUser != null) {
+      List<Integer> relatedArtistIds = artistRepository.findRelatedArtists(currentArtist.getGenre().toString(),currentArtist.getName());
+
+      relatedArtists = new ArrayList<Artist>();
+      for(Integer id: relatedArtistIds) {
+        relatedArtists.add(artistRepository.findById(id));
+      }
+    }
+
+    return relatedArtists;
   }
 }

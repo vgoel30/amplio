@@ -28,13 +28,14 @@ public class AdminService {
   public Artist addArtist(ArtistForm artistForm) {
     String name = artistForm.getName();
     String bibliography = artistForm.getBibliography();
+    GenreEnum genre = GenreEnum.valueOf(artistForm.getGenre());
 
     if(name == null) {
       return null;
     }
 
     Set<Concert> concerts = new HashSet<Concert>();
-    Artist artist = new Artist(name, bibliography, concerts, "");
+    Artist artist = new Artist(name, bibliography, concerts, "",genre);
     artistRepository.save(artist);
     return artist;
   }
@@ -58,6 +59,7 @@ public class AdminService {
     }
 
     Album album = new Album(artist, date, title, "");
+    album.setGenre(GenreEnum.valueOf((String) albumForm.getGenres().toArray()[0]));
 
     albumRepository.save(album);
 

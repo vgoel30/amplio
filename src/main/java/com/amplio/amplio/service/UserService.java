@@ -418,7 +418,7 @@ public class UserService {
         boolean albumPresent = false;
         for(Album savedAlbum : currentUser.getSavedAlbums()){
           if(savedAlbum.getId().equals(albumId)){
-            currentUser.getSavedAlbums().remove(savedAlbum);
+            currentUser.getSavedAlbums() .remove(savedAlbum);
             albumPresent = true;
           }
         }
