@@ -33,14 +33,15 @@ public class Artist {
   @Enumerated(EnumType.STRING)
   private GenreEnum genre;
 
-  public Artist() {
-  }
+  public Artist() {}
 
-  public Artist(String name, String bibliography, Set<Concert> concerts, String image) {
+  public Artist(String name, String bibliography, Set<Concert> concerts, String s,
+                GenreEnum genre)  {
     this.name = name;
     this.bibliography = bibliography;
     this.concerts = concerts;
     this.image = image;
+    this.genre = genre;
   }
 
   public Integer getId() {
