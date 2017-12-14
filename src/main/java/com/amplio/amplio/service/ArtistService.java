@@ -68,4 +68,15 @@ public class ArtistService {
 
     return relatedArtists;
   }
+
+  public List<Artist> getAll(HttpSession session) {
+    User user = (User) session.getAttribute(SESSION_USER);
+    List<Artist> artists = null;
+
+    if(user != null) {
+      artists = (List<Artist>) artistRepository.findAll();
+    }
+
+    return artists;
+  }
 }
