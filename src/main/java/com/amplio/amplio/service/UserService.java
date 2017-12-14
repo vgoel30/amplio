@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.FollowerRepository;
@@ -282,5 +283,47 @@ public class UserService {
     }
 
     return updatedProfilePicture;
+  }
+
+  public Boolean upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session){
+    Boolean upgraded = false;
+    Integer creditCardNumber;
+
+    try{
+      creditCardNumber = Integer.parseInt(upgradePremiumForm.getCreditCardNumber());
+    }
+    catch(NumberFormatException e){
+      return upgraded;
+    }
+
+    User currentUser = (User)session.getAttribute(SESSION_USER);
+    if(currentUser != null) {
+      currentUser = userRepository.findUserById(currentUser.getId());
+    }
+
+    if(currentUser != null){
+      currentUser.setPremium(true);
+      userRepository.save(currentUser);
+      upgraded = true;
+    }
+
+    return upgraded;
+  }
+
+  public Boolean downgradeUser(HttpSession session){
+    Boolean downgraded = false;
+
+    User currentUser = (User)session.getAttribute(SESSION_USER);
+    if(currentUser != null) {
+      currentUser = userRepository.findUserById(currentUser.getId());
+    }
+
+    if(currentUser != null){
+      currentUser.setPremium(false);
+      userRepository.save(currentUser);
+      downgraded = true;
+    }
+
+    return downgraded;
   }
 }

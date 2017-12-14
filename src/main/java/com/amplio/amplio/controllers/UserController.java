@@ -1,5 +1,6 @@
 package com.amplio.amplio.controllers;
 
+import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -306,5 +307,35 @@ public class UserController {
     }
 
     return new ResponseEntity<Boolean>(songDeleted, status);
+  }
+
+  @RequestMapping(path = "/upgrade", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session) {
+    HttpStatus status;
+    Boolean upgraded = userService.upgradeUser(upgradePremiumForm, session);
+
+    if(upgraded){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.FORBIDDEN;
+    }
+
+    return new ResponseEntity<Boolean>(upgraded, status);
+  }
+
+  @RequestMapping(path = "/downgrade", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> downgradeUser(HttpSession session) {
+    HttpStatus status;
+    Boolean downgraded = userService.downgradeUser(session);
+
+    if(downgraded){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.FORBIDDEN;
+    }
+
+    return new ResponseEntity<Boolean>(downgraded, status);
   }
 }
