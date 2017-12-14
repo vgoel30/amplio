@@ -46,9 +46,7 @@ public class PlaylistService {
 
     if(playlistOwner != null) {
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
-      playlistOwner.getPlaylists().add(newPlaylist);
       playlistRepository.save(newPlaylist);
-      userRepository.save(playlistOwner);
     }
     return newPlaylist;
   }
@@ -90,9 +88,7 @@ public class PlaylistService {
       if(!playlistToDeleteOwner.getId().equals(sessionUser.getId())) {
         playlistToDelete = null;
       } else {
-        playlistToDeleteOwner.getPlaylists().remove(playlistToDelete);
         playlistRepository.delete(playlistToDelete);
-        userRepository.save(playlistToDeleteOwner);
       }
     }
     return playlistToDelete;
@@ -119,7 +115,7 @@ public class PlaylistService {
     Set<Playlist> generatedPlaylists = null;
 
     if(amplioUser != null) {
-      generatedPlaylists = playlistRepository.findPlaylistsByOwnerAndPublic(amplioUser);
+      generatedPlaylists = playlistRepository.findPlaylistsByOwner(amplioUser);
     }
     return generatedPlaylists;
   }
@@ -130,7 +126,7 @@ public class PlaylistService {
     Set<Playlist> playlists = null;
 
     if(user != null && playlistOwner != null) {
-      playlists = playlistRepository.findPlaylistsByOwnerAndPublic(playlistOwner);
+      playlists = playlistRepository.findPlaylistsByOwnerAndPublic(playlistOwner.getId());
     }
 
     return playlists;
