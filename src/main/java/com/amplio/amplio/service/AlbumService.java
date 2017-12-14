@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,4 +42,18 @@ public class AlbumService {
     return albums;
   }
 
+  public List<Album> findRelatedAlbums(Integer albumId, HttpSession session) {
+    User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
+    Album currentAlbum = albumRepository.findById(albumId);
+    List<Album> albums = null;
+
+    if(currentUser != null) {
+      List<Integer> albumIds = albumRepository.findRelatedAlbums(currentAlbum.getGenre().toString(),currentAlbum.getTitle());
+      albums = new ArrayList<Album>();
+      for(Integer id: albumIds) {
+        albums.add(albumRepository.findById(id));
+      }
+    }
+    return albums;
+  }
 }

@@ -80,4 +80,25 @@ public class AlbumController {
     return new ResponseEntity<List<Album>>(albums, status);
   }
 
+  @RequestMapping(path = "/related/{id}",method = RequestMethod.GET)
+  public ResponseEntity<List<Album>> relatedAlbums(@PathVariable String id, HttpSession session) {
+    HttpStatus status;
+    List<Album> albums = null;
+    Integer albumId;
+
+    try {
+      albumId = Integer.parseInt(id);
+      albums = albumService.findRelatedAlbums(albumId,session);
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+    }
+
+    if(albums == null){
+      status = HttpStatus.FORBIDDEN;
+    } else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<>(albums, status);
+  }
 }

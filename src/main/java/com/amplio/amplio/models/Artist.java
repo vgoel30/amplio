@@ -29,6 +29,10 @@ public class Artist {
 
   private String image;
 
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private GenreEnum genre;
+
   public Artist() {
   }
 
@@ -99,4 +103,13 @@ public class Artist {
   public void setImage(String image) {
     this.image = image;
   }
+
+  public GenreEnum getGenre() {
+    return genre;
+  }
+
+  public void setGenre(GenreEnum genre) {
+    this.genre = genre;
+  }
+
 }

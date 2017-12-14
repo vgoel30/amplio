@@ -20,6 +20,10 @@ public class Album {
   private Artist artist;
   private Date date;
 
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private GenreEnum genre;
+
   public Album() {
   }
 
@@ -72,5 +76,13 @@ public class Album {
 
   public void setDate(Date date) {
     this.date = date;
+  }
+
+  public GenreEnum getGenre() {
+    return genre;
+  }
+
+  public void setGenre(GenreEnum genre) {
+    this.genre = genre;
   }
 }
