@@ -89,6 +89,7 @@ public class PlaylistService {
         playlistToDelete = null;
       } else {
         playlistRepository.delete(playlistToDelete);
+        deleted = true;
       }
     }
     return deleted;
