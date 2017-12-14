@@ -6,6 +6,7 @@ import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.AlbumRepository;
 import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.SongRepository;
+import com.amplio.amplio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class AdminService {
   private AlbumRepository albumRepository;
   @Autowired
   private SongRepository songRepository;
+  @Autowired
+  private UserRepository userRepository;
 
   public Artist addArtist(ArtistForm artistForm) {
     String name = artistForm.getName();
@@ -75,5 +78,49 @@ public class AdminService {
     }
 
     return album;
+  }
+
+  public boolean toggleBan(Integer userId){
+    boolean toggledUserBan = false;
+    User currentUser = userRepository.findUserById(userId);
+    Integer userToToggleId = currentUser.getId();
+
+    if(currentUser != null){
+      currentUser.setReported(false);
+      currentUser.setBanned(!currentUser.getBanned());
+
+      //ban the user
+      if(currentUser.getBanned()){
+        //1. delete this user from the following list of their followers
+        for(Follower follower : currentUser.getFollowers()) {
+          Integer followerId = follower.getId();
+          User followerAsUser = userRepository.findUserById(followerId);
+          Set<Follower> followingSet = followerAsUser.getFollowing();
+          for(Follower following : followingSet) {
+            if(following.getId().equals(userToToggleId)) {
+              followingSet.remove(following);
+              break;
+            }
+          }
+        }
+
+        //2. delete this user from the followers list of the people that they are following
+        for(Follower following : currentUser.getFollowing()) {
+          Integer followingId = following.getId();
+          User followingAsUser = userRepository.findUserById(followingId);
+          Set<Follower> followerSet = followingAsUser.getFollowers();
+          for(Follower follower : followerSet) {
+            if(follower.getId().equals(userToToggleId)) {
+              followerSet.remove(follower);
+              break;
+            }
+          }
+        }
+      }
+      userRepository.save(currentUser);
+      toggledUserBan = true;
+    }
+
+    return toggledUserBan;
   }
 }

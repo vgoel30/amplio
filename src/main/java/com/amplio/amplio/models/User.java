@@ -51,6 +51,10 @@ public class User {
   private Set<Artist> followedArtists;
   @Transient
   private Set<Playlist> playlists;
+  @NotNull
+  private Boolean isBanned;
+  @NotNull
+  private Boolean isReported;
 
   public User() {
     firstName = "";
@@ -65,6 +69,8 @@ public class User {
     savedSongs = new HashSet<>();
     savedAlbums = new HashSet<>();
     songHistory = new ArrayList<>();
+    isBanned = false;
+    isReported = false;
   }
 
   public User(String firstName, String lastName, String email, String username, String password, Boolean isPremium) {
@@ -81,6 +87,8 @@ public class User {
     this.savedSongs = new HashSet<>();
     this.savedAlbums = new HashSet<>();
     this.songHistory = new ArrayList<>();
+    this.isBanned = false;
+    this.isReported = false;
   }
 
   public Integer getId() {
@@ -161,6 +169,34 @@ public class User {
 
   public Set<Song> getLikedSongs() {
     return likedSongs;
+  }
+
+  public void setFollowers(Set<Follower> followers) {
+    this.followers = followers;
+  }
+
+  public void setFollowing(Set<Follower> following) {
+    this.following = following;
+  }
+
+  public void setSavedSongs(Set<Song> savedSongs) {
+    this.savedSongs = savedSongs;
+  }
+
+  public Boolean getBanned() {
+    return isBanned;
+  }
+
+  public void setBanned(Boolean banned) {
+    isBanned = banned;
+  }
+
+  public Boolean getReported() {
+    return isReported;
+  }
+
+  public void setReported(Boolean reported) {
+    isReported = reported;
   }
 
   public void likeSong(Song song) {
