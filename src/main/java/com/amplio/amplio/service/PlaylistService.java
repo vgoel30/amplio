@@ -46,7 +46,9 @@ public class PlaylistService {
 
     if(playlistOwner != null) {
       newPlaylist = new Playlist(playlistTitle, description, image, playlistOwner);
+      playlistOwner.getPlaylists().add(newPlaylist);
       playlistRepository.save(newPlaylist);
+      userRepository.save(playlistOwner);
     }
     return newPlaylist;
   }
@@ -88,7 +90,9 @@ public class PlaylistService {
       if(!playlistToDeleteOwner.getId().equals(sessionUser.getId())) {
         playlistToDelete = null;
       } else {
+        playlistToDeleteOwner.getPlaylists().remove(playlistToDelete);
         playlistRepository.delete(playlistToDelete);
+        userRepository.save(playlistToDeleteOwner);
       }
     }
     return playlistToDelete;
