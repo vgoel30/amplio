@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.forms.EditUserInfoForm;
 import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.*;
@@ -43,6 +44,24 @@ public class UserService {
     return user;
   }
 
+  public User updateUser(EditUserInfoForm editUserInfoForm, HttpSession session){
+    User updatedUser = null;
+    User user = (User)session.getAttribute(SESSION_USER);
+    if(user != null){
+      user = userRepository.findUserById(user.getId());
+      String firstName = editUserInfoForm.getFirstName();
+      String lastName = editUserInfoForm.getLastName();
+      String email = editUserInfoForm.getEmail();
+
+      user.setFirstName(firstName);
+      user.setLastName(lastName);
+      user.setEmail(email);
+
+      userRepository.save(user);
+      updatedUser = user;
+    }
+    return updatedUser;
+  }
 
   public Set<Playlist> getPlaylists(HttpSession session) {
     User currentUser = (User) session.getAttribute(SESSION_USER);

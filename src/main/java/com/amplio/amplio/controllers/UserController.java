@@ -1,15 +1,13 @@
 package com.amplio.amplio.controllers;
 
+import com.amplio.amplio.forms.EditUserInfoForm;
 import com.amplio.amplio.forms.UpgradePremiumForm;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -33,6 +31,21 @@ public class UserController {
     }
 
     return new ResponseEntity<Boolean>(deletionSuccess, status);
+  }
+
+  @RequestMapping(path = "/updateinfo", method = RequestMethod.POST)
+  public ResponseEntity<User> updateUser(@RequestBody EditUserInfoForm editUserInfoForm, HttpSession session) {
+    HttpStatus status;
+    User updatedUser = userService.updateUser(editUserInfoForm, session);
+
+    if(updatedUser == null){
+      status = HttpStatus.FORBIDDEN;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<User>(updatedUser, status);
   }
 
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
