@@ -436,4 +436,30 @@ public class UserController {
 
     return new ResponseEntity<Boolean>(unsavedAlbum, status);
   }
+
+  @RequestMapping(path = "/report/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> reportUser(@PathVariable String id, HttpSession session){
+    HttpStatus status;
+    Boolean reportedUser = false;
+    Integer userToReportId;
+
+    try{
+      userToReportId = Integer.parseInt(id);
+    }
+    catch(NumberFormatException e){
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Boolean>(reportedUser, status);
+    }
+
+    reportedUser = userService.reportUser(userToReportId, session);
+
+    if(reportedUser){
+      status = HttpStatus.OK;
+    }
+    else{
+      status = HttpStatus.NOT_FOUND;
+    }
+
+    return  new ResponseEntity<Boolean>(reportedUser, status);
+  }
 }

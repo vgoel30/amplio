@@ -1,5 +1,6 @@
 package com.amplio.amplio.service;
 
+import com.amplio.amplio.constants.Constants;
 import com.amplio.amplio.forms.AlbumForm;
 import com.amplio.amplio.forms.ArtistForm;
 import com.amplio.amplio.models.*;
@@ -10,6 +11,7 @@ import com.amplio.amplio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -80,12 +82,12 @@ public class AdminService {
     return album;
   }
 
-  public boolean toggleBan(Integer userId){
+  public boolean toggleBan(Integer userId, HttpSession session){
     boolean toggledUserBan = false;
     User currentUser = userRepository.findUserById(userId);
     Integer userToToggleId = currentUser.getId();
 
-    if(currentUser != null){
+    if(currentUser != null && session.getAttribute(Constants.SESSION_ADMIN) != null){
       currentUser.setReported(false);
       currentUser.setBanned(!currentUser.getBanned());
 

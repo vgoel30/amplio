@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Set;
 
+import static com.amplio.amplio.constants.Constants.SESSION_ADMIN;
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
 
 @Service
@@ -97,7 +98,7 @@ public class SessionService {
 
     if(admin != null) {
       if(passwordEncoder.matches(password, admin.getPassword())) {
-        session.setAttribute("admin", admin);
+        session.setAttribute(SESSION_ADMIN, admin);
       } else {
         admin = null;
       }

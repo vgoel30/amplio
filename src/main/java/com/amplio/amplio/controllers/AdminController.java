@@ -48,7 +48,7 @@ public class AdminController {
   }
 
   @RequestMapping(path = "/toggleban/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> banUser(@PathVariable String id){
+  public ResponseEntity<Boolean> banUser(@PathVariable String id, HttpSession session){
     HttpStatus status;
     Integer userId;
     Boolean userBannedToggle = false;
@@ -61,7 +61,7 @@ public class AdminController {
       return new ResponseEntity<Boolean>(userBannedToggle, status);
     }
 
-    userBannedToggle = adminService.toggleBan(userId);
+    userBannedToggle = adminService.toggleBan(userId, session);
 
     if(userBannedToggle){
       status = HttpStatus.OK;

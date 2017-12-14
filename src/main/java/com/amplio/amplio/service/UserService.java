@@ -429,4 +429,21 @@ public class UserService {
 
     return albumUnsaved;
   }
+
+  public Boolean reportUser(Integer userToReportId, HttpSession session){
+    Boolean reported = false;
+    User currentUser = (User)session.getAttribute(SESSION_USER);
+    User userToReport = userRepository.findUserById(userToReportId);
+
+    if(currentUser != null && userToReport != null){
+      currentUser = userRepository.findUserById(currentUser.getId());
+      if(currentUser != null){
+        userToReport.setReported(true);
+        reported = true;
+        userRepository.save(userToReport);
+      }
+    }
+
+    return reported;
+  }
 }

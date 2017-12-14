@@ -30,6 +30,7 @@ public class Playlist {
 
   public Playlist() {
     this.songs = new ArrayList<Song>();
+    this.isPublic = true;
   }
 
   public Playlist(String title, String description, String image, User owner) {
