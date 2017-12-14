@@ -72,7 +72,7 @@ public class PlaylistController {
       return new ResponseEntity<Boolean>(deleted, status);
     }
     deleted = playlistService.deletePlaylist(playlistId, session);
-    if(deletedPlaylist == null) {
+    if(!deleted) {
       status = HttpStatus.BAD_REQUEST;
     } else {
       status = HttpStatus.OK;
