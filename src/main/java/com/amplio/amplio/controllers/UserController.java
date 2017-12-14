@@ -314,10 +314,9 @@ public class UserController {
     HttpStatus status;
     Boolean upgraded = userService.upgradeUser(upgradePremiumForm, session);
 
-    if(upgraded){
+    if(upgraded) {
       status = HttpStatus.OK;
-    }
-    else{
+    } else {
       status = HttpStatus.FORBIDDEN;
     }
 
@@ -329,10 +328,9 @@ public class UserController {
     HttpStatus status;
     Boolean downgraded = userService.downgradeUser(session);
 
-    if(downgraded){
+    if(downgraded) {
       status = HttpStatus.OK;
-    }
-    else{
+    } else {
       status = HttpStatus.FORBIDDEN;
     }
 
@@ -340,17 +338,52 @@ public class UserController {
   }
 
   @RequestMapping(path = "/savesong/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> saveSong(String id, HttpSession session){
+  public ResponseEntity<Boolean> saveSong(String id, HttpSession session) {
     HttpStatus status;
     Boolean savedSong = false;
     Integer songId;
 
-    try{
+    try {
       songId = Integer.parseInt(id);
-    }
-    catch(NumberFormatException e){
+    } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
       return new ResponseEntity<Boolean>(savedSong, status);
     }
+
+    savedSong = userService.saveSong(songId, session);
+
+    if(savedSong){
+      status = HttpStatus.FORBIDDEN;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(savedSong, status);
+  }
+
+  @RequestMapping(path = "/unsavesong/{id}", method = RequestMethod.POST)
+  public ResponseEntity<Boolean> unsaveSong(String id, HttpSession session) {
+    HttpStatus status;
+    Boolean unsavedSong = false;
+    Integer songId;
+
+    try {
+      songId = Integer.parseInt(id);
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+      return new ResponseEntity<Boolean>(unsavedSong, status);
+    }
+
+    unsavedSong = userService.unsaveSong(songId, session);
+
+    if(unsavedSong){
+      status = HttpStatus.FORBIDDEN;
+    }
+    else{
+      status = HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Boolean>(unsavedSong, status);
   }
 }

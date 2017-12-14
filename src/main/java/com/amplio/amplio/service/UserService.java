@@ -348,9 +348,9 @@ public class UserService {
 
   public Boolean unsaveSong(Integer songId, HttpSession session){
     Boolean songUnsaved = false;
-    Song songToSave = songRepository.findSongById(songId);
+    Song songToUnsave = songRepository.findSongById(songId);
 
-    if(songToSave != null){
+    if(songToUnsave != null){
       User currentUser = (User)session.getAttribute(SESSION_USER);
       if(currentUser != null) {
         currentUser = userRepository.findUserById(currentUser.getId());
