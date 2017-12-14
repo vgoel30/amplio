@@ -31,7 +31,7 @@ public class PlaylistService {
     User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
 
     if(currentUser != null) {
-      playlists = playlistRepository.findTop10PlaylistsByTitleContaining(query);
+      playlists = playlistRepository.findTop10PlaylistsByTitleContainingAndPublic(query);
     }
 
     return playlists;
@@ -121,7 +121,7 @@ public class PlaylistService {
     Set<Playlist> generatedPlaylists = null;
 
     if(amplioUser != null) {
-      generatedPlaylists = playlistRepository.findPlaylistsByOwner(amplioUser);
+      generatedPlaylists = playlistRepository.findPlaylistsByOwnerAndPublic(amplioUser);
     }
     return generatedPlaylists;
   }
@@ -132,7 +132,7 @@ public class PlaylistService {
     Set<Playlist> playlists = null;
 
     if(user != null && playlistOwner != null) {
-      playlists = playlistRepository.findPlaylistsByOwner(playlistOwner);
+      playlists = playlistRepository.findPlaylistsByOwnerAndPublic(playlistOwner);
     }
 
     return playlists;
