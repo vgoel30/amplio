@@ -89,14 +89,14 @@ public class AlbumController {
     try {
       albumId = Integer.parseInt(id);
       albums = albumService.findRelatedAlbums(albumId,session);
+
+      if(albums == null){
+        status = HttpStatus.FORBIDDEN;
+      } else{
+        status = HttpStatus.OK;
+      }
     } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
-    }
-
-    if(albums == null){
-      status = HttpStatus.FORBIDDEN;
-    } else{
-      status = HttpStatus.OK;
     }
 
     return new ResponseEntity<>(albums, status);

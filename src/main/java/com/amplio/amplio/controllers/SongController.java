@@ -98,4 +98,25 @@ public class SongController {
 
     return new ResponseEntity<List<Song>>(songs, status);
   }
+
+  @RequestMapping(path = "/related/{id}", method = RequestMethod.GET)
+  public ResponseEntity<List<Song>> relatedSongs(HttpSession session, @PathVariable String id) {
+    HttpStatus status;
+    List<Song> relatedSongs = null;
+    Integer songId;
+
+    try {
+      songId = Integer.parseInt(id);
+      relatedSongs = songService.getRelatedSongs(session, songId);
+      if(relatedSongs != null) {
+        status = HttpStatus.OK;
+      } else {
+        status = HttpStatus.NOT_FOUND;
+      }
+    } catch(NumberFormatException e) {
+      status = HttpStatus.BAD_REQUEST;
+    }
+
+    return new ResponseEntity<List<Song>>(relatedSongs, status);
+  }
 }

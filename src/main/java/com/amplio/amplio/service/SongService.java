@@ -1,10 +1,7 @@
 package com.amplio.amplio.service;
 
 import com.amplio.amplio.constants.Constants;
-import com.amplio.amplio.models.Album;
-import com.amplio.amplio.models.Artist;
-import com.amplio.amplio.models.Song;
-import com.amplio.amplio.models.User;
+import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.AlbumRepository;
 import com.amplio.amplio.repository.ArtistRepository;
 import com.amplio.amplio.repository.SongRepository;
@@ -13,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.amplio.amplio.constants.Constants.SESSION_USER;
@@ -76,6 +74,25 @@ public class SongService {
       songs = songRepository.findTop10SongsBySongNameContainingOrderByNumberPlaysDesc(query);
     }
     return songs;
+  }
+
+  public List<Song> getRelatedSongs(HttpSession session, Integer songId) {
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+    Song song = songRepository.findSongById(songId);
+    List<Song> relatedSongs = null;
+
+    if(currentUser != null) {
+      Object[] genreEnums = song.getGenreEnum().toArray();
+      GenreEnum genre = (GenreEnum) genreEnums[0];
+      List<Integer> relatedIds = songRepository.findRelatedSongs(genre.toString(),song.getSongName());
+
+      relatedSongs = new ArrayList<Song>();
+      for(Integer id: relatedIds) {
+        relatedSongs.add(songRepository.findSongById(id));
+      }
+    }
+
+    return relatedSongs;
   }
 }
 
