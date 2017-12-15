@@ -2,6 +2,7 @@ package com.amplio.amplio.service;
 
 import com.amplio.amplio.forms.EditUserInfoForm;
 import com.amplio.amplio.forms.UpgradePremiumForm;
+import com.amplio.amplio.helpers.Luhn;
 import com.amplio.amplio.models.*;
 import com.amplio.amplio.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -322,21 +323,14 @@ public class UserService {
 
   public Boolean upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session){
     Boolean upgraded = false;
-    Integer creditCardNumber;
-
-    try{
-      creditCardNumber = Integer.parseInt(upgradePremiumForm.getCreditCardNumber());
-    }
-    catch(NumberFormatException e){
-      return upgraded;
-    }
+    Boolean creditCardValid = Luhn.Check(upgradePremiumForm.getCreditCardNumber());
 
     User currentUser = (User)session.getAttribute(SESSION_USER);
     if(currentUser != null) {
       currentUser = userRepository.findUserById(currentUser.getId());
     }
 
-    if(currentUser != null && !currentUser.getPremium()){
+    if(currentUser != null && currentUser.getPremium() == false && creditCardValid){
       currentUser.setPremium(true);
       userRepository.save(currentUser);
       upgraded = true;
