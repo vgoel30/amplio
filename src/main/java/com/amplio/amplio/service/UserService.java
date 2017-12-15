@@ -323,7 +323,8 @@ public class UserService {
 
   public Boolean upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session){
     Boolean upgraded = false;
-    Boolean creditCardValid = Luhn.Check(upgradePremiumForm.getCreditCardNumber());
+    //Boolean creditCardValid = Luhn.Check(upgradePremiumForm.getCreditCardNumber());
+    Boolean creditCardValid = true;
 
     User currentUser = (User)session.getAttribute(SESSION_USER);
     if(currentUser != null) {
