@@ -88,7 +88,7 @@ public class PlaylistController {
       status = HttpStatus.FORBIDDEN;
     }
 
-    return new ResponseEntity<Song>(updatedPlaylist, status);
+    return new ResponseEntity<Playlist>(updatedPlaylist, status);
   }
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
