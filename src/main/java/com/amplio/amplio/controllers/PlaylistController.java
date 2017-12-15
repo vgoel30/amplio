@@ -218,4 +218,18 @@ public class PlaylistController {
 
     return new ResponseEntity<Boolean>(toggledPrivate, status);
   }
+
+  @RequestMapping(path = "/topcharts", method = RequestMethod.GET)
+  public ResponseEntity<Playlist> getTopCharts(HttpSession session) {
+    HttpStatus status;
+    Playlist topCharts = playlistService.getTopCharts(session);
+
+    if(topCharts == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status= HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Playlist>(topCharts,status);
+  }
 }

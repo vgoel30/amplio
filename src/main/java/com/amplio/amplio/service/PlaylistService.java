@@ -8,6 +8,7 @@ import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.SongRepository;
 import com.amplio.amplio.repository.UserRepository;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -168,5 +169,22 @@ public class PlaylistService {
     }
 
     return toggledPrivatePlaylist;
+  }
+
+  public Playlist getTopCharts(HttpSession session) {
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+    User amplio = userRepository.findByUserName("Amplio");
+    Playlist topCharts = null;
+
+    if(currentUser != null) {
+      Set<Integer> songIds = songRepository.findTopSongs();
+
+      topCharts = new Playlist("Top Charts","Most popular songs", "", amplio);
+      for(Integer id: songIds) {
+        topCharts.getSongs().add(songRepository.findSongById(id));
+      }
+    }
+
+    return topCharts;
   }
 }

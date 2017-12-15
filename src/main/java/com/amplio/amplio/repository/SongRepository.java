@@ -26,6 +26,6 @@ public interface SongRepository extends CrudRepository<Song, Integer> {
   List<Integer> findRelatedSongs(@Param("genre") String genre, @Param("name") String name);
   @Query(value = "select r.id from (select s.id,max(s.number_plays) from song s group by s.artist_id) r", nativeQuery = true)
   Set<Integer> findRecommendedSongs();
-  @Query(value = "select id from song order by number_plays limit " + SONG_QUERY_LIMIT, nativeQuery = true)
+  @Query(value = "select id from song order by number_plays DESC limit " + SONG_QUERY_LIMIT, nativeQuery = true)
   Set<Integer> findTopSongs();
 }
