@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Set;
 
@@ -64,7 +63,7 @@ public class PlaylistController {
     return new ResponseEntity<Song>(addedSong, status);
   }
 
-  @RequestMapping(path = "/addsong/{playlistId}", method = RequestMethod.POST)
+  @RequestMapping(path = "/removesong/{playlistId}", method = RequestMethod.POST)
   public ResponseEntity<Song> removeSongFromPlaylist(@PathVariable String playlistId, @RequestBody String songId, HttpSession session) {
     HttpStatus status;
     Song deletedSong = null;

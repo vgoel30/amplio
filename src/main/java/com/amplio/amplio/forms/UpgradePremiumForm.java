@@ -1,14 +1,14 @@
 package com.amplio.amplio.forms;
 
 public class UpgradePremiumForm {
-  String creditCardNumber;
-  String securityNumber;
+  String num;
+  String num2;
 
-  public String getCreditCardNumber() {
-    return creditCardNumber;
+  public String getNum() {
+    return num;
   }
 
-  public String getSecurityNumber() {
-    return securityNumber;
+  public String getNum2() {
+    return num2;
   }
 }

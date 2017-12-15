@@ -323,7 +323,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/upgrade", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session) {
+  public ResponseEntity<Boolean> upgradeUser(@RequestBody UpgradePremiumForm upgradePremiumForm, HttpSession session) {
     HttpStatus status;
     Boolean upgraded = userService.upgradeUser(upgradePremiumForm, session);
 
