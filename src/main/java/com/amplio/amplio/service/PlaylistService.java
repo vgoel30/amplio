@@ -8,7 +8,6 @@ import com.amplio.amplio.models.User;
 import com.amplio.amplio.repository.PlaylistRepository;
 import com.amplio.amplio.repository.SongRepository;
 import com.amplio.amplio.repository.UserRepository;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -161,7 +160,6 @@ public class PlaylistService {
 
     if(amplioUser != null) {
       generatedPlaylists = playlistRepository.findPlaylistsByOwner(amplioUser);
-      generatedPlaylists.add(getRecommended());
     }
     return generatedPlaylists;
   }
@@ -213,18 +211,19 @@ public class PlaylistService {
     return topCharts;
   }
 
-  public Playlist getRecommended() {
-    User amplio = userRepository.findByUserName("Amplio");
-    Playlist recommendedSongs = null;
-
-    Set<Integer> songIds = songRepository.findRecommendedSongs();
-
-    recommendedSongs = new Playlist("RECOMMENDED","", "", amplio);
-    for(Integer id: songIds) {
-      recommendedSongs.getSongs().add(songRepository.findSongById(id));
-    }
-
-
-    return recommendedSongs;
-  }
+//  public Playlist getRecommended() {
+//    User amplio = userRepository.findByUserName("Amplio");
+//    Playlist recommendedSongs = null;
+//
+//    Set<Integer> songIds = songRepository.findRecommendedSongs();
+//
+//    recommendedSongs = new Playlist("RECOMMENDED","", "", amplio);
+//    for(Integer id: songIds) {
+//      recommendedSongs.getSongs().add(songRepository.findSongById(id));
+//    }
+//
+//    playlistRepository.save(recommendedSongs);
+//    userRepository.save(amplio);
+//    return recommendedSongs;
+//  }
 }
