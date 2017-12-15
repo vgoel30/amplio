@@ -260,4 +260,18 @@ public class PlaylistController {
 
     return new ResponseEntity<Playlist>(topCharts,status);
   }
+
+  @RequestMapping(path = "/recommended", method = RequestMethod.GET)
+  public ResponseEntity<Playlist> getRecommended(HttpSession session) {
+    HttpStatus status;
+    Playlist recommended = playlistService.getRecommended(session);
+
+    if(recommended == null) {
+      status = HttpStatus.FORBIDDEN;
+    } else {
+      status= HttpStatus.OK;
+    }
+
+    return new ResponseEntity<Playlist>(recommended,status);
+  }
 }
