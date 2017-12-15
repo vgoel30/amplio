@@ -92,29 +92,28 @@ public class PlaylistService {
     return songAdded;
   }
 
-  public Song removeSongFromPlaylist(Integer playlistId, Integer songId, HttpSession session){
-    Song songDeleted = null;
+  public Playlist removeSongFromPlaylist(Integer playlistId, Integer songId, HttpSession session){
+    Playlist updatedPlaylist = null;
     User user = (User)session.getAttribute(SESSION_USER);
 
     if(user != null){
       user = userRepository.findUserById(user.getId());
-      Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+      updatedPlaylist = playlistRepository.getPlaylistById(playlistId);
       Song song = songRepository.findSongById(songId);
 
-      if(song != null && playlist != null && playlist.getOwner().equals(user)){
-        for(Song playlistSong : playlist.getSongs()){
+      if(song != null && updatedPlaylist != null && updatedPlaylist.getOwner().equals(user)){
+        for(Song playlistSong : updatedPlaylist.getSongs()){
           if(playlistSong.getId().equals(songId)){
-            playlist.getSongs().remove(song);
+            updatedPlaylist.getSongs().remove(song);
             userRepository.save(user);
-            playlistRepository.save(playlist);
-            songDeleted = song;
+            playlistRepository.save(updatedPlaylist);
             break;
           }
         }
       }
     }
 
-    return songDeleted;
+    return updatedPlaylist;
   }
 
   public Playlist getPlaylist(Integer playlistId) {

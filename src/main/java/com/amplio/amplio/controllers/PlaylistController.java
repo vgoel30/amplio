@@ -64,9 +64,9 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/removesong/{playlistId}", method = RequestMethod.POST)
-  public ResponseEntity<Song> removeSongFromPlaylist(@PathVariable String playlistId, @RequestBody Song song, HttpSession session) {
+  public ResponseEntity<Playlist> removeSongFromPlaylist(@PathVariable String playlistId, @RequestBody Song song, HttpSession session) {
     HttpStatus status;
-    Song deletedSong = null;
+    Playlist updatedPlaylist = null;
     Integer playlistIntegerId;
     Integer songIntegerId;
 
@@ -76,19 +76,19 @@ public class PlaylistController {
     }
     catch(NumberFormatException e){
       status = HttpStatus.BAD_REQUEST;
-      return new ResponseEntity<Song>(deletedSong, status);
+      return new ResponseEntity<Playlist>(updatedPlaylist, status);
     }
 
-    deletedSong = playlistService.removeSongFromPlaylist(playlistIntegerId, songIntegerId, session);
+    updatedPlaylist = playlistService.removeSongFromPlaylist(playlistIntegerId, songIntegerId, session);
 
-    if(deletedSong != null){
+    if(updatedPlaylist != null){
       status = HttpStatus.OK;
     }
     else{
       status = HttpStatus.FORBIDDEN;
     }
 
-    return new ResponseEntity<Song>(deletedSong, status);
+    return new ResponseEntity<Song>(updatedPlaylist, status);
   }
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
