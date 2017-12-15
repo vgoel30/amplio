@@ -160,7 +160,7 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/generated", method = RequestMethod.GET)
-  public ResponseEntity<Set<Playlist>> getGeneratedPLaylists(HttpSession session) {
+  public ResponseEntity<Set<Playlist>> getGeneratedPlaylists(HttpSession session) {
     User currentUser = (User) session.getAttribute(Constants.SESSION_USER);
     Set<Playlist> generatedPlaylists = null;
     HttpStatus status;
@@ -258,19 +258,5 @@ public class PlaylistController {
     }
 
     return new ResponseEntity<Playlist>(topCharts,status);
-  }
-
-  @RequestMapping(path = "/recommended", method = RequestMethod.GET)
-  public ResponseEntity<Playlist> getRecommended(HttpSession session) {
-    HttpStatus status;
-    Playlist recommended = playlistService.getRecommended(session);
-
-    if(recommended == null) {
-      status = HttpStatus.FORBIDDEN;
-    } else {
-      status= HttpStatus.OK;
-    }
-
-    return new ResponseEntity<Playlist>(recommended,status);
   }
 }

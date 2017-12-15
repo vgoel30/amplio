@@ -161,6 +161,7 @@ public class PlaylistService {
 
     if(amplioUser != null) {
       generatedPlaylists = playlistRepository.findPlaylistsByOwner(amplioUser);
+      generatedPlaylists.add(getRecommended());
     }
     return generatedPlaylists;
   }
@@ -212,19 +213,17 @@ public class PlaylistService {
     return topCharts;
   }
 
-  public Playlist getRecommended(HttpSession session) {
-    User currentUser = (User) session.getAttribute(SESSION_USER);
+  public Playlist getRecommended() {
     User amplio = userRepository.findByUserName("Amplio");
     Playlist recommendedSongs = null;
 
-    if(currentUser != null) {
-      Set<Integer> songIds = songRepository.findRecommendedSongs();
+    Set<Integer> songIds = songRepository.findRecommendedSongs();
 
-      recommendedSongs = new Playlist("Recommended","", "", amplio);
-      for(Integer id: songIds) {
-        recommendedSongs.getSongs().add(songRepository.findSongById(id));
-      }
+    recommendedSongs = new Playlist("RECOMMENDED","", "", amplio);
+    for(Integer id: songIds) {
+      recommendedSongs.getSongs().add(songRepository.findSongById(id));
     }
+
 
     return recommendedSongs;
   }
