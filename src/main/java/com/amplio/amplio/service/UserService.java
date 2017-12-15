@@ -323,15 +323,20 @@ public class UserService {
 
   public Boolean upgradeUser(UpgradePremiumForm upgradePremiumForm, HttpSession session){
     Boolean upgraded = false;
-    //Boolean creditCardValid = Luhn.Check(upgradePremiumForm.getCreditCardNumber());
-    Boolean creditCardValid = true;
+    String creditCardNumber = upgradePremiumForm.getCreditCardNumber().replaceAll("\\s", "");
+    String securityNumber = upgradePremiumForm.getSecurityNumber();
+    Boolean creditCardValid = (creditCardNumber.matches("[0-9]+")) && (creditCardNumber.length() == 16) && (securityNumber.length() == 3);
+
+    if(!creditCardValid){
+      return upgraded;
+    }
 
     User currentUser = (User)session.getAttribute(SESSION_USER);
     if(currentUser != null) {
       currentUser = userRepository.findUserById(currentUser.getId());
     }
 
-    if(currentUser != null && currentUser.getPremium() == false && creditCardValid){
+    if(currentUser != null && currentUser.getPremium() == false){
       currentUser.setPremium(true);
       userRepository.save(currentUser);
       upgraded = true;
