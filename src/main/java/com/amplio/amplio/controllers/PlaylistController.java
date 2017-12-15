@@ -36,7 +36,7 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/addsong/{playlistId}", method = RequestMethod.POST)
-  public ResponseEntity<Song> addSongToPlaylist(@PathVariable String playlistId, @RequestBody String songId, HttpSession session) {
+  public ResponseEntity<Song> addSongToPlaylist(@PathVariable String playlistId, @RequestBody Song song, HttpSession session) {
     HttpStatus status;
     Song addedSong = null;
     Integer playlistIntegerId;
@@ -44,7 +44,7 @@ public class PlaylistController {
 
     try{
       playlistIntegerId = Integer.parseInt(playlistId);
-      songIntegerId = Integer.parseInt(songId);
+      songIntegerId = song.getId();
     }
     catch(NumberFormatException e){
       status = HttpStatus.BAD_REQUEST;
@@ -64,7 +64,7 @@ public class PlaylistController {
   }
 
   @RequestMapping(path = "/removesong/{playlistId}", method = RequestMethod.POST)
-  public ResponseEntity<Song> removeSongFromPlaylist(@PathVariable String playlistId, @RequestBody String songId, HttpSession session) {
+  public ResponseEntity<Song> removeSongFromPlaylist(@PathVariable String playlistId, @RequestBody Song song, HttpSession session) {
     HttpStatus status;
     Song deletedSong = null;
     Integer playlistIntegerId;
@@ -72,7 +72,7 @@ public class PlaylistController {
 
     try{
       playlistIntegerId = Integer.parseInt(playlistId);
-      songIntegerId = Integer.parseInt(songId);
+      songIntegerId = song.getId();
     }
     catch(NumberFormatException e){
       status = HttpStatus.BAD_REQUEST;
