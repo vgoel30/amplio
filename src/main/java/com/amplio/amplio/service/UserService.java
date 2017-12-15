@@ -52,10 +52,12 @@ public class UserService {
       String firstName = editUserInfoForm.getFirstName();
       String lastName = editUserInfoForm.getLastName();
       String email = editUserInfoForm.getEmail();
+      String image = editUserInfoForm.getImageName();
 
       user.setFirstName(firstName);
       user.setLastName(lastName);
       user.setEmail(email);
+      user.setProfilePicture(image);
 
       userRepository.save(user);
       updatedUser = user;

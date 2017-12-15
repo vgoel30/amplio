@@ -4,6 +4,7 @@ public class EditUserInfoForm {
   private String firstName;
   private String lastName;
   private String email;
+  private String imageName;
 
   public String getFirstName() {
     return firstName;
@@ -15,5 +16,9 @@ public class EditUserInfoForm {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getImageName() {
+    return imageName;
   }
 }
