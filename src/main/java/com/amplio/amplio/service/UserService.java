@@ -424,7 +424,8 @@ public class UserService {
     return savedAlbums;
   }
 
-  public Boolean unsaveAlbum(Integer albumId, HttpSession session){
+  public Set<Album> unsaveAlbum(Integer albumId, HttpSession session){
+    Set<Album> savedAlbums = null;
     Boolean albumUnsaved = false;
     Album albumToUnsave = albumRepository.findById(albumId);
 
@@ -433,21 +434,19 @@ public class UserService {
       if(currentUser != null) {
         currentUser = userRepository.findUserById(currentUser.getId());
       }
-
-      if(currentUser != null){
-        boolean albumPresent = false;
-        for(Album savedAlbum : currentUser.getSavedAlbums()){
-          if(savedAlbum.getId().equals(albumId)){
-            currentUser.getSavedAlbums() .remove(savedAlbum);
-            albumPresent = true;
-          }
+      boolean albumPresent = false;
+      for(Album savedAlbum : currentUser.getSavedAlbums()){
+        if(savedAlbum.getId().equals(albumId)){
+          currentUser.getSavedAlbums() .remove(savedAlbum);
+          albumPresent = true;
         }
-        userRepository.save(currentUser);
-        albumUnsaved = albumPresent;
       }
+      userRepository.save(currentUser);
+      albumUnsaved = albumPresent;
+      savedAlbums = currentUser.getSavedAlbums();
     }
 
-    return albumUnsaved;
+    return savedAlbums;
   }
 
   public Boolean reportUser(Integer userToReportId, HttpSession session){
