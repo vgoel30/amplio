@@ -158,7 +158,7 @@ public class PlaylistService {
     User user = (User) session.getAttribute(SESSION_USER);
     Playlist playlistToToggle = playlistRepository.getPlaylistById(playlistId);
 
-    if(user != null && playlistToToggle != null){
+    if(user != null && playlistToToggle != null) {
       user = userRepository.findUserById(user.getId());
       if(user != null && playlistToToggle.getOwner().equals(user)){
         playlistToToggle.setPublic(!playlistToToggle.isPublic());
@@ -186,5 +186,22 @@ public class PlaylistService {
     }
 
     return topCharts;
+  }
+
+  public Playlist getRecommended(HttpSession session) {
+    User currentUser = (User) session.getAttribute(SESSION_USER);
+    User amplio = userRepository.findByUserName("Amplio");
+    Playlist recommendedSongs = null;
+
+    if(currentUser != null) {
+      Set<Integer> songIds = songRepository.findRecommendedSongs();
+
+      recommendedSongs = new Playlist("Recommended","", "", amplio);
+      for(Integer id: songIds) {
+        recommendedSongs.getSongs().add(songRepository.findSongById(id));
+      }
+    }
+
+    return recommendedSongs;
   }
 }
