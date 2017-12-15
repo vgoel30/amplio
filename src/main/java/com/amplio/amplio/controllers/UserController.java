@@ -401,28 +401,28 @@ public class UserController {
   }
 
   @RequestMapping(path = "/savealbum/{id}", method = RequestMethod.POST)
-  public ResponseEntity<Boolean> saveAlbum(@PathVariable String id, HttpSession session) {
+  public ResponseEntity<Set<Album>> saveAlbum(@PathVariable String id, HttpSession session) {
     HttpStatus status;
-    Boolean savedAlbum = false;
+    Set<Album> savedAlbums = null;
     Integer albumId;
 
     try {
       albumId = Integer.parseInt(id);
     } catch(NumberFormatException e) {
       status = HttpStatus.BAD_REQUEST;
-      return new ResponseEntity<Boolean>(savedAlbum, status);
+      return new ResponseEntity<Set<Album>>(savedAlbums, status);
     }
 
-    savedAlbum = userService.saveAlbum(albumId, session);
+    savedAlbums = userService.saveAlbum(albumId, session);
 
-    if(savedAlbum){
+    if(savedAlbums == null){
       status = HttpStatus.FORBIDDEN;
     }
     else{
       status = HttpStatus.OK;
     }
 
-    return new ResponseEntity<Boolean>(savedAlbum, status);
+    return new ResponseEntity<Set<Album>>(savedAlbums, status);
   }
 
   @RequestMapping(path = "/unsavealbum/{id}", method = RequestMethod.POST)

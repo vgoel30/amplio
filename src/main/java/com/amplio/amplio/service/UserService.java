@@ -407,8 +407,8 @@ public class UserService {
     return songUnsaved;
   }
 
-  public Boolean saveAlbum(Integer albumId, HttpSession session){
-    Boolean albumSaved = false;
+  public Set<Album> saveAlbum(Integer albumId, HttpSession session){
+    Set<Album> savedAlbums = null;
     Album albumToSave = albumRepository.findById(albumId);
 
     if(albumToSave != null){
@@ -416,15 +416,12 @@ public class UserService {
       if(currentUser != null) {
         currentUser = userRepository.findUserById(currentUser.getId());
       }
-
-      if(currentUser != null){
-        currentUser.getSavedAlbums().add(albumToSave);
-        userRepository.save(currentUser);
-        albumSaved = true;
-      }
+      currentUser.getSavedAlbums().add(albumToSave);
+      userRepository.save(currentUser);
+      savedAlbums = currentUser.getSavedAlbums();
     }
 
-    return albumSaved;
+    return savedAlbums;
   }
 
   public Boolean unsaveAlbum(Integer albumId, HttpSession session){
