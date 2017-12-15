@@ -92,6 +92,31 @@ public class PlaylistService {
     return songAdded;
   }
 
+  public Song removeSongFromPlaylist(Integer playlistId, Integer songId, HttpSession session){
+    Song songDeleted = null;
+    User user = (User)session.getAttribute(SESSION_USER);
+
+    if(user != null){
+      user = userRepository.findUserById(user.getId());
+      Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+      Song song = songRepository.findSongById(songId);
+
+      if(song != null && playlist != null && playlist.getOwner().equals(user)){
+        for(Song playlistSong : playlist.getSongs()){
+          if(playlistSong.getId().equals(songId)){
+            playlist.getSongs().remove(song);
+            userRepository.save(user);
+            playlistRepository.save(playlist);
+            songDeleted = song;
+            break;
+          }
+        }
+      }
+    }
+    
+    return songDeleted;
+  }
+
   public Playlist getPlaylist(Integer playlistId) {
     Playlist playlist = playlistRepository.getPlaylistById(playlistId);
     return playlist;
