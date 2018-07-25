@@ -1,3 +1,3 @@
-![Amplio](https://github.com/mrunalkp/amplio/blob/master/AmplioLogo.png)
-
+# Amplio
 Amplio: Another music streaming service.
+[Frontend](https://github.com/vgoel30/amplio-frontend.git) for this project.
